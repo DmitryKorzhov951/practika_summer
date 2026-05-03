@@ -1,0 +1,19 @@
+# Visual Studio / .NET
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+.vs/
+*.cache
+*.dbmdf
+*.ldf
+*.mdf
+
+# Rider / VS Code
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

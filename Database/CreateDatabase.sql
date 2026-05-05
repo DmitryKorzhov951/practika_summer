@@ -10,16 +10,19 @@ USE master;
 GO
 
 -- ---------- Чистим возможный мусор от прошлых неудачных запусков ----------
-IF OBJECT_ID('master.dbo.Prokat',     'U') IS NOT NULL DROP TABLE master.dbo.Prokat;
-IF OBJECT_ID('master.dbo.Avtomobili', 'U') IS NOT NULL DROP TABLE master.dbo.Avtomobili;
-IF OBJECT_ID('master.dbo.Sotrudniki', 'U') IS NOT NULL DROP TABLE master.dbo.Sotrudniki;
-IF OBJECT_ID('master.dbo.Klienty',    'U') IS NOT NULL DROP TABLE master.dbo.Klienty;
-IF OBJECT_ID('master.dbo.Uslugi',     'U') IS NOT NULL DROP TABLE master.dbo.Uslugi;
-IF OBJECT_ID('master.dbo.Marki',      'U') IS NOT NULL DROP TABLE master.dbo.Marki;
-IF OBJECT_ID('master.dbo.Dolzhnosti', 'U') IS NOT NULL DROP TABLE master.dbo.Dolzhnosti;
-IF OBJECT_ID('master.dbo.vw_OtdelKadrov',  'V') IS NOT NULL DROP VIEW master.dbo.vw_OtdelKadrov;
-IF OBJECT_ID('master.dbo.vw_Avtopark',     'V') IS NOT NULL DROP VIEW master.dbo.vw_Avtopark;
-IF OBJECT_ID('master.dbo.vw_AvtoVProkate', 'V') IS NOT NULL DROP VIEW master.dbo.vw_AvtoVProkate;
+USE master;
+GO
+IF OBJECT_ID('dbo.vw_OtdelKadrov',  'V') IS NOT NULL DROP VIEW dbo.vw_OtdelKadrov;
+IF OBJECT_ID('dbo.vw_Avtopark',     'V') IS NOT NULL DROP VIEW dbo.vw_Avtopark;
+IF OBJECT_ID('dbo.vw_AvtoVProkate', 'V') IS NOT NULL DROP VIEW dbo.vw_AvtoVProkate;
+GO
+IF OBJECT_ID('dbo.Prokat',     'U') IS NOT NULL DROP TABLE dbo.Prokat;
+IF OBJECT_ID('dbo.Avtomobili', 'U') IS NOT NULL DROP TABLE dbo.Avtomobili;
+IF OBJECT_ID('dbo.Sotrudniki', 'U') IS NOT NULL DROP TABLE dbo.Sotrudniki;
+IF OBJECT_ID('dbo.Klienty',    'U') IS NOT NULL DROP TABLE dbo.Klienty;
+IF OBJECT_ID('dbo.Uslugi',     'U') IS NOT NULL DROP TABLE dbo.Uslugi;
+IF OBJECT_ID('dbo.Marki',      'U') IS NOT NULL DROP TABLE dbo.Marki;
+IF OBJECT_ID('dbo.Dolzhnosti', 'U') IS NOT NULL DROP TABLE dbo.Dolzhnosti;
 GO
 
 IF DB_ID('CarRentalDB') IS NOT NULL

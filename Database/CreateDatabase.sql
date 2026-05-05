@@ -1,11 +1,25 @@
 -- =====================================================
 -- БД "Прокат автомобилей" (Вариант №17)
--- Создание базы CarRentalDB.mdf в папке проекта
+-- Создание базы CarRentalDB.mdf в папке C:\db\
 -- =====================================================
--- Запустить в SQL Server Management Studio или sqlcmd.
--- ВАЖНО: укажите свой путь к папке с .mdf в переменной @path.
+-- ПЕРЕД ЗАПУСКОМ:
+-- 1. Создай в проводнике пустую папку:  C:\db\
+-- 2. Открой этот файл в SSMS, нажми F5.
 
 USE master;
+GO
+
+-- ---------- Чистим возможный мусор от прошлых неудачных запусков ----------
+IF OBJECT_ID('master.dbo.Prokat',     'U') IS NOT NULL DROP TABLE master.dbo.Prokat;
+IF OBJECT_ID('master.dbo.Avtomobili', 'U') IS NOT NULL DROP TABLE master.dbo.Avtomobili;
+IF OBJECT_ID('master.dbo.Sotrudniki', 'U') IS NOT NULL DROP TABLE master.dbo.Sotrudniki;
+IF OBJECT_ID('master.dbo.Klienty',    'U') IS NOT NULL DROP TABLE master.dbo.Klienty;
+IF OBJECT_ID('master.dbo.Uslugi',     'U') IS NOT NULL DROP TABLE master.dbo.Uslugi;
+IF OBJECT_ID('master.dbo.Marki',      'U') IS NOT NULL DROP TABLE master.dbo.Marki;
+IF OBJECT_ID('master.dbo.Dolzhnosti', 'U') IS NOT NULL DROP TABLE master.dbo.Dolzhnosti;
+IF OBJECT_ID('master.dbo.vw_OtdelKadrov',  'V') IS NOT NULL DROP VIEW master.dbo.vw_OtdelKadrov;
+IF OBJECT_ID('master.dbo.vw_Avtopark',     'V') IS NOT NULL DROP VIEW master.dbo.vw_Avtopark;
+IF OBJECT_ID('master.dbo.vw_AvtoVProkate', 'V') IS NOT NULL DROP VIEW master.dbo.vw_AvtoVProkate;
 GO
 
 IF DB_ID('CarRentalDB') IS NOT NULL
@@ -15,7 +29,8 @@ BEGIN
 END
 GO
 
-DECLARE @path NVARCHAR(400) = N'C:\Users\123\Desktop\practika_summer-claude-design-info-system-dkxK7\Database\';
+-- ---------- Создание БД ----------
+DECLARE @path NVARCHAR(400) = N'C:\db\';   -- <-- предварительно создай эту папку!
 DECLARE @sql NVARCHAR(MAX) = N'
 CREATE DATABASE CarRentalDB
 ON PRIMARY (
@@ -68,7 +83,7 @@ CREATE TABLE Klienty (
     Pasport            NVARCHAR(50)  NOT NULL
 );
 
--- ============== ВТОРИЧНЫЕ ТАБЛИЦЫ (FK = INT, "числовой") ==============
+-- ============== ВТОРИЧНЫЕ ТАБЛИЦЫ ==============
 
 CREATE TABLE Sotrudniki (
     KodSotrudnika      INT IDENTITY(1,1) PRIMARY KEY,
@@ -180,7 +195,7 @@ INSERT INTO Prokat (DataVydachi, Srok, DataVozvrata, KodAvtomobilya, KodKlienta,
 ('2025-04-22', 6,  '2025-04-28', 10, 5, 5,    NULL, NULL, 14000, 1, 2);
 GO
 
--- ============== ЗАПРОСЫ (VIEWS) ==============
+-- ============== ЗАПРОСЫ ==============
 
 CREATE OR ALTER VIEW vw_OtdelKadrov AS
 SELECT s.KodSotrudnika, s.FIO, s.Vozrast, s.Pol, s.Adres, s.Telefon, s.Pasport,
@@ -216,4 +231,4 @@ LEFT JOIN Uslugi u3 ON p.KodUslugi3 = u3.KodUslugi
 JOIN Sotrudniki s  ON p.KodSotrudnika  = s.KodSotrudnika;
 GO
 
-PRINT 'БД CarRentalDB готова. Файл .mdf лежит в указанной папке.';
+PRINT 'БД CarRentalDB готова. Файл .mdf лежит в C:\db\.';

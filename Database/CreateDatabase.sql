@@ -1,17 +1,23 @@
 -- =====================================================
 -- БД "Прокат автомобилей" (Вариант №17)
--- Создание базы CarRentalDB.mdf в папке C:\db\
+-- Создаёт БД CarRentalDB в LocalDB.
+-- LocalDB сама решит, куда положить .mdf — никаких прав
+-- настраивать не нужно.
 -- =====================================================
--- ПЕРЕД ЗАПУСКОМ:
--- 1. Создай в проводнике пустую папку:  C:\db\
--- 2. Открой этот файл в SSMS, нажми F5.
+-- Запустить в SSMS, нажать F5.
 
 USE master;
 GO
 
--- ---------- Чистим возможный мусор от прошлых неудачных запусков ----------
-USE master;
+-- ---------- Удаляем БД, если уже существовала ----------
+IF DB_ID('CarRentalDB') IS NOT NULL
+BEGIN
+    ALTER DATABASE CarRentalDB SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE CarRentalDB;
+END
 GO
+
+-- ---------- Чистим таблицы, оставшиеся в master от прошлых попыток ----------
 IF OBJECT_ID('dbo.vw_OtdelKadrov',  'V') IS NOT NULL DROP VIEW dbo.vw_OtdelKadrov;
 IF OBJECT_ID('dbo.vw_Avtopark',     'V') IS NOT NULL DROP VIEW dbo.vw_Avtopark;
 IF OBJECT_ID('dbo.vw_AvtoVProkate', 'V') IS NOT NULL DROP VIEW dbo.vw_AvtoVProkate;
@@ -25,28 +31,8 @@ IF OBJECT_ID('dbo.Marki',      'U') IS NOT NULL DROP TABLE dbo.Marki;
 IF OBJECT_ID('dbo.Dolzhnosti', 'U') IS NOT NULL DROP TABLE dbo.Dolzhnosti;
 GO
 
-IF DB_ID('CarRentalDB') IS NOT NULL
-BEGIN
-    ALTER DATABASE CarRentalDB SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-    DROP DATABASE CarRentalDB;
-END
-GO
-
--- ---------- Создание БД ----------
-DECLARE @path NVARCHAR(400) = N'C:\db\';   -- <-- предварительно создай эту папку!
-DECLARE @sql NVARCHAR(MAX) = N'
-CREATE DATABASE CarRentalDB
-ON PRIMARY (
-    NAME     = N''CarRentalDB'',
-    FILENAME = N''' + @path + N'CarRentalDB.mdf'',
-    SIZE     = 8MB, FILEGROWTH = 8MB
-)
-LOG ON (
-    NAME     = N''CarRentalDB_log'',
-    FILENAME = N''' + @path + N'CarRentalDB_log.ldf'',
-    SIZE     = 8MB, FILEGROWTH = 8MB
-);';
-EXEC sp_executesql @sql;
+-- ---------- Создание БД (LocalDB сам выберет путь для .mdf) ----------
+CREATE DATABASE CarRentalDB;
 GO
 
 USE CarRentalDB;
@@ -234,4 +220,4 @@ LEFT JOIN Uslugi u3 ON p.KodUslugi3 = u3.KodUslugi
 JOIN Sotrudniki s  ON p.KodSotrudnika  = s.KodSotrudnika;
 GO
 
-PRINT 'БД CarRentalDB готова. Файл .mdf лежит в C:\db\.';
+PRINT 'БД CarRentalDB готова. Подключайтесь к ней по имени.';

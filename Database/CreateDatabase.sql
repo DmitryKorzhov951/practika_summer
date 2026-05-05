@@ -15,7 +15,7 @@ BEGIN
 END
 GO
 
-DECLARE @path NVARCHAR(400) = N'C:\CarRentalDB\';   -- <-- замените на свой путь
+DECLARE @path NVARCHAR(400) = N'C:\Users\123\Desktop\practika_summer-claude-design-info-system-dkxK7\Database\';
 DECLARE @sql NVARCHAR(MAX) = N'
 CREATE DATABASE CarRentalDB
 ON PRIMARY (

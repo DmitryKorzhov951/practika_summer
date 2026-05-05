@@ -18,16 +18,13 @@ namespace CarRentalApp
 
         public static void EnsureDatabase()
         {
-            // Уже доступна под текущей учёткой?
-            if (TryConnect(AppConn)) return;
+            bool dbAccessible = TryConnect(AppConn);
 
-            // Создаём заново через master
-            using (var conn = new SqlConnection(MasterConn))
+            // 1. Если БД нет / нет прав — создаём её через master.
+            if (!dbAccessible)
             {
+                using var conn = new SqlConnection(MasterConn);
                 conn.Open();
-
-                // Если БД существует, но недоступна нам — попытаемся её дропнуть.
-                // Если не получится (нет прав) — выбрасываем понятную ошибку.
                 try
                 {
                     Exec(conn, @"
@@ -44,20 +41,30 @@ namespace CarRentalApp
                         "и не может быть удалена. Откройте SSMS под текущей учёткой и выполните:\n\n" +
                         "    USE master;\n    DROP DATABASE CarRentalDB;\n\nПодробности: " + ex.Message);
                 }
-
                 Exec(conn, "CREATE DATABASE CarRentalDB");
             }
 
-            // Заливаем схему и данные пакетами (разделители GO)
+            // 2. Проверяем, есть ли в БД наша схема. Если нет — заливаем.
             using (var conn = new SqlConnection(AppConn))
             {
                 conn.Open();
-                foreach (var batch in SplitByGo(SqlScript))
+                if (!TableExists(conn, "Dolzhnosti"))
                 {
-                    if (string.IsNullOrWhiteSpace(batch)) continue;
-                    Exec(conn, batch);
+                    foreach (var batch in SplitByGo(SqlScript))
+                    {
+                        if (string.IsNullOrWhiteSpace(batch)) continue;
+                        Exec(conn, batch);
+                    }
                 }
             }
+        }
+
+        static bool TableExists(SqlConnection conn, string name)
+        {
+            using var cmd = new SqlCommand(
+                "SELECT 1 FROM sys.tables WHERE name = @n", conn);
+            cmd.Parameters.AddWithValue("@n", name);
+            return cmd.ExecuteScalar() != null;
         }
 
         static bool TryConnect(string cs)

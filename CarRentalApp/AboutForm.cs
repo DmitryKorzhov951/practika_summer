@@ -9,24 +9,26 @@ namespace CarRentalApp
         {
             Text            = "О программе";
             StartPosition   = FormStartPosition.CenterParent;
-            Size            = new Size(420, 260);
+            Size            = new Size(380, 220);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox     = false; MinimizeBox = false;
+            MaximizeBox     = false;
+            MinimizeBox     = false;
 
             Controls.Add(new Label
             {
-                Text =
-                    "Информационная система\n«Прокат автомобилей»\n\n" +
-                    "Вариант №17\n\n" +
-                    "C# / WinForms + Microsoft SQL Server",
+                Text      = "Прокат автомобилей\n\n" +
+                            "Вариант №17\n\n" +
+                            "C# / WinForms + SQL Server",
                 Dock      = DockStyle.Fill,
-                Font      = new Font("Segoe UI", 11),
+                Font      = new Font("Segoe UI", 10),
                 TextAlign = ContentAlignment.MiddleCenter
             });
 
-            var ok = new Button { Text = "OK", Dock = DockStyle.Bottom, Height = 36 };
-            ok.Click += (s, e) => Close();
+            var ok = UI.MakeBtn("OK", (s, e) => Close(), 90);
+            ok.Dock = DockStyle.Bottom;
+            ok.Height = 30;
             Controls.Add(ok);
+            AcceptButton = ok;
         }
     }
 }

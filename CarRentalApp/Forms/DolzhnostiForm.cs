@@ -14,88 +14,42 @@ namespace CarRentalApp.Forms
 
         public DolzhnostiForm()
         {
-            Text = "Должности (ленточная форма)";
+            Text = "Должности";
             StartPosition = FormStartPosition.CenterScreen;
-            Size = new Size(1000, 600);
+            Size = new Size(900, 480);
+            Font = UI.Body;
 
-            Controls.Add(new Label
-            {
-                Text = "Должности", Dock = DockStyle.Top, Height = 40,
-                Font = new Font("Segoe UI", 14, FontStyle.Bold),
-                BackColor = Color.SteelBlue, ForeColor = Color.White,
-                TextAlign = ContentAlignment.MiddleCenter
-            });
+            Controls.Add(UI.MakeHeader("Должности"));
 
             _grid.Dock = DockStyle.Fill;
             _grid.AutoGenerateColumns = false;
             _grid.AllowUserToAddRows = true;
-            _grid.RowTemplate.Height = 30;
+            _grid.RowHeadersVisible = false;
             _grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            _grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(240, 245, 255);
+            _grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
             _grid.DataSource = _bs;
-            _grid.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Naimenovanie", HeaderText = "Наименование", Name = "Naimenovanie" });
-            _grid.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Oklad",        HeaderText = "Оклад",        Name = "Oklad" });
-            _grid.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Obyazannosti", HeaderText = "Обязанности",  Name = "Obyazannosti" });
-            _grid.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Trebovaniya",  HeaderText = "Требования",   Name = "Trebovaniya" });
+            _grid.Columns.Add(Tx("Naimenovanie", "Наименование"));
+            _grid.Columns.Add(Tx("Oklad",        "Оклад"));
+            _grid.Columns.Add(Tx("Obyazannosti", "Обязанности"));
+            _grid.Columns.Add(Tx("Trebovaniya",  "Требования"));
             Controls.Add(_grid);
 
             Controls.Add(new BindingNavigator(_bs) { Dock = DockStyle.Top, AddNewItem = null, DeleteItem = null });
 
-            var btns = new FlowLayoutPanel { Dock = DockStyle.Bottom, Height = 48, Padding = new Padding(6) };
-            btns.Controls.Add(Btn("Добавить",        Color.MediumSeaGreen, (s,e) => _bs.AddNew()));
-            btns.Controls.Add(Btn("Удалить",         Color.IndianRed,      (s,e) => DeleteCurrent()));
-            btns.Controls.Add(Btn("Сохранить",       Color.SteelBlue,      (s,e) => SaveAll()));
-            btns.Controls.Add(Btn("Табличная форма", Color.DarkSlateGray,  (s,e) => new DolzhnostiGridForm().Show()));
-            btns.Controls.Add(Btn("Отчёт",           Color.DarkSlateBlue,  (s,e) => new DolzhnostiReport().Show()));
-            btns.Controls.Add(Btn("Закрыть",         Color.Gray,           (s,e) => Close()));
+            var btns = UI.MakeButtonsPanel();
+            btns.Controls.Add(UI.MakeBtn("Добавить",  (s, e) => _bs.AddNew()));
+            btns.Controls.Add(UI.MakeBtn("Удалить",   (s, e) => Del()));
+            btns.Controls.Add(UI.MakeBtn("Сохранить", (s, e) => Save()));
+            btns.Controls.Add(UI.MakeBtn("Табличная", (s, e) => new DolzhnostiGridForm().Show()));
+            btns.Controls.Add(UI.MakeBtn("Отчёт",     (s, e) => new DolzhnostiReport().Show()));
+            btns.Controls.Add(UI.MakeBtn("Закрыть",   (s, e) => Close()));
             Controls.Add(btns);
 
-            LoadData();
+            Load_();
         }
-
-        private static Button Btn(string text, Color color, EventHandler h)
-        {
-            var b = new Button
-            {
-                Text = text, Width = 140, Height = 32,
-                BackColor = color, ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat, Font = new Font("Segoe UI", 9, FontStyle.Bold)
-            };
-            b.Click += h; return b;
-        }
-
-        private void LoadData()
-        {
-            try
-            {
-                _dt.Clear();
-                using var conn = Db.Open();
-                using var da = new SqlDataAdapter("SELECT * FROM Dolzhnosti", conn);
-                da.Fill(_dt);
-                _bs.DataSource = _dt;
-            }
-            catch (Exception ex) { MessageBox.Show("Ошибка:\n" + ex.Message); }
-        }
-
-        private void SaveAll()
-        {
-            try
-            {
-                _bs.EndEdit();
-                using var conn = Db.Open();
-                using var da = new SqlDataAdapter("SELECT * FROM Dolzhnosti", conn);
-                using var bld = new SqlCommandBuilder(da); _ = bld;
-                da.Update(_dt);
-                MessageBox.Show("Сохранено.");
-            }
-            catch (Exception ex) { MessageBox.Show("Ошибка:\n" + ex.Message); }
-        }
-
-        private void DeleteCurrent()
-        {
-            if (_grid.CurrentRow == null || _grid.CurrentRow.IsNewRow) return;
-            if (MessageBox.Show("Удалить?", "?", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                _grid.Rows.Remove(_grid.CurrentRow);
-        }
+        private static DataGridViewTextBoxColumn Tx(string p, string h) => new() { DataPropertyName = p, HeaderText = h, Name = p };
+        private void Load_() { try { _dt.Clear(); using var c = Db.Open(); using var da = new SqlDataAdapter("SELECT * FROM Dolzhnosti", c); da.Fill(_dt); _bs.DataSource = _dt; } catch (Exception ex) { MessageBox.Show(ex.Message); } }
+        private void Save() { try { _bs.EndEdit(); using var c = Db.Open(); using var da = new SqlDataAdapter("SELECT * FROM Dolzhnosti", c); using var b = new SqlCommandBuilder(da); _ = b; da.Update(_dt); MessageBox.Show("Сохранено."); } catch (Exception ex) { MessageBox.Show(ex.Message); } }
+        private void Del() { if (_grid.CurrentRow == null || _grid.CurrentRow.IsNewRow) return; if (MessageBox.Show("Удалить?", "?", MessageBoxButtons.YesNo) == DialogResult.Yes) _grid.Rows.Remove(_grid.CurrentRow); }
     }
 }

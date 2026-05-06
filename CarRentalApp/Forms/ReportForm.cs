@@ -4,86 +4,76 @@ using System.Windows.Forms;
 
 namespace CarRentalApp.Forms
 {
-    /// <summary>Универсальный отчёт - карточки с цветом и рамкой.</summary>
+    /// <summary>Универсальный отчёт - простые карточки с тонкой рамкой.</summary>
     public class ReportForm : Form
     {
         public ReportForm(string title, string sql)
         {
             Text          = "Отчёт: " + title;
             StartPosition = FormStartPosition.CenterScreen;
-            Size          = new Size(900, 640);
+            Size          = new Size(700, 520);
+            Font          = UI.Body;
 
-            Controls.Add(new Label
-            {
-                Text      = "Отчёт «" + title + "»",
-                Dock      = DockStyle.Top, Height = 44,
-                Font      = new Font("Segoe UI", 14, FontStyle.Bold),
-                BackColor = Color.SteelBlue, ForeColor = Color.White,
-                TextAlign = ContentAlignment.MiddleCenter
-            });
+            Controls.Add(UI.MakeHeader("Отчёт «" + title + "»"));
 
             var scroll = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown,
                 AutoScroll = true, WrapContents = false, BackColor = Color.White,
-                Padding = new Padding(10)
+                Padding = new Padding(8)
             };
             Controls.Add(scroll);
 
-            var btn = new Button { Text = "Закрыть", Dock = DockStyle.Bottom, Height = 36 };
-            btn.Click += (s, e) => Close();
-            Controls.Add(btn);
+            var bottom = UI.MakeButtonsPanel();
+            bottom.Controls.Add(UI.MakeBtn("Закрыть", (s, e) => Close()));
+            Controls.Add(bottom);
 
             var dt = Db.Load(sql);
 
-            Color[] back   = { Color.FromArgb(245, 250, 255), Color.FromArgb(255, 248, 240) };
-            Color[] border = { Color.SteelBlue,               Color.DarkOrange };
+            Color[] back = { Color.FromArgb(248, 248, 248), Color.White };
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 var row = dt.Rows[i];
-                int idx = i;
                 var card = new Panel
                 {
-                    Width = 820, Height = 28 + dt.Columns.Count * 22,
-                    BackColor = back[i % 2], Margin = new Padding(0, 4, 0, 4)
-                };
-                card.Paint += (s, e) =>
-                {
-                    using var p = new Pen(border[idx % 2], 2);
-                    e.Graphics.DrawRectangle(p, 1, 1, card.Width - 3, card.Height - 3);
+                    Width = 640,
+                    Height = 22 + dt.Columns.Count * 18,
+                    BackColor = back[i % 2],
+                    BorderStyle = BorderStyle.FixedSingle,
+                    Margin = new Padding(0, 2, 0, 2)
                 };
                 card.Controls.Add(new Label
                 {
-                    Text = "Запись № " + (i + 1),
-                    Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                    ForeColor = border[i % 2],
-                    AutoSize = true, Top = 4, Left = 8
+                    Text = "№ " + (i + 1),
+                    Font = new Font("Segoe UI", 8, FontStyle.Bold),
+                    ForeColor = SystemColors.ControlDarkDark,
+                    AutoSize = true, Top = 2, Left = 6
                 });
-                int y = 26;
+                int y = 20;
                 foreach (DataColumn col in dt.Columns)
                 {
                     card.Controls.Add(new Label
                     {
                         Text = col.ColumnName + ":",
-                        Font = new Font("Segoe UI", 9, FontStyle.Bold),
-                        AutoSize = false, Top = y, Left = 12, Width = 220, Height = 20
+                        Font = new Font("Segoe UI", 8, FontStyle.Bold),
+                        AutoSize = false, Top = y, Left = 8, Width = 180, Height = 16
                     });
                     card.Controls.Add(new Label
                     {
                         Text = Format(row[col]),
-                        Font = new Font("Segoe UI", 9),
-                        AutoSize = false, Top = y, Left = 240, Width = 560, Height = 20
+                        Font = new Font("Segoe UI", 8),
+                        AutoSize = false, Top = y, Left = 195, Width = 430, Height = 16
                     });
-                    y += 22;
+                    y += 18;
                 }
                 scroll.Controls.Add(card);
             }
         }
 
-        private static string Format(object v)
+        protected static string Format(object v)
         {
-            if (v == null || v is System.DBNull)  return "—";
+            if (v == null || v is System.DBNull) return "—";
             if (v is bool b)                       return b ? "Да" : "Нет";
             if (v is System.DateTime d)            return d.ToString("dd.MM.yyyy");
             if (v is decimal m)                    return m.ToString("N2");

@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace CarRentalApp.Forms
@@ -16,8 +15,8 @@ namespace CarRentalApp.Forms
 
         protected override void ExtendButtons(FlowLayoutPanel panel)
         {
-            // По требованию задания (п. 25) — кнопка гистограммы на форме «Отдел кадров»
-            panel.Controls.Add(B("Гистограмма", Color.Goldenrod, (s,e) => new HistogramForm().Show()));
+            // По п. 25 задания — кнопка гистограммы на форме «Отдел кадров»
+            panel.Controls.Add(UI.MakeBtn("Гистограмма", (s,e) => new HistogramForm().Show()));
         }
     }
     public class OtdelKadrovReport : ReportForm

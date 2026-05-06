@@ -24,9 +24,8 @@ namespace CarRentalApp.Forms
             _grid.Dock = DockStyle.Fill;
             _grid.AutoGenerateColumns = false;
             _grid.AllowUserToAddRows = true;
-            _grid.RowHeadersVisible = false;
-            _grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            _grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
+            UI.StyleGrid(_grid);
+            _grid.AllowUserToAddRows = true;
             _grid.DataSource = _bs;
 
             _grid.Columns.Add(Tx("FIO",     "ФИО"));
@@ -51,9 +50,9 @@ namespace CarRentalApp.Forms
             });
 
             var btns = UI.MakeButtonsPanel();
-            btns.Controls.Add(UI.MakeBtn("Добавить",       (s, e) => _bs.AddNew()));
-            btns.Controls.Add(UI.MakeBtn("Удалить",        (s, e) => DeleteCurrent()));
-            btns.Controls.Add(UI.MakeBtn("Сохранить",      (s, e) => SaveAll()));
+            btns.Controls.Add(UI.MakeBtn("Добавить",       (s, e) => _bs.AddNew(),    110, UI.BtnStyle.Accent));
+            btns.Controls.Add(UI.MakeBtn("Удалить",        (s, e) => DeleteCurrent(), 110, UI.BtnStyle.Danger));
+            btns.Controls.Add(UI.MakeBtn("Сохранить",      (s, e) => SaveAll(),       110, UI.BtnStyle.Primary));
             btns.Controls.Add(UI.MakeBtn("Табличная",      (s, e) => new SotrudnikiGridForm().Show()));
             btns.Controls.Add(UI.MakeBtn("Отчёт",          (s, e) => new SotrudnikiReport().Show()));
             btns.Controls.Add(UI.MakeBtn("Закрыть",        (s, e) => Close()));

@@ -42,11 +42,9 @@ namespace CarRentalApp.Forms
             _s.TextChanged += (s, e) => Flt();
 
             _grid.Dock = DockStyle.Fill;
-            _grid.ReadOnly = true; _grid.AllowUserToAddRows = false;
-            _grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            _grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            _grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
-            _grid.RowHeadersVisible = false;
+            UI.StyleGrid(_grid);
+            _grid.ReadOnly = true;
+            _grid.AllowUserToAddRows = false;
             _grid.DataSource = _bs;
             Controls.Add(_grid);
 

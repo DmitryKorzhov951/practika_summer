@@ -28,19 +28,17 @@ namespace CarRentalApp.Forms
             Controls.Add(top);
 
             _grid.Dock = DockStyle.Fill;
-            _grid.ReadOnly = true; _grid.AllowUserToAddRows = false;
-            _grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            _grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            _grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
-            _grid.RowHeadersVisible = false;
+            UI.StyleGrid(_grid);
+            _grid.ReadOnly = true;
+            _grid.AllowUserToAddRows = false;
             _grid.DataSource = _bs;
             Controls.Add(_grid);
             Controls.Add(new BindingNavigator(_bs) { Dock = DockStyle.Bottom, AddNewItem = null, DeleteItem = null });
 
             var btns = UI.MakeButtonsPanel();
-            btns.Controls.Add(UI.MakeBtn("Применить", (s, e) => Reload()));
+            btns.Controls.Add(UI.MakeBtn("Применить", (s, e) => Reload(),         110, UI.BtnStyle.Primary));
             btns.Controls.Add(UI.MakeBtn("Сброс",     (s, e) => ResetAndReload()));
-            btns.Controls.Add(UI.MakeBtn("Отчёт",     (s, e) => ShowReport()));
+            btns.Controls.Add(UI.MakeBtn("Отчёт",     (s, e) => ShowReport(),     110, UI.BtnStyle.Accent));
             btns.Controls.Add(UI.MakeBtn("Закрыть",   (s, e) => Close()));
             Controls.Add(btns);
 
@@ -210,16 +208,17 @@ namespace CarRentalApp.Forms
         {
             Text = "Отчёт (фильтр): " + title;
             StartPosition = FormStartPosition.CenterScreen;
-            Size = new Size(700, 520);
+            Size = new Size(760, 560);
             Font = UI.Body;
+            BackColor = UI.Surface;
 
             Controls.Add(UI.MakeHeader("Отчёт «" + title + "»"));
 
             var scroll = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown,
-                AutoScroll = true, WrapContents = false, BackColor = Color.White,
-                Padding = new Padding(8)
+                AutoScroll = true, WrapContents = false,
+                BackColor = UI.Surface, Padding = new Padding(12)
             };
             Controls.Add(scroll);
             var bottom = UI.MakeButtonsPanel();
@@ -228,37 +227,50 @@ namespace CarRentalApp.Forms
 
             DataTable dt = prm == null ? Db.Load(sql) : Db.Load(sql, prm);
 
-            Color[] back = { Color.FromArgb(248, 248, 248), Color.White };
+            Color[] strip = { UI.PrimaryLt, UI.Accent, Color.FromArgb(214, 158, 46),
+                              Color.FromArgb(159, 122, 234), UI.Danger };
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 var row = dt.Rows[i];
+                Color stripColor = strip[i % strip.Length];
+
                 var card = new Panel
                 {
-                    Width = 640, Height = 22 + dt.Columns.Count * 18,
-                    BackColor = back[i % 2], BorderStyle = BorderStyle.FixedSingle,
-                    Margin = new Padding(0, 2, 0, 2)
+                    Width = 680, Height = 28 + dt.Columns.Count * 20,
+                    BackColor = Color.White,
+                    Margin = new Padding(0, 4, 0, 4)
                 };
+                card.Paint += (s, e) =>
+                {
+                    using var border = new Pen(Color.FromArgb(226, 232, 240));
+                    e.Graphics.DrawRectangle(border, 0, 0, card.Width - 1, card.Height - 1);
+                    using var br = new SolidBrush(stripColor);
+                    e.Graphics.FillRectangle(br, 0, 0, 4, card.Height);
+                };
+
                 card.Controls.Add(new Label
                 {
-                    Text = "№ " + (i + 1),
-                    Font = new Font("Segoe UI", 8, FontStyle.Bold),
-                    ForeColor = SystemColors.ControlDarkDark,
-                    AutoSize = true, Top = 2, Left = 6
+                    Text = "Запись № " + (i + 1),
+                    Font = UI.BodyBold,
+                    ForeColor = stripColor,
+                    AutoSize = true, Top = 6, Left = 14
                 });
-                int y = 20;
+                int y = 24;
                 foreach (DataColumn col in dt.Columns)
                 {
                     card.Controls.Add(new Label
                     {
-                        Text = col.ColumnName + ":", Font = new Font("Segoe UI", 8, FontStyle.Bold),
-                        AutoSize = false, Top = y, Left = 8, Width = 180, Height = 16
+                        Text = col.ColumnName + ":", Font = UI.BodyBold,
+                        ForeColor = UI.TextDim,
+                        AutoSize = false, Top = y, Left = 14, Width = 200, Height = 18
                     });
                     card.Controls.Add(new Label
                     {
-                        Text = Format(row[col]), Font = new Font("Segoe UI", 8),
-                        AutoSize = false, Top = y, Left = 195, Width = 430, Height = 16
+                        Text = Format(row[col]), Font = UI.Body,
+                        ForeColor = Color.FromArgb(45, 55, 72),
+                        AutoSize = false, Top = y, Left = 220, Width = 450, Height = 18
                     });
-                    y += 18;
+                    y += 20;
                 }
                 scroll.Controls.Add(card);
             }

@@ -24,9 +24,8 @@ namespace CarRentalApp.Forms
             _grid.Dock = DockStyle.Fill;
             _grid.AutoGenerateColumns = false;
             _grid.AllowUserToAddRows = true;
-            _grid.RowHeadersVisible = false;
-            _grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            _grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
+            UI.StyleGrid(_grid);
+            _grid.AllowUserToAddRows = true;
             _grid.DataSource = _bs;
             _grid.Columns.Add(Tx("Naimenovanie", "Наименование"));
             _grid.Columns.Add(Tx("Oklad",        "Оклад"));

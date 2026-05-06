@@ -24,9 +24,8 @@ namespace CarRentalApp.Forms
             _grid.Dock = DockStyle.Fill;
             _grid.AutoGenerateColumns = false;
             _grid.AllowUserToAddRows = true;
-            _grid.RowHeadersVisible = false;
-            _grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            _grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
+            UI.StyleGrid(_grid);
+            _grid.AllowUserToAddRows = true;
             _grid.DataSource = _bs;
             _grid.Columns.Add(Tx("Naimenovanie",   "Наименование"));
             _grid.Columns.Add(Tx("Harakteristiki", "Характеристики"));
@@ -36,9 +35,9 @@ namespace CarRentalApp.Forms
             Controls.Add(new BindingNavigator(_bs) { Dock = DockStyle.Top, AddNewItem = null, DeleteItem = null });
 
             var btns = UI.MakeButtonsPanel();
-            btns.Controls.Add(UI.MakeBtn("Добавить",  (s,e) => _bs.AddNew()));
-            btns.Controls.Add(UI.MakeBtn("Удалить",   (s,e) => Del()));
-            btns.Controls.Add(UI.MakeBtn("Сохранить", (s,e) => Save()));
+            btns.Controls.Add(UI.MakeBtn("Добавить",  (s,e) => _bs.AddNew(), 110, UI.BtnStyle.Accent));
+            btns.Controls.Add(UI.MakeBtn("Удалить",   (s,e) => Del(),  110, UI.BtnStyle.Danger));
+            btns.Controls.Add(UI.MakeBtn("Сохранить", (s,e) => Save(), 110, UI.BtnStyle.Primary));
             btns.Controls.Add(UI.MakeBtn("Табличная", (s,e) => new MarkiGridForm().Show()));
             btns.Controls.Add(UI.MakeBtn("Отчёт",     (s,e) => new MarkiReport().Show()));
             btns.Controls.Add(UI.MakeBtn("Закрыть",   (s,e) => Close()));

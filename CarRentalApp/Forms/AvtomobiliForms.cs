@@ -25,9 +25,8 @@ namespace CarRentalApp.Forms
             _grid.Dock = DockStyle.Fill;
             _grid.AutoGenerateColumns = false;
             _grid.AllowUserToAddRows = true;
-            _grid.RowHeadersVisible = false;
-            _grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            _grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
+            UI.StyleGrid(_grid);
+            _grid.AllowUserToAddRows = true;
             _grid.DataSource = _bs;
 
             var marki = Db.Load("SELECT KodMarki, Naimenovanie FROM Marki ORDER BY Naimenovanie");
@@ -52,9 +51,9 @@ namespace CarRentalApp.Forms
             Controls.Add(new BindingNavigator(_bs) { Dock = DockStyle.Top, AddNewItem = null, DeleteItem = null });
 
             var btns = UI.MakeButtonsPanel();
-            btns.Controls.Add(UI.MakeBtn("Добавить",  (s,e) => _bs.AddNew()));
-            btns.Controls.Add(UI.MakeBtn("Удалить",   (s,e) => Del()));
-            btns.Controls.Add(UI.MakeBtn("Сохранить", (s,e) => Save()));
+            btns.Controls.Add(UI.MakeBtn("Добавить",  (s,e) => _bs.AddNew(), 110, UI.BtnStyle.Accent));
+            btns.Controls.Add(UI.MakeBtn("Удалить",   (s,e) => Del(),  110, UI.BtnStyle.Danger));
+            btns.Controls.Add(UI.MakeBtn("Сохранить", (s,e) => Save(), 110, UI.BtnStyle.Primary));
             btns.Controls.Add(UI.MakeBtn("Табличная", (s,e) => new AvtomobiliGridForm().Show()));
             btns.Controls.Add(UI.MakeBtn("Отчёт",     (s,e) => new AvtomobiliReport().Show()));
             btns.Controls.Add(UI.MakeBtn("Закрыть",   (s,e) => Close()));
@@ -96,11 +95,9 @@ namespace CarRentalApp.Forms
             _f.TextChanged += (s,e) => Flt(); _s.TextChanged += (s,e) => Flt();
 
             _grid.Dock = DockStyle.Fill;
-            _grid.ReadOnly = true; _grid.AllowUserToAddRows = false;
-            _grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            _grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            _grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
-            _grid.RowHeadersVisible = false;
+            UI.StyleGrid(_grid);
+            _grid.ReadOnly = true;
+            _grid.AllowUserToAddRows = false;
             _grid.DataSource = _bs;
             Controls.Add(_grid);
             Controls.Add(new BindingNavigator(_bs) { Dock = DockStyle.Bottom, AddNewItem = null, DeleteItem = null });

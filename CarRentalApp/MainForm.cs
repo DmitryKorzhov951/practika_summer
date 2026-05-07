@@ -5,50 +5,81 @@ using CarRentalApp.Forms;
 
 namespace CarRentalApp
 {
-    /// <summary>Главная кнопочная форма.</summary>
+    /// <summary>Главная кнопочная форма (тёмная гоночная тема).</summary>
     public class MainForm : Form
     {
         public MainForm()
         {
             Text          = "БД «Прокат автомобилей»";
             StartPosition = FormStartPosition.CenterScreen;
-            Size          = new Size(620, 600);
-            MinimumSize   = new Size(500, 460);
-            Font          = UI.Body;
-            BackColor     = UI.Surface;
+            Size          = new Size(680, 640);
+            MinimumSize   = new Size(540, 480);
+            UI.ApplyTheme(this);
 
             // Заголовок
             Controls.Add(UI.MakeHeader("База данных «Прокат автомобилей»"));
 
-            // Нижняя панель: Выход / О программе / Гистограмма
+            // Нижняя панель
             var bottom = UI.MakeButtonsPanel();
             bottom.Controls.Add(UI.MakeBtn("Выход",        (s,e) => Application.Exit(),                   100, UI.BtnStyle.Danger));
-            bottom.Controls.Add(UI.MakeBtn("О программе",  (s,e) => new AboutForm().ShowDialog(this),     120));
-            bottom.Controls.Add(UI.MakeBtn("Гистограмма",  (s,e) => new HistogramForm().ShowDialog(this), 130, UI.BtnStyle.Accent));
+            bottom.Controls.Add(UI.MakeBtn("О программе",  (s,e) => new AboutForm().ShowDialog(this),     130));
+            bottom.Controls.Add(UI.MakeBtn("Гистограмма",  (s,e) => new HistogramForm().ShowDialog(this), 140, UI.BtnStyle.Primary));
             Controls.Add(bottom);
 
-            // Вкладки
+            // Кастомные тёмные вкладки
             var tabs = new TabControl
             {
-                Dock      = DockStyle.Fill,
-                Font      = UI.BodyBold,
-                Padding   = new Point(14, 6)
+                Dock          = DockStyle.Fill,
+                Font          = UI.BodyBold,
+                Appearance    = TabAppearance.Normal,
+                SizeMode      = TabSizeMode.Fixed,
+                ItemSize      = new Size(160, 32),
+                DrawMode      = TabDrawMode.OwnerDrawFixed,
+                Padding       = new Point(0, 0)
             };
-            tabs.TabPages.Add(BuildFormsTab());
-            tabs.TabPages.Add(BuildReportsTab());
+            tabs.DrawItem += (s, e) =>
+            {
+                var tc = (TabControl)s;
+                var page = tc.TabPages[e.Index];
+                bool sel = e.State == DrawItemState.Selected || tc.SelectedIndex == e.Index;
+
+                Color bg = sel ? UI.Surface : Color.FromArgb(22, 22, 26);
+                Color fg = sel ? UI.Primary : UI.TextDim;
+                using var bgBr = new SolidBrush(bg);
+                e.Graphics.FillRectangle(bgBr, e.Bounds);
+
+                if (sel)
+                {
+                    using var red = new SolidBrush(UI.Primary);
+                    e.Graphics.FillRectangle(red, e.Bounds.Left, e.Bounds.Bottom - 3, e.Bounds.Width, 3);
+                }
+
+                TextRenderer.DrawText(e.Graphics, page.Text, UI.BodyBold,
+                    e.Bounds, fg,
+                    TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+            };
+
+            tabs.TabPages.Add(BuildTab("ФОРМЫ",   BuildFormsContent));
+            tabs.TabPages.Add(BuildTab("ОТЧЁТЫ",  BuildReportsContent));
             Controls.Add(tabs);
         }
 
-        private TabPage BuildFormsTab()
+        private TabPage BuildTab(string title, Action<FlowLayoutPanel> fill)
         {
-            var tab = new TabPage("  Формы  ") { BackColor = UI.Surface };
+            var tab = new TabPage(title) { BackColor = UI.Surface };
             var list = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown,
                 AutoScroll = true, WrapContents = false,
-                Padding = new Padding(12), BackColor = UI.Surface
+                Padding = new Padding(16), BackColor = UI.Surface
             };
+            fill(list);
+            tab.Controls.Add(list);
+            return tab;
+        }
 
+        private void BuildFormsContent(FlowLayoutPanel list)
+        {
             list.Controls.Add(Group("ТАБЛИЦЫ"));
             list.Controls.Add(Item("Сотрудники",            () => new SotrudnikiForm().Show()));
             list.Controls.Add(Item("Должности",             () => new DolzhnostiForm().Show()));
@@ -69,21 +100,10 @@ namespace CarRentalApp
             list.Controls.Add(Item("В прокате / свободные",    () => new FilterByVozvrachen().Show()));
             list.Controls.Add(Item("Прокат по дате",           () => new FilterByDate().Show()));
             list.Controls.Add(Item("Оплачено / не оплачено",   () => new FilterByOplata().Show()));
-
-            tab.Controls.Add(list);
-            return tab;
         }
 
-        private TabPage BuildReportsTab()
+        private void BuildReportsContent(FlowLayoutPanel list)
         {
-            var tab = new TabPage("  Отчёты  ") { BackColor = UI.Surface };
-            var list = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown,
-                AutoScroll = true, WrapContents = false,
-                Padding = new Padding(12), BackColor = UI.Surface
-            };
-
             list.Controls.Add(Group("ПО ТАБЛИЦАМ"));
             list.Controls.Add(Item("Сотрудники",            () => new SotrudnikiReport().Show()));
             list.Controls.Add(Item("Должности",             () => new DolzhnostiReport().Show()));
@@ -104,44 +124,50 @@ namespace CarRentalApp
             list.Controls.Add(Item("В прокате / свободные",   () => new ReportFormParam("В прокате / свободные (все)",   AvtoparkForm.Sql,     null).Show()));
             list.Controls.Add(Item("Прокат по дате",          () => new ReportFormParam("Прокат по дате (все)",          AvtoVProkateForm.Sql, null).Show()));
             list.Controls.Add(Item("Оплачено / не оплачено",  () => new ReportFormParam("Оплачено / не оплачено (все)",  AvtoVProkateForm.Sql, null).Show()));
-
-            tab.Controls.Add(list);
-            return tab;
         }
 
         // --- helpers ---
-        private static Label Group(string text) => new()
+        private static Label Group(string text)
         {
-            Text     = text,
-            AutoSize = false, Width = 540, Height = 24,
-            Font     = new Font("Segoe UI Semibold", 9, FontStyle.Bold),
-            ForeColor = UI.PrimaryLt,
-            Margin   = new Padding(2, 10, 0, 4)
-        };
+            var l = new Label
+            {
+                Text     = "▌ " + text,
+                AutoSize = false, Width = 580, Height = 28,
+                Font     = new Font("Segoe UI Semibold", 10, FontStyle.Bold),
+                ForeColor = UI.Primary,
+                Margin   = new Padding(0, 12, 0, 6),
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+            return l;
+        }
 
         private static Panel Item(string caption, Action onOpen)
         {
             var p = new Panel
             {
-                Width = 540, Height = 38,
-                Margin = new Padding(0, 1, 0, 1),
-                BackColor = Color.White
+                Width = 580, Height = 42,
+                Margin = new Padding(0, 2, 0, 2),
+                BackColor = UI.SurfaceAlt
             };
-            // тонкая нижняя разделительная линия
             p.Paint += (s, e) =>
             {
-                using var pen = new Pen(Color.FromArgb(226, 232, 240));
-                e.Graphics.DrawLine(pen, 0, p.Height - 1, p.Width, p.Height - 1);
+                using var border = new Pen(UI.Border);
+                e.Graphics.DrawRectangle(border, 0, 0, p.Width - 1, p.Height - 1);
+                using var red = new SolidBrush(UI.Primary);
+                e.Graphics.FillRectangle(red, 0, 0, 4, p.Height);
             };
+            p.MouseEnter += (s, e) => p.BackColor = UI.SurfaceHi;
+            p.MouseLeave += (s, e) => p.BackColor = UI.SurfaceAlt;
 
             var b = UI.MakeBtn("Открыть", (s, e) => onOpen(), 100, UI.BtnStyle.Primary);
-            b.Left = 8; b.Top = 4;
+            b.Left = 12; b.Top = 5;
             var l = new Label
             {
-                Text = caption, Left = 116, Top = 0, Width = 410, Height = 38,
-                TextAlign = ContentAlignment.MiddleLeft, Font = UI.Body,
-                ForeColor = Color.FromArgb(45, 55, 72)
+                Text = caption, Left = 124, Top = 0, Width = 444, Height = 42,
+                TextAlign = ContentAlignment.MiddleLeft, Font = UI.BodyBold,
+                ForeColor = UI.Text, BackColor = Color.Transparent
             };
+            l.MouseEnter += (s, e) => p.BackColor = UI.SurfaceHi;
             p.Controls.Add(b); p.Controls.Add(l);
             return p;
         }

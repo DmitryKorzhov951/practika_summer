@@ -19,7 +19,7 @@ namespace CarRentalApp.Forms
             Text = "Сотрудники (табличная)";
             StartPosition = FormStartPosition.CenterScreen;
             Size = new Size(960, 520);
-            Font = UI.Body;
+            UI.ApplyTheme(this);
 
             Controls.Add(UI.MakeHeader("Сотрудники — табличная форма"));
 
@@ -58,7 +58,7 @@ namespace CarRentalApp.Forms
             if (_cmb.Items.Count > 0) _cmb.SelectedIndex = 0;
         }
 
-        private static Label L(string t) => new() { Text = t, AutoSize = true, Padding = new Padding(0, 6, 4, 0) };
+        private static Label L(string t) => new() { Text = t, AutoSize = true, Padding = new Padding(0, 9, 4, 0), Font = UI.BodyBold, ForeColor = UI.TextDim, BackColor = Color.Transparent };
 
         private void Sort(bool asc)
         {

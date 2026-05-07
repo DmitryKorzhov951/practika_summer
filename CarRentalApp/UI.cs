@@ -1,61 +1,89 @@
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace CarRentalApp
 {
-    /// <summary>Общие элементы оформления и палитра.</summary>
+    /// <summary>Палитра и стили для тёмной «гоночной» темы.</summary>
     static class UI
     {
-        // ---- Палитра ----
-        public static readonly Color Primary    = Color.FromArgb( 44,  82, 130); // тёмно-синий
-        public static readonly Color PrimaryLt  = Color.FromArgb( 49, 130, 206); // светло-синий
-        public static readonly Color Accent     = Color.FromArgb( 56, 161, 105); // зелёный
-        public static readonly Color Danger     = Color.FromArgb(197,  48,  48); // красный
-        public static readonly Color Surface    = Color.FromArgb(247, 250, 252); // фон
-        public static readonly Color SurfaceAlt = Color.FromArgb(237, 242, 247); // чередование строк
-        public static readonly Color OnPrimary  = Color.White;
-        public static readonly Color TextDim    = Color.FromArgb(113, 128, 150);
+        // ---- Палитра (тёмная тема, красный акцент) ----
+        public static readonly Color Bg          = Color.FromArgb( 18,  18,  20);  // глубокий фон
+        public static readonly Color Surface     = Color.FromArgb( 30,  30,  34);  // карточки/панели
+        public static readonly Color SurfaceAlt  = Color.FromArgb( 38,  38,  44);  // чередование
+        public static readonly Color SurfaceHi   = Color.FromArgb( 50,  50,  56);  // hover
+        public static readonly Color Border      = Color.FromArgb( 60,  60,  66);
 
-        public static readonly Font Header     = new("Segoe UI Semibold", 13, FontStyle.Bold);
-        public static readonly Font Body       = new("Segoe UI", 9);
-        public static readonly Font BodyBold   = new("Segoe UI Semibold", 9, FontStyle.Bold);
+        public static readonly Color Primary     = Color.FromArgb(229,  57,  53);  // фирменный красный
+        public static readonly Color PrimaryDk   = Color.FromArgb(183,  28,  28);
+        public static readonly Color PrimaryLt   = Color.FromArgb(255,  82,  82);
 
-        /// <summary>Цветная полоса заголовка формы.</summary>
+        public static readonly Color Accent      = Color.FromArgb(255, 193,   7);  // янтарный
+        public static readonly Color Success     = Color.FromArgb( 67, 160,  71);
+        public static readonly Color Danger      = PrimaryDk;
+
+        public static readonly Color Text        = Color.FromArgb(240, 240, 244);
+        public static readonly Color TextDim     = Color.FromArgb(160, 160, 168);
+        public static readonly Color OnPrimary   = Color.White;
+
+        public static readonly Font Header   = new("Segoe UI Semibold", 14, FontStyle.Bold);
+        public static readonly Font Body     = new("Segoe UI", 9);
+        public static readonly Font BodyBold = new("Segoe UI Semibold", 9, FontStyle.Bold);
+
+        /// <summary>Применить тёмную тему к форме.</summary>
+        public static void ApplyTheme(Form f)
+        {
+            f.BackColor = Bg;
+            f.ForeColor = Text;
+            f.Font = Body;
+        }
+
+        /// <summary>Шапка формы — чёрная плашка с красной акцентной линией снизу.</summary>
         public static Panel MakeHeader(string text)
         {
             var p = new Panel
             {
-                Dock      = DockStyle.Top,
-                Height    = 44,
-                BackColor = Primary
+                Dock = DockStyle.Top, Height = 50,
+                BackColor = Color.FromArgb(10, 10, 12)
             };
+            // Градиентная подложка
+            p.Paint += (s, e) =>
+            {
+                using var bg = new LinearGradientBrush(p.ClientRectangle,
+                    Color.FromArgb(10, 10, 12),
+                    Color.FromArgb(30, 30, 36),
+                    LinearGradientMode.Horizontal);
+                e.Graphics.FillRectangle(bg, p.ClientRectangle);
+                // Тонкая красная полоса сверху и снизу
+                using var top = new SolidBrush(Primary);
+                e.Graphics.FillRectangle(top, 0, 0, p.Width, 2);
+                e.Graphics.FillRectangle(top, 0, p.Height - 3, p.Width, 3);
+            };
+
             p.Controls.Add(new Label
             {
-                Text       = text,
+                Text       = text.ToUpperInvariant(),
                 Dock       = DockStyle.Fill,
                 Font       = Header,
-                ForeColor  = OnPrimary,
+                ForeColor  = Color.White,
+                BackColor  = Color.Transparent,
                 TextAlign  = ContentAlignment.MiddleLeft,
-                Padding    = new Padding(16, 0, 0, 0)
+                Padding    = new Padding(20, 0, 0, 0)
             });
-            // тонкая нижняя полоска-акцент
-            p.Controls.Add(new Panel { Dock = DockStyle.Bottom, Height = 3, BackColor = PrimaryLt });
             return p;
         }
 
         public enum BtnStyle { Default, Primary, Accent, Danger }
 
-        /// <summary>Кнопка с акцентом.</summary>
-        public static Button MakeBtn(string text, EventHandler onClick, int width = 110,
-                                     BtnStyle style = BtnStyle.Default)
+        public static Button MakeBtn(string text, EventHandler onClick, int width = 110, BtnStyle style = BtnStyle.Default)
         {
             var b = new Button
             {
                 Text   = text,
                 Width  = width,
-                Height = 30,
-                Font   = Body,
+                Height = 32,
+                Font   = BodyBold,
                 FlatStyle = FlatStyle.Flat,
                 Cursor  = Cursors.Hand,
                 Margin  = new Padding(2)
@@ -69,96 +97,105 @@ namespace CarRentalApp
                     b.ForeColor = OnPrimary;
                     b.FlatAppearance.BorderColor = Primary;
                     b.FlatAppearance.MouseOverBackColor = PrimaryLt;
+                    b.FlatAppearance.MouseDownBackColor = PrimaryDk;
                     break;
                 case BtnStyle.Accent:
                     b.BackColor = Accent;
-                    b.ForeColor = OnPrimary;
+                    b.ForeColor = Color.FromArgb(40, 28, 0);
                     b.FlatAppearance.BorderColor = Accent;
-                    b.FlatAppearance.MouseOverBackColor = Color.FromArgb(72, 187, 120);
+                    b.FlatAppearance.MouseOverBackColor = Color.FromArgb(255, 213, 79);
                     break;
                 case BtnStyle.Danger:
-                    b.BackColor = Danger;
+                    b.BackColor = PrimaryDk;
                     b.ForeColor = OnPrimary;
-                    b.FlatAppearance.BorderColor = Danger;
-                    b.FlatAppearance.MouseOverBackColor = Color.FromArgb(229, 62, 62);
+                    b.FlatAppearance.BorderColor = PrimaryDk;
+                    b.FlatAppearance.MouseOverBackColor = Primary;
                     break;
                 default:
-                    b.BackColor = Color.White;
-                    b.ForeColor = Color.FromArgb(45, 55, 72);
-                    b.FlatAppearance.BorderColor = Color.FromArgb(203, 213, 224);
-                    b.FlatAppearance.MouseOverBackColor = Color.FromArgb(237, 242, 247);
+                    b.BackColor = Surface;
+                    b.ForeColor = Text;
+                    b.FlatAppearance.BorderColor = Border;
+                    b.FlatAppearance.MouseOverBackColor = SurfaceHi;
                     break;
             }
             b.Click += onClick;
             return b;
         }
 
-        /// <summary>Нижняя панель с кнопками.</summary>
         public static FlowLayoutPanel MakeButtonsPanel()
         {
             var p = new FlowLayoutPanel
             {
                 Dock          = DockStyle.Bottom,
-                Height        = 46,
-                Padding       = new Padding(10, 8, 10, 8),
+                Height        = 50,
+                Padding       = new Padding(12, 8, 12, 8),
                 FlowDirection = FlowDirection.LeftToRight,
-                BackColor     = Surface
+                BackColor     = Color.FromArgb(22, 22, 26)
             };
-            // тонкая верхняя разделительная линия
             p.Paint += (s, e) =>
             {
-                using var pen = new Pen(Color.FromArgb(226, 232, 240), 1);
+                using var pen = new Pen(Border, 1);
                 e.Graphics.DrawLine(pen, 0, 0, p.Width, 0);
+                using var red = new Pen(Primary, 2);
+                e.Graphics.DrawLine(red, 0, 1, 60, 1);
             };
             return p;
         }
 
-        /// <summary>Верхняя панель параметров (для табличных/фильтров).</summary>
         public static FlowLayoutPanel MakeParamsPanel()
         {
             var p = new FlowLayoutPanel
             {
                 Dock          = DockStyle.Top,
-                Height        = 44,
-                Padding       = new Padding(10, 8, 10, 8),
+                Height        = 46,
+                Padding       = new Padding(12, 8, 12, 8),
                 FlowDirection = FlowDirection.LeftToRight,
-                BackColor     = Surface
+                BackColor     = Color.FromArgb(22, 22, 26)
             };
             p.Paint += (s, e) =>
             {
-                using var pen = new Pen(Color.FromArgb(226, 232, 240), 1);
+                using var pen = new Pen(Border, 1);
                 e.Graphics.DrawLine(pen, 0, p.Height - 1, p.Width, p.Height - 1);
             };
             return p;
         }
 
-        /// <summary>Стилизация DataGridView.</summary>
         public static void StyleGrid(DataGridView grid)
         {
-            grid.BackgroundColor = Color.White;
+            grid.BackgroundColor = Bg;
             grid.BorderStyle = BorderStyle.None;
-            grid.GridColor = Color.FromArgb(226, 232, 240);
+            grid.GridColor = Border;
             grid.RowHeadersVisible = false;
             grid.EnableHeadersVisualStyles = false;
             grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             grid.RowTemplate.Height = 28;
 
-            grid.ColumnHeadersDefaultCellStyle.BackColor = Primary;
-            grid.ColumnHeadersDefaultCellStyle.ForeColor = OnPrimary;
+            // Заголовки колонок — чёрный с красной акцентной полосой
+            grid.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(15, 15, 18);
+            grid.ColumnHeadersDefaultCellStyle.ForeColor = Primary;
             grid.ColumnHeadersDefaultCellStyle.Font = BodyBold;
-            grid.ColumnHeadersDefaultCellStyle.SelectionBackColor = Primary;
-            grid.ColumnHeadersDefaultCellStyle.Padding = new Padding(6, 0, 6, 0);
-            grid.ColumnHeadersHeight = 32;
+            grid.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(15, 15, 18);
+            grid.ColumnHeadersDefaultCellStyle.SelectionForeColor = Primary;
+            grid.ColumnHeadersDefaultCellStyle.Padding = new Padding(8, 0, 8, 0);
+            grid.ColumnHeadersHeight = 36;
             grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 
             grid.DefaultCellStyle.Font = Body;
-            grid.DefaultCellStyle.BackColor = Color.White;
-            grid.DefaultCellStyle.SelectionBackColor = Color.FromArgb(190, 227, 248);
-            grid.DefaultCellStyle.SelectionForeColor = Color.FromArgb(45, 55, 72);
-            grid.DefaultCellStyle.Padding = new Padding(4, 2, 4, 2);
+            grid.DefaultCellStyle.BackColor = Surface;
+            grid.DefaultCellStyle.ForeColor = Text;
+            grid.DefaultCellStyle.SelectionBackColor = PrimaryDk;
+            grid.DefaultCellStyle.SelectionForeColor = OnPrimary;
+            grid.DefaultCellStyle.Padding = new Padding(6, 2, 6, 2);
 
             grid.AlternatingRowsDefaultCellStyle.BackColor = SurfaceAlt;
+            grid.AlternatingRowsDefaultCellStyle.ForeColor = Text;
         }
+
+        public static Label SmallLabel(string t) => new()
+        {
+            Text = t, AutoSize = true, Padding = new Padding(0, 9, 4, 0),
+            Font = BodyBold, ForeColor = TextDim
+        };
     }
 }

@@ -9,40 +9,40 @@ namespace CarRentalApp
         {
             Text            = "О программе";
             StartPosition   = FormStartPosition.CenterParent;
-            Size            = new Size(440, 280);
+            Size            = new Size(460, 320);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox     = false;
             MinimizeBox     = false;
-            BackColor       = UI.Surface;
-            Font            = UI.Body;
+            UI.ApplyTheme(this);
 
             Controls.Add(UI.MakeHeader("О программе"));
 
-            var content = new Panel { Dock = DockStyle.Fill, BackColor = UI.Surface, Padding = new Padding(16) };
-            content.Controls.Add(new Label
+            var content = new Panel { Dock = DockStyle.Fill, BackColor = UI.Bg, Padding = new Padding(20) };
+
+            var title = new Label
             {
-                Text      = "Прокат автомобилей",
+                Text      = "ПРОКАТ АВТОМОБИЛЕЙ",
                 Dock      = DockStyle.Top, Height = 36,
-                Font      = new Font("Segoe UI Semibold", 14, FontStyle.Bold),
+                Font      = new Font("Segoe UI Black", 14, FontStyle.Bold),
                 ForeColor = UI.Primary,
                 TextAlign = ContentAlignment.MiddleLeft
-            });
-            content.Controls.Add(new Label
+            };
+            var sub = new Label
             {
                 Text      = "Вариант №17  ·  C# / WinForms + SQL Server",
                 Dock      = DockStyle.Top, Height = 24,
-                Font      = new Font("Segoe UI", 9),
-                ForeColor = UI.TextDim
-            });
-            content.Controls.Add(new Label
+                Font      = UI.Body, ForeColor = UI.TextDim
+            };
+            var body = new Label
             {
-                Text      = "\nУчебный курсовой проект.\nИнформационная система для учёта проката автомобилей.",
-                Dock      = DockStyle.Top, Height = 80,
+                Text      = "\nИнформационная система для учёта проката автомобилей.\nКурсовой проект.",
+                Dock      = DockStyle.Top, Height = 90,
                 Font      = new Font("Segoe UI", 10),
-                ForeColor = Color.FromArgb(45, 55, 72)
-            });
-            // children докаются в обратном порядке — переставим
-            content.Controls.SetChildIndex(content.Controls[0], 2);
+                ForeColor = UI.Text
+            };
+            content.Controls.Add(body);
+            content.Controls.Add(sub);
+            content.Controls.Add(title);
             Controls.Add(content);
 
             var bottom = UI.MakeButtonsPanel();

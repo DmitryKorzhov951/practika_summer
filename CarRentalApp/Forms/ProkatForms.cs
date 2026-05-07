@@ -18,7 +18,7 @@ namespace CarRentalApp.Forms
             Text = "Прокат";
             StartPosition = FormStartPosition.CenterScreen;
             Size = new Size(1200, 520);
-            Font = UI.Body;
+            UI.ApplyTheme(this);
 
             Controls.Add(UI.MakeHeader("Прокат"));
 
@@ -84,7 +84,7 @@ namespace CarRentalApp.Forms
             Text = "Прокат (табличная)";
             StartPosition = FormStartPosition.CenterScreen;
             Size = new Size(1200, 520);
-            Font = UI.Body;
+            UI.ApplyTheme(this);
 
             Controls.Add(UI.MakeHeader("Прокат — табличная форма"));
 
@@ -133,7 +133,7 @@ namespace CarRentalApp.Forms
             LEFT JOIN Uslugi u2 ON p.KodUslugi2 = u2.KodUslugi
             LEFT JOIN Uslugi u3 ON p.KodUslugi3 = u3.KodUslugi
             JOIN Sotrudniki s ON p.KodSotrudnika = s.KodSotrudnika";
-        private static Label L(string t) => new() { Text = t, AutoSize = true, Padding = new Padding(0, 6, 4, 0) };
+        private static Label L(string t) => new() { Text = t, AutoSize = true, Padding = new Padding(0, 9, 4, 0), Font = UI.BodyBold, ForeColor = UI.TextDim, BackColor = Color.Transparent };
         private void Sort(bool asc) { if (_cmb.SelectedItem == null) return; try { _bs.Sort = $"[{_cmb.SelectedItem}] " + (asc?"ASC":"DESC"); } catch { } }
         private void Flt()
         {

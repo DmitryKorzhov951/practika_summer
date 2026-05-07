@@ -17,7 +17,7 @@ namespace CarRentalApp.Forms
             Text = "Сотрудники";
             StartPosition = FormStartPosition.CenterScreen;
             Size = new Size(960, 520);
-            Font = UI.Body;
+            UI.ApplyTheme(this);
 
             Controls.Add(UI.MakeHeader("Сотрудники"));
 

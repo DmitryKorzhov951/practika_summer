@@ -23,7 +23,7 @@ namespace CarRentalApp.Forms
             Text = "Запрос: " + title;
             StartPosition = FormStartPosition.CenterScreen;
             Size = new Size(960, 520);
-            Font = UI.Body;
+            UI.ApplyTheme(this);
 
             Controls.Add(UI.MakeHeader("Запрос «" + title + "»"));
 
@@ -66,10 +66,7 @@ namespace CarRentalApp.Forms
 
         protected virtual void ExtendButtons(FlowLayoutPanel panel) { }
 
-        private static Label L(string text) => new()
-        {
-            Text = text, AutoSize = true, Padding = new Padding(0, 6, 4, 0)
-        };
+        private static Label L(string text) => new() { Text = text, AutoSize = true, Padding = new Padding(0, 9, 4, 0), Font = UI.BodyBold, ForeColor = UI.TextDim, BackColor = Color.Transparent };
 
         private void Sort(bool asc)
         {

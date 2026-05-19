@@ -14,7 +14,6 @@ namespace CarRentalApp.Forms
             Size          = new Size(820, 600);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeBanner("Отчёт «" + title + "»", poster));
 
             var scroll = new FlowLayoutPanel
             {
@@ -28,6 +27,7 @@ namespace CarRentalApp.Forms
             var bottom = UI.MakeButtonsPanel();
             bottom.Controls.Add(UI.MakeBtn("Закрыть", (s, e) => Close()));
             Controls.Add(bottom);
+            Controls.Add(UI.MakeBanner("Отчёт «" + title + "»", poster));
 
             var dt = Db.Load(sql);
 

@@ -20,7 +20,6 @@ namespace CarRentalApp.Forms
             Size = new Size(1100, 520);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeBanner("Автомобили", "avtomobili"));
 
             _grid.Dock = DockStyle.Fill;
             _grid.AutoGenerateColumns = false;
@@ -58,6 +57,7 @@ namespace CarRentalApp.Forms
             btns.Controls.Add(UI.MakeBtn("Отчёт",     (s,e) => new AvtomobiliReport().Show()));
             btns.Controls.Add(UI.MakeBtn("Закрыть",   (s,e) => Close()));
             Controls.Add(btns);
+            Controls.Add(UI.MakeBanner("Автомобили", "avtomobili"));
             Load_();
         }
         private static DataGridViewTextBoxColumn Tx(string p, string h) => new() { DataPropertyName = p, HeaderText = h, Name = p };
@@ -83,7 +83,6 @@ namespace CarRentalApp.Forms
             Size = new Size(1100, 520);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeBanner("Автомобили — табличная форма", "avtomobili"));
 
             var top = UI.MakeParamsPanel();
             top.Controls.Add(L("Поле:")); top.Controls.Add(_cmb);
@@ -106,6 +105,7 @@ namespace CarRentalApp.Forms
             btns.Controls.Add(UI.MakeBtn("Отчёт",   (s,e) => new AvtomobiliReport().Show()));
             btns.Controls.Add(UI.MakeBtn("Закрыть", (s,e) => Close()));
             Controls.Add(btns);
+            Controls.Add(UI.MakeBanner("Автомобили — табличная форма", "avtomobili"));
 
             var dt = Db.Load(SqlText); _bs.DataSource = dt;
             foreach (DataColumn c in dt.Columns) _cmb.Items.Add(c.ColumnName);

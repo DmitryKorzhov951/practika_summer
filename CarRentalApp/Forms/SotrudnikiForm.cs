@@ -19,7 +19,6 @@ namespace CarRentalApp.Forms
             Size = new Size(960, 520);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeBanner("Сотрудники", "sotrudniki"));
 
             _grid.Dock = DockStyle.Fill;
             _grid.AutoGenerateColumns = false;
@@ -57,6 +56,7 @@ namespace CarRentalApp.Forms
             btns.Controls.Add(UI.MakeBtn("Отчёт",          (s, e) => new SotrudnikiReport().Show()));
             btns.Controls.Add(UI.MakeBtn("Закрыть",        (s, e) => Close()));
             Controls.Add(btns);
+            Controls.Add(UI.MakeBanner("Сотрудники", "sotrudniki"));
 
             LoadData();
         }

@@ -21,7 +21,6 @@ namespace CarRentalApp.Forms
             Size = new Size(880, 460);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeBanner("Дополнительные услуги", "uslugi"));
 
             _grid.Dock = DockStyle.Fill;
             _grid.AutoGenerateColumns = false;
@@ -44,6 +43,7 @@ namespace CarRentalApp.Forms
             btns.Controls.Add(UI.MakeBtn("Отчёт",     (s,e) => new UslugiReport().Show()));
             btns.Controls.Add(UI.MakeBtn("Закрыть",   (s,e) => Close()));
             Controls.Add(btns);
+            Controls.Add(UI.MakeBanner("Дополнительные услуги", "uslugi"));
 
             Load_();
         }
@@ -69,7 +69,6 @@ namespace CarRentalApp.Forms
             Size = new Size(880, 460);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeBanner("Дополнительные услуги — табличная форма", "uslugi"));
 
             var top = UI.MakeParamsPanel();
             top.Controls.Add(L("Поле:")); top.Controls.Add(_cmb);
@@ -92,6 +91,7 @@ namespace CarRentalApp.Forms
             btns.Controls.Add(UI.MakeBtn("Отчёт",   (s,e) => new UslugiReport().Show()));
             btns.Controls.Add(UI.MakeBtn("Закрыть", (s,e) => Close()));
             Controls.Add(btns);
+            Controls.Add(UI.MakeBanner("Дополнительные услуги — табличная форма", "uslugi"));
 
             const string sql = "SELECT Naimenovanie AS [Наименование], Opisanie AS [Описание], Cena AS [Цена] FROM Uslugi";
             var dt = Db.Load(sql); _bs.DataSource = dt;

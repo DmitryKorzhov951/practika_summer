@@ -96,31 +96,12 @@ namespace CarRentalApp
             catch { _posters[key] = null; return null; }
         }
 
-        /// <summary>Шапка-баннер с постером на фоне.
-        /// Не докается: кладётся поверх в зарезервированный отступ формы.</summary>
+        /// <summary>Шапка-баннер с постером на фоне. Добавлять на форму ПОСЛЕДНИМ.</summary>
         public static Panel MakeBanner(string text, string posterKey)
         {
-            const int H = 72;
-            var p = new Panel { Height = H, BackColor = Color.FromArgb(12, 12, 14) };
+            var p = new Panel { Dock = DockStyle.Top, Height = 72, BackColor = Color.FromArgb(12, 12, 14) };
             var img = LoadPoster(posterKey);
-
-            // Резервируем место под баннер: задаём родителю верхний отступ,
-            // а сам баннер помещаем в (0,0) поверх остальных контролов.
-            p.ParentChanged += (s, e) =>
-            {
-                var parent = p.Parent;
-                if (parent == null) return;
-                parent.Padding = new Padding(parent.Padding.Left, H,
-                                             parent.Padding.Right, parent.Padding.Bottom);
-                p.Location = new Point(0, 0);
-                p.Width = parent.ClientSize.Width;
-                p.BringToFront();
-                parent.Resize += (s2, e2) =>
-                {
-                    p.Width = parent.ClientSize.Width;
-                    p.Invalidate();
-                };
-            };
+            p.Resize += (s, e) => p.Invalidate();
 
             p.Paint += (s, e) =>
             {

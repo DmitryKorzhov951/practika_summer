@@ -25,7 +25,6 @@ namespace CarRentalApp.Forms
             Size = new Size(960, 520);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeBanner("Запрос «" + title + "»", poster));
 
             // Панель сорт/фильтр/поиск
             var top = UI.MakeParamsPanel();
@@ -58,6 +57,7 @@ namespace CarRentalApp.Forms
             ExtendButtons(btns);
             btns.Controls.Add(UI.MakeBtn("Закрыть", (s, e) => Close()));
             Controls.Add(btns);
+            Controls.Add(UI.MakeBanner("Запрос «" + title + "»", poster));
 
             var dt = Db.Load(sql); _bs.DataSource = dt;
             foreach (DataColumn c in dt.Columns) _cmb.Items.Add(c.ColumnName);

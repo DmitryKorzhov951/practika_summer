@@ -20,7 +20,6 @@ namespace CarRentalApp.Forms
             Size = new Size(960, 480);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeBanner("Клиенты", "klienty"));
 
             _grid.Dock = DockStyle.Fill;
             _grid.AutoGenerateColumns = false;
@@ -45,6 +44,7 @@ namespace CarRentalApp.Forms
             btns.Controls.Add(UI.MakeBtn("Отчёт",     (s,e) => new KlientyReport().Show()));
             btns.Controls.Add(UI.MakeBtn("Закрыть",   (s,e) => Close()));
             Controls.Add(btns);
+            Controls.Add(UI.MakeBanner("Клиенты", "klienty"));
             Load_();
         }
         private static DataGridViewTextBoxColumn Tx(string p, string h) => new() { DataPropertyName = p, HeaderText = h, Name = p };
@@ -68,7 +68,6 @@ namespace CarRentalApp.Forms
             Size = new Size(960, 480);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeBanner("Клиенты — табличная форма", "klienty"));
 
             var top = UI.MakeParamsPanel();
             top.Controls.Add(L("Поле:")); top.Controls.Add(_cmb);
@@ -91,6 +90,7 @@ namespace CarRentalApp.Forms
             btns.Controls.Add(UI.MakeBtn("Отчёт",   (s,e) => new KlientyReport().Show()));
             btns.Controls.Add(UI.MakeBtn("Закрыть", (s,e) => Close()));
             Controls.Add(btns);
+            Controls.Add(UI.MakeBanner("Клиенты — табличная форма", "klienty"));
 
             const string sql = @"SELECT FIO AS [ФИО], Pol AS [Пол], DataRozhdeniya AS [Дата рождения],
                                         Adres AS [Адрес], Telefon AS [Телефон], Pasport AS [Паспорт] FROM Klienty";

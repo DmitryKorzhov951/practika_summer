@@ -21,7 +21,6 @@ namespace CarRentalApp.Forms
             Size = new Size(960, 520);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeBanner("Сотрудники — табличная форма", "sotrudniki"));
 
             var top = UI.MakeParamsPanel();
             top.Controls.Add(L("Поле:")); top.Controls.Add(_cmb);
@@ -46,6 +45,7 @@ namespace CarRentalApp.Forms
             btns.Controls.Add(UI.MakeBtn("Отчёт",   (s,e) => new SotrudnikiReport().Show()));
             btns.Controls.Add(UI.MakeBtn("Закрыть", (s,e) => Close()));
             Controls.Add(btns);
+            Controls.Add(UI.MakeBanner("Сотрудники — табличная форма", "sotrudniki"));
 
             const string sql = @"
                 SELECT s.FIO AS [ФИО], s.Vozrast AS [Возраст], s.Pol AS [Пол],

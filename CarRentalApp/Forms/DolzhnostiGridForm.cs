@@ -21,7 +21,6 @@ namespace CarRentalApp.Forms
             Size = new Size(900, 480);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeBanner("Должности — табличная форма", "dolzhnosti"));
 
             var top = UI.MakeParamsPanel();
             top.Controls.Add(L("Поле:")); top.Controls.Add(_cmb);
@@ -45,6 +44,7 @@ namespace CarRentalApp.Forms
             btns.Controls.Add(UI.MakeBtn("Отчёт",   (s,e) => new DolzhnostiReport().Show()));
             btns.Controls.Add(UI.MakeBtn("Закрыть", (s,e) => Close()));
             Controls.Add(btns);
+            Controls.Add(UI.MakeBanner("Должности — табличная форма", "dolzhnosti"));
 
             const string sql = "SELECT Naimenovanie AS [Наименование], Oklad AS [Оклад], Obyazannosti AS [Обязанности], Trebovaniya AS [Требования] FROM Dolzhnosti";
             var dt = Db.Load(sql); _bs.DataSource = dt;

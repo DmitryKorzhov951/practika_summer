@@ -21,7 +21,6 @@ namespace CarRentalApp.Forms
             Size = new Size(960, 520);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeBanner("Фильтр «" + title + "»", poster));
 
             var top = UI.MakeParamsPanel();
             BuildFilterPanel(top);
@@ -41,6 +40,7 @@ namespace CarRentalApp.Forms
             btns.Controls.Add(UI.MakeBtn("Отчёт",     (s, e) => ShowReport(),     110, UI.BtnStyle.Accent));
             btns.Controls.Add(UI.MakeBtn("Закрыть",   (s, e) => Close()));
             Controls.Add(btns);
+            Controls.Add(UI.MakeBanner("Фильтр «" + title + "»", poster));
 
             Reload();
         }
@@ -212,7 +212,6 @@ namespace CarRentalApp.Forms
             Size = new Size(820, 600);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeBanner("Отчёт «" + title + "»", poster));
 
             var scroll = new FlowLayoutPanel
             {
@@ -224,6 +223,7 @@ namespace CarRentalApp.Forms
             var bottom = UI.MakeButtonsPanel();
             bottom.Controls.Add(UI.MakeBtn("Закрыть", (s, e) => Close()));
             Controls.Add(bottom);
+            Controls.Add(UI.MakeBanner("Отчёт «" + title + "»", poster));
 
             DataTable dt = prm == null ? Db.Load(sql) : Db.Load(sql, prm);
 

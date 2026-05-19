@@ -96,44 +96,51 @@ namespace CarRentalApp
             catch { _posters[key] = null; return null; }
         }
 
-        /// <summary>Шапка-баннер с постером на фоне.</summary>
+        /// <summary>Шапка-баннер с постером на фоне.
+        /// Не докается: кладётся поверх в зарезервированный отступ формы.</summary>
         public static Panel MakeBanner(string text, string posterKey)
         {
-            var p = new Panel { Dock = DockStyle.Top, Height = 72, BackColor = Color.FromArgb(12, 12, 14) };
+            const int H = 72;
+            var p = new Panel { Height = H, BackColor = Color.FromArgb(12, 12, 14) };
             var img = LoadPoster(posterKey);
-            p.Resize += (s, e) => p.Invalidate();
-            // Гарантируем, что баннер всегда у верхнего края (выше навигатора и панелей):
-            // при добавлении любого соседнего контрола уводим баннер в конец Z-order.
+
+            // Резервируем место под баннер: задаём родителю верхний отступ,
+            // а сам баннер помещаем в (0,0) поверх остальных контролов.
             p.ParentChanged += (s, e) =>
             {
-                if (p.Parent == null) return;
-                p.Parent.ControlAdded += (s2, e2) => p.SendToBack();
-                p.SendToBack();
+                var parent = p.Parent;
+                if (parent == null) return;
+                parent.Padding = new Padding(parent.Padding.Left, H,
+                                             parent.Padding.Right, parent.Padding.Bottom);
+                p.Location = new Point(0, 0);
+                p.Width = parent.ClientSize.Width;
+                p.BringToFront();
+                parent.Resize += (s2, e2) =>
+                {
+                    p.Width = parent.ClientSize.Width;
+                    p.Invalidate();
+                };
             };
-            p.HandleCreated += (s, e) => p.SendToBack();
+
             p.Paint += (s, e) =>
             {
                 var g = e.Graphics;
                 var rect = p.ClientRectangle;
                 if (img != null)
                 {
-                    // центральная горизонтальная полоса постера, растянутая по ширине
                     int srcH = Math.Max(1, Math.Min(img.Height,
                         (int)(img.Width * (double)p.Height / Math.Max(1, p.Width))));
                     var src = new Rectangle(0, (img.Height - srcH) / 2, img.Width, srcH);
                     g.DrawImage(img, rect, src, GraphicsUnit.Pixel);
                 }
-                // тёмный градиент слева для читаемости текста
                 using (var grad = new LinearGradientBrush(rect,
                         Color.FromArgb(240, 12, 12, 14), Color.FromArgb(90, 12, 12, 14),
                         LinearGradientMode.Horizontal))
                     g.FillRectangle(grad, rect);
-                // красные акцентные полосы
                 using var red = new SolidBrush(Primary);
                 g.FillRectangle(red, 0, 0, p.Width, 2);
                 g.FillRectangle(red, 0, p.Height - 3, p.Width, 3);
                 g.FillRectangle(red, 0, 0, 5, p.Height);
-                // заголовок
                 TextRenderer.DrawText(g, text.ToUpperInvariant(), Header,
                     new Rectangle(22, 0, p.Width - 44, p.Height), Color.White,
                     TextFormatFlags.Left | TextFormatFlags.VerticalCenter);

@@ -1,175 +1,190 @@
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using CarRentalApp.Forms;
 
 namespace CarRentalApp
 {
-    /// <summary>Главная кнопочная форма (тёмная гоночная тема).</summary>
+    /// <summary>Главная форма в стиле Netflix: hero-баннер + ряды каруселей карточек.</summary>
     public class MainForm : Form
     {
         public MainForm()
         {
             Text          = "БД «Прокат автомобилей»";
             StartPosition = FormStartPosition.CenterScreen;
-            Size          = new Size(680, 640);
-            MinimumSize   = new Size(540, 480);
+            Size          = new Size(1060, 720);
+            MinimumSize   = new Size(820, 560);
             UI.ApplyTheme(this);
 
-            // Заголовок
-            Controls.Add(UI.MakeHeader("База данных «Прокат автомобилей»"));
-
-            // Нижняя панель
+            // ---- Нижняя панель ----
             var bottom = UI.MakeButtonsPanel();
-            bottom.Controls.Add(UI.MakeBtn("Выход",        (s,e) => Application.Exit(),                   100, UI.BtnStyle.Danger));
-            bottom.Controls.Add(UI.MakeBtn("О программе",  (s,e) => new AboutForm().ShowDialog(this),     130));
-            bottom.Controls.Add(UI.MakeBtn("Гистограмма",  (s,e) => new HistogramForm().ShowDialog(this), 140, UI.BtnStyle.Primary));
+            bottom.Controls.Add(UI.MakeBtn("Выход",       (s,e) => Application.Exit(),                   100, UI.BtnStyle.Danger));
+            bottom.Controls.Add(UI.MakeBtn("О программе", (s,e) => new AboutForm().ShowDialog(this),     130));
+            bottom.Controls.Add(UI.MakeBtn("Гистограмма", (s,e) => new HistogramForm().ShowDialog(this), 140, UI.BtnStyle.Primary));
             Controls.Add(bottom);
 
-            // Кастомные тёмные вкладки
-            var tabs = new TabControl
+            // ---- Прокручиваемая лента контента ----
+            var scroll = new Panel
             {
-                Dock          = DockStyle.Fill,
-                Font          = UI.BodyBold,
-                Appearance    = TabAppearance.Normal,
-                SizeMode      = TabSizeMode.Fixed,
-                ItemSize      = new Size(160, 32),
-                DrawMode      = TabDrawMode.OwnerDrawFixed,
-                Padding       = new Point(0, 0)
+                Dock = DockStyle.Fill,
+                AutoScroll = true,
+                BackColor = UI.Bg
             };
-            tabs.DrawItem += (s, e) =>
+            var content = new FlowLayoutPanel
             {
-                var tc = (TabControl)s;
-                var page = tc.TabPages[e.Index];
-                bool sel = e.State == DrawItemState.Selected || tc.SelectedIndex == e.Index;
-
-                Color bg = sel ? UI.Surface : Color.FromArgb(22, 22, 26);
-                Color fg = sel ? UI.Primary : UI.TextDim;
-                using var bgBr = new SolidBrush(bg);
-                e.Graphics.FillRectangle(bgBr, e.Bounds);
-
-                if (sel)
-                {
-                    using var red = new SolidBrush(UI.Primary);
-                    e.Graphics.FillRectangle(red, e.Bounds.Left, e.Bounds.Bottom - 3, e.Bounds.Width, 3);
-                }
-
-                TextRenderer.DrawText(e.Graphics, page.Text, UI.BodyBold,
-                    e.Bounds, fg,
-                    TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+                FlowDirection = FlowDirection.TopDown,
+                WrapContents = false,
+                AutoSize = true,
+                BackColor = UI.Bg,
+                Padding = new Padding(0, 0, 0, 20)
             };
+            scroll.Controls.Add(content);
+            Controls.Add(scroll);
 
-            tabs.TabPages.Add(BuildTab("ФОРМЫ",   BuildFormsContent));
-            tabs.TabPages.Add(BuildTab("ОТЧЁТЫ",  BuildReportsContent));
-            Controls.Add(tabs);
+            // ---- Hero-баннер ----
+            content.Controls.Add(BuildHero());
+
+            // ---- Ряды каруселей ----
+            content.Controls.Add(BuildRow("ТАБЛИЦЫ", new (string, string, Action)[]
+            {
+                ("Сотрудники",            "sotrudniki", () => new SotrudnikiForm().Show()),
+                ("Должности",             "dolzhnosti", () => new DolzhnostiForm().Show()),
+                ("Марки автомобилей",     "marki",      () => new MarkiForm().Show()),
+                ("Дополнительные услуги", "uslugi",     () => new UslugiForm().Show()),
+                ("Автомобили",            "avtomobili", () => new AvtomobiliForm().Show()),
+                ("Клиенты",               "klienty",    () => new KlientyForm().Show()),
+                ("Прокат",                "prokat",     () => new ProkatForm().Show()),
+            }));
+
+            content.Controls.Add(BuildRow("ЗАПРОСЫ", new (string, string, Action)[]
+            {
+                ("Отдел кадров",         "q_kadrov",   () => new OtdelKadrovForm().Show()),
+                ("Автопарк",             "q_avtopark", () => new AvtoparkForm().Show()),
+                ("Автомобили в прокате", "q_vprokate", () => new AvtoVProkateForm().Show()),
+            }));
+
+            content.Controls.Add(BuildRow("ФИЛЬТРЫ", new (string, string, Action)[]
+            {
+                ("Сотрудники по должности", "f_dolzh",   () => new FilterByDolzhnost().Show()),
+                ("Автомобили по марке",     "f_marka",   () => new FilterByMarka().Show()),
+                ("В прокате / свободные",   "f_vozvrat", () => new FilterByVozvrachen().Show()),
+                ("Прокат по дате",          "f_data",    () => new FilterByDate().Show()),
+                ("Оплачено / не оплачено",  "f_oplata",  () => new FilterByOplata().Show()),
+            }));
+
+            // ---- Ряд отчётов ----
+            content.Controls.Add(BuildRow("ОТЧЁТЫ", new (string, string, Action)[]
+            {
+                ("Сотрудники",            "sotrudniki", () => new SotrudnikiReport().Show()),
+                ("Должности",             "dolzhnosti", () => new DolzhnostiReport().Show()),
+                ("Марки автомобилей",     "marki",      () => new MarkiReport().Show()),
+                ("Дополнительные услуги", "uslugi",     () => new UslugiReport().Show()),
+                ("Автомобили",            "avtomobili", () => new AvtomobiliReport().Show()),
+                ("Клиенты",               "klienty",    () => new KlientyReport().Show()),
+                ("Прокат",                "prokat",     () => new ProkatReport().Show()),
+                ("Отдел кадров",          "q_kadrov",   () => new OtdelKadrovReport().Show()),
+                ("Автопарк",              "q_avtopark", () => new AvtoparkReport().Show()),
+                ("Автомобили в прокате",  "q_vprokate", () => new AvtoVProkateReport().Show()),
+            }));
+
+            // содержимое и ряды подгоняем по ширине окна
+            void Resize()
+            {
+                int w = scroll.ClientSize.Width;
+                content.Width = w;
+                foreach (Control row in content.Controls)
+                    row.Width = w;
+            }
+            scroll.Resize += (s, e) => Resize();
+            Resize();
         }
 
-        private TabPage BuildTab(string title, Action<FlowLayoutPanel> fill)
+        // ============ Hero-баннер ============
+        private Panel BuildHero()
         {
-            var tab = new TabPage(title) { BackColor = UI.Surface };
-            var list = new FlowLayoutPanel
+            var hero = new Panel { Height = 180, Width = 1000 };
+            hero.Paint += (s, e) =>
             {
-                Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown,
-                AutoScroll = true, WrapContents = false,
-                Padding = new Padding(16), BackColor = UI.Surface
-            };
-            fill(list);
-            tab.Controls.Add(list);
-            return tab;
-        }
-
-        private void BuildFormsContent(FlowLayoutPanel list)
-        {
-            list.Controls.Add(Group("ТАБЛИЦЫ"));
-            list.Controls.Add(Item("Сотрудники",            () => new SotrudnikiForm().Show()));
-            list.Controls.Add(Item("Должности",             () => new DolzhnostiForm().Show()));
-            list.Controls.Add(Item("Марки автомобилей",     () => new MarkiForm().Show()));
-            list.Controls.Add(Item("Дополнительные услуги", () => new UslugiForm().Show()));
-            list.Controls.Add(Item("Автомобили",            () => new AvtomobiliForm().Show()));
-            list.Controls.Add(Item("Клиенты",               () => new KlientyForm().Show()));
-            list.Controls.Add(Item("Прокат",                () => new ProkatForm().Show()));
-
-            list.Controls.Add(Group("ЗАПРОСЫ"));
-            list.Controls.Add(Item("Отдел кадров",         () => new OtdelKadrovForm().Show()));
-            list.Controls.Add(Item("Автопарк",             () => new AvtoparkForm().Show()));
-            list.Controls.Add(Item("Автомобили в прокате", () => new AvtoVProkateForm().Show()));
-
-            list.Controls.Add(Group("ФИЛЬТРЫ"));
-            list.Controls.Add(Item("Сотрудники по должности",  () => new FilterByDolzhnost().Show()));
-            list.Controls.Add(Item("Автомобили по марке",      () => new FilterByMarka().Show()));
-            list.Controls.Add(Item("В прокате / свободные",    () => new FilterByVozvrachen().Show()));
-            list.Controls.Add(Item("Прокат по дате",           () => new FilterByDate().Show()));
-            list.Controls.Add(Item("Оплачено / не оплачено",   () => new FilterByOplata().Show()));
-        }
-
-        private void BuildReportsContent(FlowLayoutPanel list)
-        {
-            list.Controls.Add(Group("ПО ТАБЛИЦАМ"));
-            list.Controls.Add(Item("Сотрудники",            () => new SotrudnikiReport().Show()));
-            list.Controls.Add(Item("Должности",             () => new DolzhnostiReport().Show()));
-            list.Controls.Add(Item("Марки автомобилей",     () => new MarkiReport().Show()));
-            list.Controls.Add(Item("Дополнительные услуги", () => new UslugiReport().Show()));
-            list.Controls.Add(Item("Автомобили",            () => new AvtomobiliReport().Show()));
-            list.Controls.Add(Item("Клиенты",               () => new KlientyReport().Show()));
-            list.Controls.Add(Item("Прокат",                () => new ProkatReport().Show()));
-
-            list.Controls.Add(Group("ПО ЗАПРОСАМ"));
-            list.Controls.Add(Item("Отдел кадров",         () => new OtdelKadrovReport().Show()));
-            list.Controls.Add(Item("Автопарк",             () => new AvtoparkReport().Show()));
-            list.Controls.Add(Item("Автомобили в прокате", () => new AvtoVProkateReport().Show()));
-
-            list.Controls.Add(Group("ПО ФИЛЬТРАМ"));
-            list.Controls.Add(Item("Сотрудники по должности", () => new ReportFormParam("Сотрудники по должности (все)", OtdelKadrovForm.Sql, null).Show()));
-            list.Controls.Add(Item("Автомобили по марке",     () => new ReportFormParam("Автомобили по марке (все)",     AvtoparkForm.Sql,     null).Show()));
-            list.Controls.Add(Item("В прокате / свободные",   () => new ReportFormParam("В прокате / свободные (все)",   AvtoparkForm.Sql,     null).Show()));
-            list.Controls.Add(Item("Прокат по дате",          () => new ReportFormParam("Прокат по дате (все)",          AvtoVProkateForm.Sql, null).Show()));
-            list.Controls.Add(Item("Оплачено / не оплачено",  () => new ReportFormParam("Оплачено / не оплачено (все)",  AvtoVProkateForm.Sql, null).Show()));
-        }
-
-        // --- helpers ---
-        private static Label Group(string text)
-        {
-            var l = new Label
-            {
-                Text     = "▌ " + text,
-                AutoSize = false, Width = 580, Height = 28,
-                Font     = new Font("Segoe UI Semibold", 10, FontStyle.Bold),
-                ForeColor = UI.Primary,
-                Margin   = new Padding(0, 12, 0, 6),
-                TextAlign = ContentAlignment.MiddleLeft
-            };
-            return l;
-        }
-
-        private static Panel Item(string caption, Action onOpen)
-        {
-            var p = new Panel
-            {
-                Width = 580, Height = 42,
-                Margin = new Padding(0, 2, 0, 2),
-                BackColor = UI.SurfaceAlt
-            };
-            p.Paint += (s, e) =>
-            {
-                using var border = new Pen(UI.Border);
-                e.Graphics.DrawRectangle(border, 0, 0, p.Width - 1, p.Height - 1);
+                var g = e.Graphics;
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                using (var bg = new LinearGradientBrush(hero.ClientRectangle,
+                        Color.FromArgb(80, 16, 22), Color.FromArgb(14, 14, 17),
+                        LinearGradientMode.Horizontal))
+                    g.FillRectangle(bg, hero.ClientRectangle);
+                // диагональные скоростные линии
+                using var line = new Pen(Color.FromArgb(22, 255, 255, 255), 8);
+                for (int x = -200; x < hero.Width; x += 70)
+                    g.DrawLine(line, x, 0, x + hero.Height, hero.Height);
+                // нижняя красная полоса
                 using var red = new SolidBrush(UI.Primary);
-                e.Graphics.FillRectangle(red, 0, 0, 4, p.Height);
+                g.FillRectangle(red, 0, hero.Height - 4, hero.Width, 4);
             };
-            p.MouseEnter += (s, e) => p.BackColor = UI.SurfaceHi;
-            p.MouseLeave += (s, e) => p.BackColor = UI.SurfaceAlt;
 
-            var b = UI.MakeBtn("Открыть", (s, e) => onOpen(), 100, UI.BtnStyle.Primary);
-            b.Left = 12; b.Top = 5;
-            var l = new Label
+            var sub = new Label
             {
-                Text = caption, Left = 124, Top = 0, Width = 444, Height = 42,
-                TextAlign = ContentAlignment.MiddleLeft, Font = UI.BodyBold,
-                ForeColor = UI.Text, BackColor = Color.Transparent
+                Text = "ИНФОРМАЦИОННАЯ СИСТЕМА  ·  ВАРИАНТ №17",
+                Font = new Font("Segoe UI Semibold", 11, FontStyle.Bold),
+                ForeColor = UI.Primary, BackColor = Color.Transparent,
+                AutoSize = true, Location = new Point(40, 44)
             };
-            l.MouseEnter += (s, e) => p.BackColor = UI.SurfaceHi;
-            p.Controls.Add(b); p.Controls.Add(l);
-            return p;
+            var title = new Label
+            {
+                Text = "ПРОКАТ АВТОМОБИЛЕЙ",
+                Font = new Font("Segoe UI Black", 30, FontStyle.Bold),
+                ForeColor = Color.White, BackColor = Color.Transparent,
+                AutoSize = true, Location = new Point(38, 70)
+            };
+            var hint = new Label
+            {
+                Text = "Выберите раздел — таблицы, запросы, фильтры или отчёты",
+                Font = new Font("Segoe UI", 10),
+                ForeColor = UI.TextDim, BackColor = Color.Transparent,
+                AutoSize = true, Location = new Point(40, 130)
+            };
+            hero.Controls.Add(sub);
+            hero.Controls.Add(title);
+            hero.Controls.Add(hint);
+            return hero;
+        }
+
+        // ============ Ряд-карусель ============
+        private Panel BuildRow(string title, (string caption, string poster, Action open)[] items)
+        {
+            var row = new Panel { Height = 200, Width = 1000, BackColor = UI.Bg };
+
+            var lbl = new Label
+            {
+                Text = "▌ " + title,
+                Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold),
+                ForeColor = UI.Primary,
+                AutoSize = false, Height = 30,
+                Dock = DockStyle.Top,
+                Padding = new Padding(36, 4, 0, 0),
+                BackColor = UI.Bg
+            };
+
+            var strip = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                FlowDirection = FlowDirection.LeftToRight,
+                WrapContents = false,
+                AutoScroll = true,
+                Padding = new Padding(36, 6, 36, 6),
+                BackColor = UI.Bg
+            };
+
+            foreach (var (caption, poster, open) in items)
+            {
+                var card = new PosterCard(poster, open);
+                var tip = new ToolTip();
+                tip.SetToolTip(card, caption);
+                strip.Controls.Add(card);
+            }
+
+            row.Controls.Add(strip);
+            row.Controls.Add(lbl);
+            return row;
         }
     }
 }

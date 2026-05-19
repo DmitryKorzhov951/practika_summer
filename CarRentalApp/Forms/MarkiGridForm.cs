@@ -21,7 +21,7 @@ namespace CarRentalApp.Forms
             Size = new Size(880, 460);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeHeader("Марки автомобилей — табличная форма"));
+            Controls.Add(UI.MakeBanner("Марки автомобилей — табличная форма", "marki"));
 
             var top = UI.MakeParamsPanel();
             top.Controls.Add(L("Поле:")); top.Controls.Add(_cmb);
@@ -76,7 +76,6 @@ namespace CarRentalApp.Forms
     public class MarkiReport : ReportForm
     {
         public MarkiReport() : base("Марки автомобилей",
-            "SELECT Naimenovanie AS [Наименование], Harakteristiki AS [Характеристики], Opisanie AS [Описание] FROM Marki")
-        { }
+            "SELECT Naimenovanie AS [Наименование], Harakteristiki AS [Характеристики], Opisanie AS [Описание] FROM Marki", "marki") { }
     }
 }

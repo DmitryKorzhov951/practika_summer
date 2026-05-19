@@ -20,7 +20,7 @@ namespace CarRentalApp.Forms
             Size = new Size(1100, 520);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeHeader("Автомобили"));
+            Controls.Add(UI.MakeBanner("Автомобили", "avtomobili"));
 
             _grid.Dock = DockStyle.Fill;
             _grid.AutoGenerateColumns = false;
@@ -83,7 +83,7 @@ namespace CarRentalApp.Forms
             Size = new Size(1100, 520);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeHeader("Автомобили — табличная форма"));
+            Controls.Add(UI.MakeBanner("Автомобили — табличная форма", "avtomobili"));
 
             var top = UI.MakeParamsPanel();
             top.Controls.Add(L("Поле:")); top.Controls.Add(_cmb);
@@ -151,6 +151,6 @@ namespace CarRentalApp.Forms
 
     public class AvtomobiliReport : ReportForm
     {
-        public AvtomobiliReport() : base("Автомобили", AvtomobiliGridForm.SqlText) { }
+        public AvtomobiliReport() : base("Автомобили", AvtomobiliGridForm.SqlText, "avtomobili") { }
     }
 }

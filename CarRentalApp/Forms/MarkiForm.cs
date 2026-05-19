@@ -19,7 +19,7 @@ namespace CarRentalApp.Forms
             Size = new Size(880, 460);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeHeader("Марки автомобилей"));
+            Controls.Add(UI.MakeBanner("Марки автомобилей", "marki"));
 
             _grid.Dock = DockStyle.Fill;
             _grid.AutoGenerateColumns = false;

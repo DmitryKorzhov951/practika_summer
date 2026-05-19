@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Windows.Forms;
 
 namespace CarRentalApp
@@ -71,6 +73,62 @@ namespace CarRentalApp
                 TextAlign  = ContentAlignment.MiddleLeft,
                 Padding    = new Padding(20, 0, 0, 0)
             });
+            return p;
+        }
+
+        // ---- Загрузка постеров ----
+        private static readonly Dictionary<string, Image> _posters = new();
+
+        public static Image LoadPoster(string key)
+        {
+            if (string.IsNullOrEmpty(key)) return null;
+            if (_posters.TryGetValue(key, out var c)) return c;
+            try
+            {
+                string path = Path.Combine(AppContext.BaseDirectory,
+                    "Assets", "posters", key + ".png");
+                if (!File.Exists(path)) { _posters[key] = null; return null; }
+                using var tmp = Image.FromFile(path);
+                var copy = new Bitmap(tmp);
+                _posters[key] = copy;
+                return copy;
+            }
+            catch { _posters[key] = null; return null; }
+        }
+
+        /// <summary>Шапка-баннер с постером на фоне.</summary>
+        public static Panel MakeBanner(string text, string posterKey)
+        {
+            var p = new Panel { Dock = DockStyle.Top, Height = 72, BackColor = Color.FromArgb(12, 12, 14) };
+            var img = LoadPoster(posterKey);
+            p.Resize += (s, e) => p.Invalidate();
+            p.Paint += (s, e) =>
+            {
+                var g = e.Graphics;
+                var rect = p.ClientRectangle;
+                if (img != null)
+                {
+                    // центральная горизонтальная полоса постера, растянутая по ширине
+                    int srcH = Math.Max(1, Math.Min(img.Height,
+                        (int)(img.Width * (double)p.Height / Math.Max(1, p.Width))));
+                    var src = new Rectangle(0, (img.Height - srcH) / 2, img.Width, srcH);
+                    g.DrawImage(img, rect, src, GraphicsUnit.Pixel);
+                }
+                // тёмный градиент слева для читаемости текста
+                using (var grad = new LinearGradientBrush(rect,
+                        Color.FromArgb(240, 12, 12, 14), Color.FromArgb(90, 12, 12, 14),
+                        LinearGradientMode.Horizontal))
+                    g.FillRectangle(grad, rect);
+                // красные акцентные полосы
+                using var red = new SolidBrush(Primary);
+                g.FillRectangle(red, 0, 0, p.Width, 2);
+                g.FillRectangle(red, 0, p.Height - 3, p.Width, 3);
+                g.FillRectangle(red, 0, 0, 5, p.Height);
+                // заголовок
+                TextRenderer.DrawText(g, text.ToUpperInvariant(), Header,
+                    new Rectangle(22, 0, p.Width - 44, p.Height), Color.White,
+                    TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
+            };
             return p;
         }
 

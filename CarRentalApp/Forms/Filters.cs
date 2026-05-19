@@ -13,7 +13,7 @@ namespace CarRentalApp.Forms
         protected readonly BindingSource _bs = new();
         protected readonly string _title;
 
-        protected FilterFormBase(string title)
+        protected FilterFormBase(string title, string poster = null)
         {
             _title = title;
             Text = "Фильтр: " + title;
@@ -21,7 +21,7 @@ namespace CarRentalApp.Forms
             Size = new Size(960, 520);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeHeader("Фильтр «" + title + "»"));
+            Controls.Add(UI.MakeBanner("Фильтр «" + title + "»", poster));
 
             var top = UI.MakeParamsPanel();
             BuildFilterPanel(top);
@@ -74,7 +74,7 @@ namespace CarRentalApp.Forms
     public class FilterByDolzhnost : FilterFormBase
     {
         private ComboBox _cmb;
-        public FilterByDolzhnost() : base("Сотрудники по должности") { }
+        public FilterByDolzhnost() : base("Сотрудники по должности", "f_dolzh") { }
         protected override void BuildFilterPanel(FlowLayoutPanel panel)
         {
             panel.Controls.Add(L("Должность:"));
@@ -93,7 +93,7 @@ namespace CarRentalApp.Forms
         protected override void ShowReport()
         {
             var (sql, prm) = BuildSql(false);
-            new ReportFormParam("Сотрудники по должности", sql, prm).Show();
+            new ReportFormParam("Сотрудники по должности", sql, prm, "f_dolzh").Show();
         }
     }
 
@@ -101,7 +101,7 @@ namespace CarRentalApp.Forms
     public class FilterByMarka : FilterFormBase
     {
         private ComboBox _cmb;
-        public FilterByMarka() : base("Автомобили по марке") { }
+        public FilterByMarka() : base("Автомобили по марке", "f_marka") { }
         protected override void BuildFilterPanel(FlowLayoutPanel panel)
         {
             panel.Controls.Add(L("Марка:"));
@@ -120,7 +120,7 @@ namespace CarRentalApp.Forms
         protected override void ShowReport()
         {
             var (sql, prm) = BuildSql(false);
-            new ReportFormParam("Автомобили по марке", sql, prm).Show();
+            new ReportFormParam("Автомобили по марке", sql, prm, "f_marka").Show();
         }
     }
 
@@ -128,7 +128,7 @@ namespace CarRentalApp.Forms
     public class FilterByVozvrachen : FilterFormBase
     {
         private ComboBox _cmb;
-        public FilterByVozvrachen() : base("Автомобили в прокате / свободные") { }
+        public FilterByVozvrachen() : base("Автомобили в прокате / свободные", "f_vozvrat") { }
         protected override void BuildFilterPanel(FlowLayoutPanel panel)
         {
             panel.Controls.Add(L("Состояние:"));
@@ -147,7 +147,7 @@ namespace CarRentalApp.Forms
         protected override void ShowReport()
         {
             var (sql, prm) = BuildSql(false);
-            new ReportFormParam("В прокате / свободные", sql, prm).Show();
+            new ReportFormParam("В прокате / свободные", sql, prm, "f_vozvrat").Show();
         }
     }
 
@@ -155,7 +155,7 @@ namespace CarRentalApp.Forms
     public class FilterByDate : FilterFormBase
     {
         private DateTimePicker _dp;
-        public FilterByDate() : base("Прокат по дате") { }
+        public FilterByDate() : base("Прокат по дате", "f_data") { }
         protected override void BuildFilterPanel(FlowLayoutPanel panel)
         {
             panel.Controls.Add(L("Дата:"));
@@ -171,7 +171,7 @@ namespace CarRentalApp.Forms
         protected override void ShowReport()
         {
             var (sql, prm) = BuildSql(false);
-            new ReportFormParam("Прокат по дате", sql, prm).Show();
+            new ReportFormParam("Прокат по дате", sql, prm, "f_data").Show();
         }
     }
 
@@ -179,7 +179,7 @@ namespace CarRentalApp.Forms
     public class FilterByOplata : FilterFormBase
     {
         private ComboBox _cmb;
-        public FilterByOplata() : base("Оплачено / не оплачено") { }
+        public FilterByOplata() : base("Оплачено / не оплачено", "f_oplata") { }
         protected override void BuildFilterPanel(FlowLayoutPanel panel)
         {
             panel.Controls.Add(L("Оплата:"));
@@ -198,21 +198,21 @@ namespace CarRentalApp.Forms
         protected override void ShowReport()
         {
             var (sql, prm) = BuildSql(false);
-            new ReportFormParam("Оплата проката", sql, prm).Show();
+            new ReportFormParam("Оплата проката", sql, prm, "f_oplata").Show();
         }
     }
 
     // Отчёт с параметром (тёмная тема)
     public class ReportFormParam : Form
     {
-        public ReportFormParam(string title, string sql, SqlParameter prm)
+        public ReportFormParam(string title, string sql, SqlParameter prm, string poster = null)
         {
             Text = "Отчёт (фильтр): " + title;
             StartPosition = FormStartPosition.CenterScreen;
             Size = new Size(820, 600);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeHeader("Отчёт «" + title + "»"));
+            Controls.Add(UI.MakeBanner("Отчёт «" + title + "»", poster));
 
             var scroll = new FlowLayoutPanel
             {

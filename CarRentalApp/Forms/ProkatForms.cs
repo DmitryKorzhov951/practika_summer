@@ -20,7 +20,7 @@ namespace CarRentalApp.Forms
             Size = new Size(1200, 520);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeHeader("Прокат"));
+            Controls.Add(UI.MakeBanner("Прокат", "prokat"));
 
             _grid.Dock = DockStyle.Fill;
             _grid.AutoGenerateColumns = false;
@@ -86,7 +86,7 @@ namespace CarRentalApp.Forms
             Size = new Size(1200, 520);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeHeader("Прокат — табличная форма"));
+            Controls.Add(UI.MakeBanner("Прокат — табличная форма", "prokat"));
 
             var top = UI.MakeParamsPanel();
             top.Controls.Add(L("Поле:")); top.Controls.Add(_cmb);
@@ -157,6 +157,6 @@ namespace CarRentalApp.Forms
 
     public class ProkatReport : ReportForm
     {
-        public ProkatReport() : base("Прокат", ProkatGridForm.SqlText) { }
+        public ProkatReport() : base("Прокат", ProkatGridForm.SqlText, "prokat") { }
     }
 }

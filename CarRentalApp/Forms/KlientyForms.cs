@@ -20,7 +20,7 @@ namespace CarRentalApp.Forms
             Size = new Size(960, 480);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeHeader("Клиенты"));
+            Controls.Add(UI.MakeBanner("Клиенты", "klienty"));
 
             _grid.Dock = DockStyle.Fill;
             _grid.AutoGenerateColumns = false;
@@ -68,7 +68,7 @@ namespace CarRentalApp.Forms
             Size = new Size(960, 480);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeHeader("Клиенты — табличная форма"));
+            Controls.Add(UI.MakeBanner("Клиенты — табличная форма", "klienty"));
 
             var top = UI.MakeParamsPanel();
             top.Controls.Add(L("Поле:")); top.Controls.Add(_cmb);
@@ -124,6 +124,6 @@ namespace CarRentalApp.Forms
     {
         public KlientyReport() : base("Клиенты",
             @"SELECT FIO AS [ФИО], Pol AS [Пол], DataRozhdeniya AS [Дата рождения],
-                     Adres AS [Адрес], Telefon AS [Телефон], Pasport AS [Паспорт] FROM Klienty") { }
+                     Adres AS [Адрес], Telefon AS [Телефон], Pasport AS [Паспорт] FROM Klienty", "klienty") { }
     }
 }

@@ -11,7 +11,6 @@ namespace CarRentalApp.Forms
                    s.Pasport      AS [Паспорт],
                    d.Naimenovanie AS [Должность]
             FROM Sotrudniki s
-            JOIN Dolzhnosti d ON s.KodDolzhnosti = d.KodDolzhnosti")
-        { }
+            JOIN Dolzhnosti d ON s.KodDolzhnosti = d.KodDolzhnosti", "sotrudniki") { }
     }
 }

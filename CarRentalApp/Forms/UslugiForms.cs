@@ -21,7 +21,7 @@ namespace CarRentalApp.Forms
             Size = new Size(880, 460);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeHeader("Дополнительные услуги"));
+            Controls.Add(UI.MakeBanner("Дополнительные услуги", "uslugi"));
 
             _grid.Dock = DockStyle.Fill;
             _grid.AutoGenerateColumns = false;
@@ -69,7 +69,7 @@ namespace CarRentalApp.Forms
             Size = new Size(880, 460);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeHeader("Дополнительные услуги — табличная форма"));
+            Controls.Add(UI.MakeBanner("Дополнительные услуги — табличная форма", "uslugi"));
 
             var top = UI.MakeParamsPanel();
             top.Controls.Add(L("Поле:")); top.Controls.Add(_cmb);
@@ -123,6 +123,6 @@ namespace CarRentalApp.Forms
     public class UslugiReport : ReportForm
     {
         public UslugiReport() : base("Дополнительные услуги",
-            "SELECT Naimenovanie AS [Наименование], Opisanie AS [Описание], Cena AS [Цена] FROM Uslugi") { }
+            "SELECT Naimenovanie AS [Наименование], Opisanie AS [Описание], Cena AS [Цена] FROM Uslugi", "uslugi") { }
     }
 }

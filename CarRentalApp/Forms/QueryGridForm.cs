@@ -16,7 +16,7 @@ namespace CarRentalApp.Forms
         protected readonly TextBox _s = new() { Width = 140 };
         private readonly Action _onReport;
 
-        public QueryGridForm(string title, string sql, Action onReport)
+        public QueryGridForm(string title, string sql, Action onReport, string poster = null)
         {
             _onReport = onReport;
 
@@ -25,7 +25,7 @@ namespace CarRentalApp.Forms
             Size = new Size(960, 520);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeHeader("Запрос «" + title + "»"));
+            Controls.Add(UI.MakeBanner("Запрос «" + title + "»", poster));
 
             // Панель сорт/фильтр/поиск
             var top = UI.MakeParamsPanel();

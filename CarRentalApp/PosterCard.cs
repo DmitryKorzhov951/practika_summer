@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.IO;
 using System.Windows.Forms;
 
 namespace CarRentalApp
@@ -10,7 +8,6 @@ namespace CarRentalApp
     /// <summary>Карточка-постер в стиле Netflix: картинка + затемнение + hover-подсветка.</summary>
     public class PosterCard : Panel
     {
-        private static readonly Dictionary<string, Image> _cache = new();
         private bool _hover;
 
         public PosterCard(string posterFile, Action onClick)
@@ -22,7 +19,7 @@ namespace CarRentalApp
             DoubleBuffered = true;
             BackColor = UI.Surface;
 
-            var img = LoadPoster(posterFile);
+            var img = UI.LoadPoster(posterFile);
             if (img != null)
             {
                 BackgroundImage = img;
@@ -55,22 +52,6 @@ namespace CarRentalApp
                 using var pen = new Pen(UI.Border, 1);
                 g.DrawRectangle(pen, 0, 0, rect.Width - 1, rect.Height - 1);
             }
-        }
-
-        private static Image LoadPoster(string file)
-        {
-            if (_cache.TryGetValue(file, out var cached)) return cached;
-            try
-            {
-                string path = Path.Combine(AppContext.BaseDirectory,
-                    "Assets", "posters", file + ".png");
-                if (!File.Exists(path)) return null;
-                using var tmp = Image.FromFile(path);
-                var copy = new Bitmap(tmp);
-                _cache[file] = copy;
-                return copy;
-            }
-            catch { return null; }
         }
     }
 }

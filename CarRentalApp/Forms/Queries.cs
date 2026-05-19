@@ -11,7 +11,7 @@ namespace CarRentalApp.Forms
                    Dolzhnost AS [Должность], Oklad AS [Оклад],
                    Obyazannosti AS [Обязанности], Trebovaniya AS [Требования]
             FROM vw_OtdelKadrov";
-        public OtdelKadrovForm() : base("Отдел кадров", Sql, () => new OtdelKadrovReport().Show()) { }
+        public OtdelKadrovForm() : base("Отдел кадров", Sql, () => new OtdelKadrovReport().Show(), "q_kadrov") { }
 
         protected override void ExtendButtons(FlowLayoutPanel panel)
         {
@@ -21,7 +21,7 @@ namespace CarRentalApp.Forms
     }
     public class OtdelKadrovReport : ReportForm
     {
-        public OtdelKadrovReport() : base("Отдел кадров", OtdelKadrovForm.Sql) { }
+        public OtdelKadrovReport() : base("Отдел кадров", OtdelKadrovForm.Sql, "q_kadrov") { }
     }
 
     // ========= Автопарк =========
@@ -36,11 +36,11 @@ namespace CarRentalApp.Forms
                    DataTO AS [Дата ТО], Mehanik AS [Механик],
                    Otmetki AS [Отметки], Vozvrachen AS [Возвращён]
             FROM vw_Avtopark";
-        public AvtoparkForm() : base("Автопарк", Sql, () => new AvtoparkReport().Show()) { }
+        public AvtoparkForm() : base("Автопарк", Sql, () => new AvtoparkReport().Show(), "q_avtopark") { }
     }
     public class AvtoparkReport : ReportForm
     {
-        public AvtoparkReport() : base("Автопарк", AvtoparkForm.Sql) { }
+        public AvtoparkReport() : base("Автопарк", AvtoparkForm.Sql, "q_avtopark") { }
     }
 
     // ========= Автомобили в прокате =========
@@ -55,10 +55,10 @@ namespace CarRentalApp.Forms
                    Cena AS [Цена], Oplachen AS [Оплачен],
                    Sotrudnik AS [Сотрудник]
             FROM vw_AvtoVProkate";
-        public AvtoVProkateForm() : base("Автомобили в прокате", Sql, () => new AvtoVProkateReport().Show()) { }
+        public AvtoVProkateForm() : base("Автомобили в прокате", Sql, () => new AvtoVProkateReport().Show(), "q_vprokate") { }
     }
     public class AvtoVProkateReport : ReportForm
     {
-        public AvtoVProkateReport() : base("Автомобили в прокате", AvtoVProkateForm.Sql) { }
+        public AvtoVProkateReport() : base("Автомобили в прокате", AvtoVProkateForm.Sql, "q_vprokate") { }
     }
 }

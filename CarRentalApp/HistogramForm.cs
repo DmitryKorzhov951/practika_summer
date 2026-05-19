@@ -18,7 +18,7 @@ namespace CarRentalApp
             Size          = new Size(880, 540);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeHeader("Гистограмма заработной платы сотрудников"));
+            Controls.Add(UI.MakeBanner("Гистограмма заработной платы сотрудников", "q_kadrov"));
 
             _dt = Db.Load("SELECT FIO, Oklad, Dolzhnost FROM vw_OtdelKadrov ORDER BY Oklad DESC");
 

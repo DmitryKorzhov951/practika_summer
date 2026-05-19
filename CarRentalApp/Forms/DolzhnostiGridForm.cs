@@ -21,7 +21,7 @@ namespace CarRentalApp.Forms
             Size = new Size(900, 480);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeHeader("Должности — табличная форма"));
+            Controls.Add(UI.MakeBanner("Должности — табличная форма", "dolzhnosti"));
 
             var top = UI.MakeParamsPanel();
             top.Controls.Add(L("Поле:")); top.Controls.Add(_cmb);

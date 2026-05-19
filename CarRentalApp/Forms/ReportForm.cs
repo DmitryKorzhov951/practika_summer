@@ -7,14 +7,14 @@ namespace CarRentalApp.Forms
     /// <summary>Отчёт - тёмные карточки с цветной полосой слева.</summary>
     public class ReportForm : Form
     {
-        public ReportForm(string title, string sql)
+        public ReportForm(string title, string sql, string poster = null)
         {
             Text          = "Отчёт: " + title;
             StartPosition = FormStartPosition.CenterScreen;
             Size          = new Size(820, 600);
             UI.ApplyTheme(this);
 
-            Controls.Add(UI.MakeHeader("Отчёт «" + title + "»"));
+            Controls.Add(UI.MakeBanner("Отчёт «" + title + "»", poster));
 
             var scroll = new FlowLayoutPanel
             {

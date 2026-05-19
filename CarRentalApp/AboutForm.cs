@@ -36,10 +36,18 @@ namespace CarRentalApp
             var body = new Label
             {
                 Text      = "\nИнформационная система для учёта проката автомобилей.\nКурсовой проект.",
-                Dock      = DockStyle.Top, Height = 90,
+                Dock      = DockStyle.Top, Height = 70,
                 Font      = new Font("Segoe UI", 10),
                 ForeColor = UI.Text
             };
+            var author = new Label
+            {
+                Text      = "Работу выполнил студент группы ВИС-22\nКоржов Дмитрий",
+                Dock      = DockStyle.Top, Height = 56,
+                Font      = new Font("Segoe UI Semibold", 10, FontStyle.Bold),
+                ForeColor = UI.Accent
+            };
+            content.Controls.Add(author);
             content.Controls.Add(body);
             content.Controls.Add(sub);
             content.Controls.Add(title);

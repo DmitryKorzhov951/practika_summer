@@ -102,6 +102,15 @@ namespace CarRentalApp
             var p = new Panel { Dock = DockStyle.Top, Height = 72, BackColor = Color.FromArgb(12, 12, 14) };
             var img = LoadPoster(posterKey);
             p.Resize += (s, e) => p.Invalidate();
+            // Гарантируем, что баннер всегда у верхнего края (выше навигатора и панелей):
+            // при добавлении любого соседнего контрола уводим баннер в конец Z-order.
+            p.ParentChanged += (s, e) =>
+            {
+                if (p.Parent == null) return;
+                p.Parent.ControlAdded += (s2, e2) => p.SendToBack();
+                p.SendToBack();
+            };
+            p.HandleCreated += (s, e) => p.SendToBack();
             p.Paint += (s, e) =>
             {
                 var g = e.Graphics;

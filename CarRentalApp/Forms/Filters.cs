@@ -166,7 +166,7 @@ namespace CarRentalApp.Forms
         {
             string b = AvtoVProkateForm.Sql;
             if (reset) return (b, null);
-            return (b + @" WHERE [Дата выдачи] = @v OR [Дата возврата] = @v", new SqlParameter("@v", _dp.Value.Date));
+            return (b + " WHERE DataVydachi = @v OR DataVozvrata = @v", new SqlParameter("@v", _dp.Value.Date));
         }
         protected override void ShowReport()
         {

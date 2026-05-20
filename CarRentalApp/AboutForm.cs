@@ -35,8 +35,8 @@ namespace CarRentalApp
             };
             var body = new Label
             {
-                Text      = "\nИнформационная система для учёта проката автомобилей.\nКурсовой проект.",
-                Dock      = DockStyle.Top, Height = 70,
+                Text      = "\nИнформационная система для учёта проката автомобилей.",
+                Dock      = DockStyle.Top, Height = 50,
                 Font      = new Font("Segoe UI", 10),
                 ForeColor = UI.Text
             };

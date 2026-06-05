@@ -6,7 +6,6 @@ namespace CarRentalApp.Forms
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Panel panelHeaderAccent;
         private System.Windows.Forms.PictureBox picPoster;
-        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.DataGridView grid;
         private System.Windows.Forms.Panel panelButtons;
         private System.Windows.Forms.Button btnAdd;
@@ -40,7 +39,6 @@ namespace CarRentalApp.Forms
             this.panelHeader = new System.Windows.Forms.Panel();
             this.panelHeaderAccent = new System.Windows.Forms.Panel();
             this.picPoster = new System.Windows.Forms.PictureBox();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.grid = new System.Windows.Forms.DataGridView();
             this.panelButtons = new System.Windows.Forms.Panel();
             this.btnAdd = new System.Windows.Forms.Button();
@@ -76,22 +74,12 @@ namespace CarRentalApp.Forms
             this.panelHeader.Size = new System.Drawing.Size(1200, 130);
 
             // PictureBox занимает всё пространство шапки, картинка растягивается
-            this.picPoster.Controls.Add(this.lblTitle);
             this.picPoster.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picPoster.Image = ((System.Drawing.Image)(resources.GetObject("poster")));
             this.picPoster.Name = "picPoster";
             this.picPoster.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picPoster.TabStop = false;
 
-            // Полупрозрачная плёнка с белым жирным заголовком поверх постера
-            this.lblTitle.BackColor = System.Drawing.Color.FromArgb(110, 0, 0, 0);
-            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI Black", 22F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
-            this.lblTitle.Text = "ПРОКАТ";
-            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
             // Красная акцентная полоса в самом низу шапки
             this.panelHeaderAccent.BackColor = System.Drawing.Color.FromArgb(229, 57, 53);

@@ -5,7 +5,10 @@ using System.Windows.Forms;
 
 namespace CarRentalApp.Forms
 {
-    /// <summary>Ленточная форма "Клиенты". Раскладка контролов — в KlientyForm.Designer.cs.</summary>
+    /// <summary>
+    /// Ленточная форма «Клиенты». Раскладка и оформление — в KlientyForm.Designer.cs
+    /// (видно в конструкторе Visual Studio).
+    /// </summary>
     public partial class KlientyForm : Form
     {
         private readonly DataTable _dt = new();
@@ -14,42 +17,16 @@ namespace CarRentalApp.Forms
         public KlientyForm()
         {
             InitializeComponent();
-
-            // Тёмная тема и стиль таблицы поверх дизайнерской раскладки
-            UI.ApplyTheme(this);
-            UI.StyleGrid(grid);
             grid.DataSource = _bs;
 
-            // Навигатор перемещения по записям (под шапкой)
-            Controls.Add(new BindingNavigator(_bs)
-            {
-                Dock = DockStyle.Top, AddNewItem = null, DeleteItem = null
-            });
-
-            // Стилизация кнопок + обработчики
-            Style(btnAdd,   UI.BtnStyle.Accent,  (s, e) => _bs.AddNew());
-            Style(btnDel,   UI.BtnStyle.Danger,  (s, e) => Del());
-            Style(btnSave,  UI.BtnStyle.Primary, (s, e) => Save());
-            Style(btnTable, UI.BtnStyle.Default, (s, e) => new KlientyGridForm().Show());
-            Style(btnReport,UI.BtnStyle.Default, (s, e) => new KlientyReport().Show());
-            Style(btnClose, UI.BtnStyle.Default, (s, e) => Close());
+            btnAdd.Click    += (s, e) => _bs.AddNew();
+            btnDel.Click    += (s, e) => Del();
+            btnSave.Click   += (s, e) => Save();
+            btnTable.Click  += (s, e) => new KlientyGridForm().Show();
+            btnReport.Click += (s, e) => new KlientyReport().Show();
+            btnClose.Click  += (s, e) => Close();
 
             Load_();
-        }
-
-        private static void Style(Button b, UI.BtnStyle st, EventHandler onClick)
-        {
-            b.FlatStyle = FlatStyle.Flat;
-            b.Font = UI.BodyBold;
-            b.FlatAppearance.BorderSize = 1;
-            switch (st)
-            {
-                case UI.BtnStyle.Primary: b.BackColor = UI.Primary;   b.ForeColor = UI.OnPrimary; b.FlatAppearance.BorderColor = UI.Primary; break;
-                case UI.BtnStyle.Accent:  b.BackColor = UI.Accent;    b.ForeColor = System.Drawing.Color.FromArgb(40,28,0); b.FlatAppearance.BorderColor = UI.Accent; break;
-                case UI.BtnStyle.Danger:  b.BackColor = UI.PrimaryDk; b.ForeColor = UI.OnPrimary; b.FlatAppearance.BorderColor = UI.PrimaryDk; break;
-                default:                  b.BackColor = UI.Surface;   b.ForeColor = UI.Text;      b.FlatAppearance.BorderColor = UI.Border; break;
-            }
-            b.Click += onClick;
         }
 
         private void Load_()

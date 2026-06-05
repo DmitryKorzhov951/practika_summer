@@ -33,6 +33,7 @@
 
   <!-- Явная привязка .resx к формам как Embedded Resource -->
   <ItemGroup>
+    <EmbeddedResource Update="MainForm.resx">                <DependentUpon>MainForm.cs</DependentUpon>         </EmbeddedResource>
     <EmbeddedResource Update="Forms\KlientyForm.resx">      <DependentUpon>KlientyForm.cs</DependentUpon>      </EmbeddedResource>
     <EmbeddedResource Update="Forms\SotrudnikiForm.resx">   <DependentUpon>SotrudnikiForm.cs</DependentUpon>   </EmbeddedResource>
     <EmbeddedResource Update="Forms\DolzhnostiForm.resx">   <DependentUpon>DolzhnostiForm.cs</DependentUpon>   </EmbeddedResource>

@@ -5,13 +5,13 @@ using System.Windows.Forms;
 
 namespace CarRentalApp.Forms
 {
-    /// <summary>Ленточная форма. Раскладка — в MarkiForm.Designer.cs.</summary>
-    public partial class MarkiForm : Form
+    /// <summary>Ленточная форма. Раскладка — в UslugiForm.Designer.cs.</summary>
+    public partial class UslugiForm : Form
     {
         private readonly DataTable _dt = new();
         private readonly BindingSource _bs = new();
 
-        public MarkiForm()
+        public UslugiForm()
         {
             InitializeComponent();
 
@@ -20,8 +20,8 @@ namespace CarRentalApp.Forms
             btnAdd.Click    += (s, e) => _bs.AddNew();
             btnDel.Click    += (s, e) => Del();
             btnSave.Click   += (s, e) => Save();
-            btnTable.Click  += (s, e) => new MarkiGridForm().Show();
-            btnReport.Click += (s, e) => new MarkiReport().Show();
+            btnTable.Click  += (s, e) => new UslugiGridForm().Show();
+            btnReport.Click += (s, e) => new UslugiReport().Show();
             btnClose.Click  += (s, e) => Close();
 
             Load_();
@@ -29,12 +29,12 @@ namespace CarRentalApp.Forms
 
         private void Load_()
         {
-            try { _dt.Clear(); using var c = Db.Open(); using var da = new SqlDataAdapter("SELECT * FROM Marki", c); da.Fill(_dt); _bs.DataSource = _dt; }
+            try { _dt.Clear(); using var c = Db.Open(); using var da = new SqlDataAdapter("SELECT * FROM Uslugi", c); da.Fill(_dt); _bs.DataSource = _dt; }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Save()
         {
-            try { _bs.EndEdit(); using var c = Db.Open(); using var da = new SqlDataAdapter("SELECT * FROM Marki", c); using var b = new SqlCommandBuilder(da); _ = b; da.Update(_dt); MessageBox.Show("Сохранено."); }
+            try { _bs.EndEdit(); using var c = Db.Open(); using var da = new SqlDataAdapter("SELECT * FROM Uslugi", c); using var b = new SqlCommandBuilder(da); _ = b; da.Update(_dt); MessageBox.Show("Сохранено."); }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Del()

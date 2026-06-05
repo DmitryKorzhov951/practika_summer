@@ -1,72 +1,12 @@
 using System;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace CarRentalApp.Forms
 {
-    public class AvtomobiliForm : Form
-    {
-        private readonly DataTable _dt = new();
-        private readonly DataGridView _grid = new();
-        private readonly BindingSource _bs = new();
-
-        public AvtomobiliForm()
-        {
-            Text = "Автомобили";
-            StartPosition = FormStartPosition.CenterScreen;
-            Size = new Size(1100, 520);
-            UI.ApplyTheme(this);
-
-
-            _grid.Dock = DockStyle.Fill;
-            _grid.AutoGenerateColumns = false;
-            _grid.AllowUserToAddRows = true;
-            UI.StyleGrid(_grid);
-            _grid.AllowUserToAddRows = true;
-            _grid.DataSource = _bs;
-
-            var marki = Db.Load("SELECT KodMarki, Naimenovanie FROM Marki ORDER BY Naimenovanie");
-            _grid.Columns.Add(Combo("KodMarki", "Марка", marki, "Naimenovanie", "KodMarki"));
-
-            _grid.Columns.Add(Tx("RegNomer",        "Рег. номер"));
-            _grid.Columns.Add(Tx("NomerKuzova",     "Кузов"));
-            _grid.Columns.Add(Tx("NomerDvigatelya", "Двигатель"));
-            _grid.Columns.Add(Tx("GodVypuska",      "Год"));
-            _grid.Columns.Add(Tx("Probeg",          "Пробег"));
-            _grid.Columns.Add(Tx("CenaAvto",        "Цена"));
-            _grid.Columns.Add(Tx("CenaDnyaProkata", "Цена/день"));
-            _grid.Columns.Add(Tx("DataTO",          "Дата ТО"));
-
-            var meh = Db.Load("SELECT KodSotrudnika, FIO FROM Sotrudniki ORDER BY FIO");
-            _grid.Columns.Add(Combo("KodMehanika", "Механик", meh, "FIO", "KodSotrudnika"));
-
-            _grid.Columns.Add(Tx("Otmetki", "Отметки"));
-            _grid.Columns.Add(new DataGridViewCheckBoxColumn { DataPropertyName = "Vozvrachen", HeaderText = "Возвращён", Name = "Vozvrachen" });
-
-            Controls.Add(_grid);
-            Controls.Add(new BindingNavigator(_bs) { Dock = DockStyle.Top, AddNewItem = null, DeleteItem = null });
-
-            var btns = UI.MakeButtonsPanel();
-            btns.Controls.Add(UI.MakeBtn("Добавить",  (s,e) => _bs.AddNew(), 110, UI.BtnStyle.Accent));
-            btns.Controls.Add(UI.MakeBtn("Удалить",   (s,e) => Del(),  110, UI.BtnStyle.Danger));
-            btns.Controls.Add(UI.MakeBtn("Сохранить", (s,e) => Save(), 110, UI.BtnStyle.Primary));
-            btns.Controls.Add(UI.MakeBtn("Табличная", (s,e) => new AvtomobiliGridForm().Show()));
-            btns.Controls.Add(UI.MakeBtn("Отчёт",     (s,e) => new AvtomobiliReport().Show()));
-            btns.Controls.Add(UI.MakeBtn("Закрыть",   (s,e) => Close()));
-            Controls.Add(btns);
-            Controls.Add(UI.MakeBanner("Автомобили", "avtomobili"));
-            Load_();
-        }
-        private static DataGridViewTextBoxColumn Tx(string p, string h) => new() { DataPropertyName = p, HeaderText = h, Name = p };
-        private static DataGridViewComboBoxColumn Combo(string p, string h, DataTable src, string disp, string val) =>
-            new() { DataPropertyName = p, HeaderText = h, Name = p, DataSource = src, DisplayMember = disp, ValueMember = val, FlatStyle = FlatStyle.Standard };
-        private void Load_() { try { _dt.Clear(); using var c = Db.Open(); using var da = new SqlDataAdapter("SELECT * FROM Avtomobili", c); da.Fill(_dt); _bs.DataSource = _dt; } catch (Exception ex) { MessageBox.Show(ex.Message); } }
-        private void Save() { try { _bs.EndEdit(); using var c = Db.Open(); using var da = new SqlDataAdapter("SELECT * FROM Avtomobili", c); using var b = new SqlCommandBuilder(da); _ = b; da.Update(_dt); MessageBox.Show("Сохранено."); } catch (Exception ex) { MessageBox.Show(ex.Message); } }
-        private void Del() { if (_grid.CurrentRow == null || _grid.CurrentRow.IsNewRow) return; if (MessageBox.Show("Удалить?", "?", MessageBoxButtons.YesNo) == DialogResult.Yes) _grid.Rows.Remove(_grid.CurrentRow); }
-    }
+    // AvtomobiliForm перенесена в AvtomobiliForm.cs + AvtomobiliForm.Designer.cs
 
     public class AvtomobiliGridForm : Form
     {
@@ -82,7 +22,6 @@ namespace CarRentalApp.Forms
             StartPosition = FormStartPosition.CenterScreen;
             Size = new Size(1100, 520);
             UI.ApplyTheme(this);
-
 
             var top = UI.MakeParamsPanel();
             top.Controls.Add(L("Поле:")); top.Controls.Add(_cmb);

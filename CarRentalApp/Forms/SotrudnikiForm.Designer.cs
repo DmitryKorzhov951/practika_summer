@@ -3,7 +3,6 @@ namespace CarRentalApp.Forms
     partial class SotrudnikiForm
     {
         private System.ComponentModel.IContainer components = null;
-
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Panel panelHeaderAccent;
         private System.Windows.Forms.PictureBox picPoster;
@@ -16,14 +15,13 @@ namespace CarRentalApp.Forms
         private System.Windows.Forms.Button btnTable;
         private System.Windows.Forms.Button btnReport;
         private System.Windows.Forms.Button btnClose;
-
         private System.Windows.Forms.DataGridViewTextBoxColumn colFIO;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVozrast;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPol;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAdres;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTelefon;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPasport;
-        private System.Windows.Forms.DataGridViewComboBoxColumn colDolzhnost;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colKodDolzhnosti;
 
         protected override void Dispose(bool disposing)
         {
@@ -53,61 +51,47 @@ namespace CarRentalApp.Forms
             this.colAdres = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTelefon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPasport = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDolzhnost = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colKodDolzhnosti = new System.Windows.Forms.DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).BeginInit();
             this.panelHeader.SuspendLayout();
+            this.picPoster.SuspendLayout();
             this.panelButtons.SuspendLayout();
             this.SuspendLayout();
-            //
-            // panelHeader
-            //
+
+            // ===== Шапка: постер растянут на всю ширину, заголовок-плёнка поверх =====
             this.panelHeader.BackColor = System.Drawing.Color.FromArgb(12, 12, 14);
-            this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Controls.Add(this.picPoster);
             this.panelHeader.Controls.Add(this.panelHeaderAccent);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(960, 72);
-            this.panelHeader.TabIndex = 0;
-            //
-            // picPoster
-            //
+            this.panelHeader.Size = new System.Drawing.Size(960, 130);
+
+            // PictureBox занимает всё пространство шапки, картинка растягивается
+            this.picPoster.Controls.Add(this.lblTitle);
             this.picPoster.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picPoster.Image = ((System.Drawing.Image)(resources.GetObject("poster")));
-            this.picPoster.Location = new System.Drawing.Point(0, 0);
             this.picPoster.Name = "picPoster";
-            this.picPoster.Size = new System.Drawing.Size(960, 69);
-            this.picPoster.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picPoster.TabIndex = 0;
+            this.picPoster.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picPoster.TabStop = false;
-            //
-            // panelHeaderAccent
-            //
-            this.panelHeaderAccent.BackColor = System.Drawing.Color.FromArgb(229, 57, 53);
-            this.panelHeaderAccent.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelHeaderAccent.Location = new System.Drawing.Point(0, 69);
-            this.panelHeaderAccent.Name = "panelHeaderAccent";
-            this.panelHeaderAccent.Size = new System.Drawing.Size(960, 3);
-            this.panelHeaderAccent.TabIndex = 1;
-            //
-            // lblTitle
-            //
-            this.lblTitle.BackColor = System.Drawing.Color.FromArgb(160, 12, 12, 14);
-            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
+
+            // Полупрозрачная плёнка с белым жирным заголовком поверх постера
+            this.lblTitle.BackColor = System.Drawing.Color.FromArgb(110, 0, 0, 0);
+            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI Black", 22F, System.Drawing.FontStyle.Bold);
             this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(0, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Padding = new System.Windows.Forms.Padding(22, 0, 22, 0);
-            this.lblTitle.Size = new System.Drawing.Size(280, 69);
-            this.lblTitle.TabIndex = 2;
+            this.lblTitle.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.lblTitle.Text = "СОТРУДНИКИ";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
-            // grid
-            //
+
+            // Красная акцентная полоса в самом низу шапки
+            this.panelHeaderAccent.BackColor = System.Drawing.Color.FromArgb(229, 57, 53);
+            this.panelHeaderAccent.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelHeaderAccent.Name = "panelHeaderAccent";
+            this.panelHeaderAccent.Size = new System.Drawing.Size(960, 4);
+
+            // ===== Сетка данных =====
             this.grid.AllowUserToAddRows = true;
             this.grid.AllowUserToResizeRows = false;
             this.grid.AutoGenerateColumns = false;
@@ -116,16 +100,21 @@ namespace CarRentalApp.Forms
             this.grid.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.grid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.grid.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(15, 15, 18);
-            this.grid.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.grid.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
             this.grid.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
             this.grid.ColumnHeadersDefaultCellStyle.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
-            this.grid.ColumnHeadersHeight = 36;
+            this.grid.ColumnHeadersHeight = 38;
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-                this.colFIO, this.colVozrast, this.colPol, this.colAdres,
-                this.colTelefon, this.colPasport, this.colDolzhnost});
+                this.colFIO,
+                this.colVozrast,
+                this.colPol,
+                this.colAdres,
+                this.colTelefon,
+                this.colPasport,
+                this.colKodDolzhnosti});
             this.grid.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
-            this.grid.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.grid.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.grid.DefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
             this.grid.DefaultCellStyle.Padding = new System.Windows.Forms.Padding(6, 2, 6, 2);
             this.grid.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(183, 28, 28);
@@ -135,32 +124,19 @@ namespace CarRentalApp.Forms
             this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grid.EnableHeadersVisualStyles = false;
             this.grid.GridColor = System.Drawing.Color.FromArgb(60, 60, 66);
-            this.grid.Location = new System.Drawing.Point(0, 72);
             this.grid.Name = "grid";
             this.grid.RowHeadersVisible = false;
             this.grid.RowTemplate.Height = 28;
             this.grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grid.Size = new System.Drawing.Size(960, 398);
-            this.grid.TabIndex = 1;
-            //
             this.colFIO.DataPropertyName = "FIO"; this.colFIO.HeaderText = "ФИО"; this.colFIO.Name = "colFIO";
             this.colVozrast.DataPropertyName = "Vozrast"; this.colVozrast.HeaderText = "Возраст"; this.colVozrast.Name = "colVozrast";
             this.colPol.DataPropertyName = "Pol"; this.colPol.HeaderText = "Пол"; this.colPol.Name = "colPol";
             this.colAdres.DataPropertyName = "Adres"; this.colAdres.HeaderText = "Адрес"; this.colAdres.Name = "colAdres";
             this.colTelefon.DataPropertyName = "Telefon"; this.colTelefon.HeaderText = "Телефон"; this.colTelefon.Name = "colTelefon";
             this.colPasport.DataPropertyName = "Pasport"; this.colPasport.HeaderText = "Паспорт"; this.colPasport.Name = "colPasport";
-            //
-            // colDolzhnost (комбобокс — FK)
-            //
-            this.colDolzhnost.DataPropertyName = "KodDolzhnosti";
-            this.colDolzhnost.DisplayMember = "Naimenovanie";
-            this.colDolzhnost.ValueMember = "KodDolzhnosti";
-            this.colDolzhnost.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
-            this.colDolzhnost.HeaderText = "Должность";
-            this.colDolzhnost.Name = "colDolzhnost";
-            //
-            // panelButtons
-            //
+            this.colKodDolzhnosti.DataPropertyName = "KodDolzhnosti"; this.colKodDolzhnosti.HeaderText = "Должность"; this.colKodDolzhnosti.Name = "colKodDolzhnosti"; this.colKodDolzhnosti.DisplayMember = "Naimenovanie"; this.colKodDolzhnosti.ValueMember = "KodDolzhnosti"; this.colKodDolzhnosti.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
+
+            // ===== Нижняя панель кнопок =====
             this.panelButtons.BackColor = System.Drawing.Color.FromArgb(22, 22, 26);
             this.panelButtons.Controls.Add(this.btnAdd);
             this.panelButtons.Controls.Add(this.btnDel);
@@ -169,66 +145,48 @@ namespace CarRentalApp.Forms
             this.panelButtons.Controls.Add(this.btnReport);
             this.panelButtons.Controls.Add(this.btnClose);
             this.panelButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelButtons.Location = new System.Drawing.Point(0, 470);
             this.panelButtons.Name = "panelButtons";
             this.panelButtons.Size = new System.Drawing.Size(960, 50);
-            this.panelButtons.TabIndex = 2;
-            //
-            // btnAdd
-            //
+
+            // btnAdd (Accent)
             this.btnAdd.BackColor = System.Drawing.Color.FromArgb(255, 193, 7);
             this.btnAdd.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(255, 193, 7);
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdd.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.btnAdd.ForeColor = System.Drawing.Color.FromArgb(40, 28, 0);
             this.btnAdd.Location = new System.Drawing.Point(12, 9);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(110, 32);
-            this.btnAdd.TabIndex = 0;
-            this.btnAdd.Text = "Добавить";
-            this.btnAdd.UseVisualStyleBackColor = false;
-            //
-            // btnDel
-            //
+            this.btnAdd.Name = "btnAdd"; this.btnAdd.Size = new System.Drawing.Size(110, 32);
+            this.btnAdd.Text = "Добавить"; this.btnAdd.UseVisualStyleBackColor = false;
+
+            // btnDel (Danger)
             this.btnDel.BackColor = System.Drawing.Color.FromArgb(183, 28, 28);
             this.btnDel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(183, 28, 28);
             this.btnDel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDel.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.btnDel.ForeColor = System.Drawing.Color.White;
             this.btnDel.Location = new System.Drawing.Point(128, 9);
-            this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(110, 32);
-            this.btnDel.TabIndex = 1;
-            this.btnDel.Text = "Удалить";
-            this.btnDel.UseVisualStyleBackColor = false;
-            //
-            // btnSave
-            //
+            this.btnDel.Name = "btnDel"; this.btnDel.Size = new System.Drawing.Size(110, 32);
+            this.btnDel.Text = "Удалить"; this.btnDel.UseVisualStyleBackColor = false;
+
+            // btnSave (Primary)
             this.btnSave.BackColor = System.Drawing.Color.FromArgb(229, 57, 53);
             this.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(229, 57, 53);
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.Location = new System.Drawing.Point(244, 9);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(110, 32);
-            this.btnSave.TabIndex = 2;
-            this.btnSave.Text = "Сохранить";
-            this.btnSave.UseVisualStyleBackColor = false;
-            //
-            // btnTable / btnReport / btnClose
-            //
+            this.btnSave.Name = "btnSave"; this.btnSave.Size = new System.Drawing.Size(110, 32);
+            this.btnSave.Text = "Сохранить"; this.btnSave.UseVisualStyleBackColor = false;
+
+            // btnTable / btnReport / btnClose (Default)
             this.btnTable.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
             this.btnTable.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(60, 60, 66);
             this.btnTable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTable.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.btnTable.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
             this.btnTable.Location = new System.Drawing.Point(360, 9);
-            this.btnTable.Name = "btnTable";
-            this.btnTable.Size = new System.Drawing.Size(110, 32);
-            this.btnTable.TabIndex = 3;
-            this.btnTable.Text = "Табличная";
-            this.btnTable.UseVisualStyleBackColor = false;
+            this.btnTable.Name = "btnTable"; this.btnTable.Size = new System.Drawing.Size(110, 32);
+            this.btnTable.Text = "Табличная"; this.btnTable.UseVisualStyleBackColor = false;
 
             this.btnReport.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
             this.btnReport.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(60, 60, 66);
@@ -236,11 +194,8 @@ namespace CarRentalApp.Forms
             this.btnReport.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.btnReport.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
             this.btnReport.Location = new System.Drawing.Point(476, 9);
-            this.btnReport.Name = "btnReport";
-            this.btnReport.Size = new System.Drawing.Size(110, 32);
-            this.btnReport.TabIndex = 4;
-            this.btnReport.Text = "Отчёт";
-            this.btnReport.UseVisualStyleBackColor = false;
+            this.btnReport.Name = "btnReport"; this.btnReport.Size = new System.Drawing.Size(110, 32);
+            this.btnReport.Text = "Отчёт"; this.btnReport.UseVisualStyleBackColor = false;
 
             this.btnClose.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
             this.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(60, 60, 66);
@@ -248,14 +203,10 @@ namespace CarRentalApp.Forms
             this.btnClose.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.btnClose.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
             this.btnClose.Location = new System.Drawing.Point(592, 9);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(110, 32);
-            this.btnClose.TabIndex = 5;
-            this.btnClose.Text = "Закрыть";
-            this.btnClose.UseVisualStyleBackColor = false;
-            //
-            // SotrudnikiForm
-            //
+            this.btnClose.Name = "btnClose"; this.btnClose.Size = new System.Drawing.Size(110, 32);
+            this.btnClose.Text = "Закрыть"; this.btnClose.UseVisualStyleBackColor = false;
+
+            // ===== Форма =====
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(18, 18, 20);
@@ -270,6 +221,7 @@ namespace CarRentalApp.Forms
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).EndInit();
             this.panelHeader.ResumeLayout(false);
+            this.picPoster.ResumeLayout(false);
             this.panelButtons.ResumeLayout(false);
             this.ResumeLayout(false);
         }

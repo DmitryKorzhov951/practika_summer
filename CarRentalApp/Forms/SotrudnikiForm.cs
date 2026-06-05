@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace CarRentalApp.Forms
 {
-    /// <summary>Ленточная форма «Сотрудники». Раскладка и оформление — в SotrudnikiForm.Designer.cs.</summary>
+    /// <summary>Ленточная форма. Раскладка — в SotrudnikiForm.Designer.cs.</summary>
     public partial class SotrudnikiForm : Form
     {
         private readonly DataTable _dt = new();
@@ -14,11 +14,7 @@ namespace CarRentalApp.Forms
         public SotrudnikiForm()
         {
             InitializeComponent();
-
-            // Источник данных для комбобокса должностей (FK)
-            colDolzhnost.DataSource = Db.Load(
-                "SELECT KodDolzhnosti, Naimenovanie FROM Dolzhnosti ORDER BY Naimenovanie");
-
+            colKodDolzhnosti.DataSource = Db.Load("SELECT KodDolzhnosti, Naimenovanie FROM Dolzhnosti ORDER BY Naimenovanie");
             grid.DataSource = _bs;
 
             btnAdd.Click    += (s, e) => _bs.AddNew();

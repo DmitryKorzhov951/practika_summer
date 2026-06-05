@@ -5,10 +5,7 @@ using System.Windows.Forms;
 
 namespace CarRentalApp.Forms
 {
-    /// <summary>
-    /// Ленточная форма «Клиенты». Раскладка и оформление — в KlientyForm.Designer.cs
-    /// (видно в конструкторе Visual Studio).
-    /// </summary>
+    /// <summary>Ленточная форма. Раскладка — в KlientyForm.Designer.cs.</summary>
     public partial class KlientyForm : Form
     {
         private readonly DataTable _dt = new();
@@ -17,6 +14,7 @@ namespace CarRentalApp.Forms
         public KlientyForm()
         {
             InitializeComponent();
+
             grid.DataSource = _bs;
 
             btnAdd.Click    += (s, e) => _bs.AddNew();

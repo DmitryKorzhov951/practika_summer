@@ -1,84 +1,50 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace CarRentalApp.Forms
 {
-    public class SotrudnikiForm : Form
+    /// <summary>Ленточная форма «Сотрудники». Раскладка и оформление — в SotrudnikiForm.Designer.cs.</summary>
+    public partial class SotrudnikiForm : Form
     {
         private readonly DataTable _dt = new();
-        private readonly DataGridView _grid = new();
         private readonly BindingSource _bs = new();
 
         public SotrudnikiForm()
         {
-            Text = "Сотрудники";
-            StartPosition = FormStartPosition.CenterScreen;
-            Size = new Size(960, 520);
-            UI.ApplyTheme(this);
+            InitializeComponent();
 
+            // Источник данных для комбобокса должностей (FK)
+            colDolzhnost.DataSource = Db.Load(
+                "SELECT KodDolzhnosti, Naimenovanie FROM Dolzhnosti ORDER BY Naimenovanie");
 
-            _grid.Dock = DockStyle.Fill;
-            _grid.AutoGenerateColumns = false;
-            _grid.AllowUserToAddRows = true;
-            UI.StyleGrid(_grid);
-            _grid.AllowUserToAddRows = true;
-            _grid.DataSource = _bs;
+            grid.DataSource = _bs;
 
-            _grid.Columns.Add(Tx("FIO",     "ФИО"));
-            _grid.Columns.Add(Tx("Vozrast", "Возраст"));
-            _grid.Columns.Add(Tx("Pol",     "Пол"));
-            _grid.Columns.Add(Tx("Adres",   "Адрес"));
-            _grid.Columns.Add(Tx("Telefon", "Телефон"));
-            _grid.Columns.Add(Tx("Pasport", "Паспорт"));
+            btnAdd.Click    += (s, e) => _bs.AddNew();
+            btnDel.Click    += (s, e) => Del();
+            btnSave.Click   += (s, e) => Save();
+            btnTable.Click  += (s, e) => new SotrudnikiGridForm().Show();
+            btnReport.Click += (s, e) => new SotrudnikiReport().Show();
+            btnClose.Click  += (s, e) => Close();
 
-            var dolzh = Db.Load("SELECT KodDolzhnosti, Naimenovanie FROM Dolzhnosti ORDER BY Naimenovanie");
-            _grid.Columns.Add(new DataGridViewComboBoxColumn
-            {
-                DataPropertyName = "KodDolzhnosti", HeaderText = "Должность", Name = "KodDolzhnosti",
-                DataSource = dolzh, DisplayMember = "Naimenovanie", ValueMember = "KodDolzhnosti",
-                FlatStyle = FlatStyle.Standard
-            });
-            Controls.Add(_grid);
-
-            Controls.Add(new BindingNavigator(_bs)
-            {
-                Dock = DockStyle.Top, AddNewItem = null, DeleteItem = null
-            });
-
-            var btns = UI.MakeButtonsPanel();
-            btns.Controls.Add(UI.MakeBtn("Добавить",       (s, e) => _bs.AddNew(),    110, UI.BtnStyle.Accent));
-            btns.Controls.Add(UI.MakeBtn("Удалить",        (s, e) => DeleteCurrent(), 110, UI.BtnStyle.Danger));
-            btns.Controls.Add(UI.MakeBtn("Сохранить",      (s, e) => SaveAll(),       110, UI.BtnStyle.Primary));
-            btns.Controls.Add(UI.MakeBtn("Табличная",      (s, e) => new SotrudnikiGridForm().Show()));
-            btns.Controls.Add(UI.MakeBtn("Отчёт",          (s, e) => new SotrudnikiReport().Show()));
-            btns.Controls.Add(UI.MakeBtn("Закрыть",        (s, e) => Close()));
-            Controls.Add(btns);
-            Controls.Add(UI.MakeBanner("Сотрудники", "sotrudniki"));
-
-            LoadData();
+            Load_();
         }
 
-        private static DataGridViewTextBoxColumn Tx(string p, string h) => new() { DataPropertyName = p, HeaderText = h, Name = p };
-
-        private void LoadData()
+        private void Load_()
         {
             try { _dt.Clear(); using var c = Db.Open(); using var da = new SqlDataAdapter("SELECT * FROM Sotrudniki", c); da.Fill(_dt); _bs.DataSource = _dt; }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
-        private void SaveAll()
+        private void Save()
         {
-            try { _bs.EndEdit(); using var c = Db.Open(); using var da = new SqlDataAdapter("SELECT * FROM Sotrudniki", c);
-                  using var b = new SqlCommandBuilder(da); _ = b; da.Update(_dt); MessageBox.Show("Сохранено."); }
+            try { _bs.EndEdit(); using var c = Db.Open(); using var da = new SqlDataAdapter("SELECT * FROM Sotrudniki", c); using var b = new SqlCommandBuilder(da); _ = b; da.Update(_dt); MessageBox.Show("Сохранено."); }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
-        private void DeleteCurrent()
+        private void Del()
         {
-            if (_grid.CurrentRow == null || _grid.CurrentRow.IsNewRow) return;
-            if (MessageBox.Show("Удалить?", "?", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                _grid.Rows.Remove(_grid.CurrentRow);
+            if (grid.CurrentRow == null || grid.CurrentRow.IsNewRow) return;
+            if (MessageBox.Show("Удалить?", "?", MessageBoxButtons.YesNo) == DialogResult.Yes) grid.Rows.Remove(grid.CurrentRow);
         }
     }
 }

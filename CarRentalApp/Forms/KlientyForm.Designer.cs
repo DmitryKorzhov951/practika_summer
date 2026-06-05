@@ -6,6 +6,7 @@ namespace CarRentalApp.Forms
 
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Panel panelHeaderAccent;
+        private System.Windows.Forms.PictureBox picPoster;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.DataGridView grid;
         private System.Windows.Forms.Panel panelButtons;
@@ -31,8 +32,11 @@ namespace CarRentalApp.Forms
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(KlientyForm));
             this.panelHeader = new System.Windows.Forms.Panel();
             this.panelHeaderAccent = new System.Windows.Forms.Panel();
+            this.picPoster = new System.Windows.Forms.PictureBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.grid = new System.Windows.Forms.DataGridView();
             this.panelButtons = new System.Windows.Forms.Panel();
@@ -49,6 +53,7 @@ namespace CarRentalApp.Forms
             this.colTelefon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPasport = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picPoster)).BeginInit();
             this.panelHeader.SuspendLayout();
             this.panelButtons.SuspendLayout();
             this.SuspendLayout();
@@ -57,12 +62,24 @@ namespace CarRentalApp.Forms
             //
             this.panelHeader.BackColor = System.Drawing.Color.FromArgb(12, 12, 14);
             this.panelHeader.Controls.Add(this.lblTitle);
+            this.panelHeader.Controls.Add(this.picPoster);
             this.panelHeader.Controls.Add(this.panelHeaderAccent);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(960, 72);
             this.panelHeader.TabIndex = 0;
+            //
+            // picPoster (фоновый постер шапки)
+            //
+            this.picPoster.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picPoster.Image = ((System.Drawing.Image)(resources.GetObject("poster")));
+            this.picPoster.Location = new System.Drawing.Point(0, 0);
+            this.picPoster.Name = "picPoster";
+            this.picPoster.Size = new System.Drawing.Size(960, 69);
+            this.picPoster.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picPoster.TabIndex = 0;
+            this.picPoster.TabStop = false;
             //
             // panelHeaderAccent (красная полоса снизу шапки)
             //
@@ -73,15 +90,16 @@ namespace CarRentalApp.Forms
             this.panelHeaderAccent.Size = new System.Drawing.Size(960, 3);
             this.panelHeaderAccent.TabIndex = 0;
             //
-            // lblTitle
+            // lblTitle (поверх постера)
             //
-            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTitle.BackColor = System.Drawing.Color.FromArgb(160, 12, 12, 14);
+            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Left;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
             this.lblTitle.ForeColor = System.Drawing.Color.White;
             this.lblTitle.Location = new System.Drawing.Point(0, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Padding = new System.Windows.Forms.Padding(22, 0, 0, 0);
-            this.lblTitle.Size = new System.Drawing.Size(960, 69);
+            this.lblTitle.Padding = new System.Windows.Forms.Padding(22, 0, 22, 0);
+            this.lblTitle.Size = new System.Drawing.Size(280, 69);
             this.lblTitle.TabIndex = 1;
             this.lblTitle.Text = "КЛИЕНТЫ";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -271,6 +289,7 @@ namespace CarRentalApp.Forms
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Клиенты";
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picPoster)).EndInit();
             this.panelHeader.ResumeLayout(false);
             this.panelButtons.ResumeLayout(false);
             this.ResumeLayout(false);

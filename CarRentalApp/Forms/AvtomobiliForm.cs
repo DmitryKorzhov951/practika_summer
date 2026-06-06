@@ -13,7 +13,6 @@ namespace CarRentalApp.Forms
         public AvtomobiliForm()
         {
             InitializeComponent();
-            // Очищаем образцы строк из дизайнера перед привязкой к реальным данным
             grid.Rows.Clear();
             colKodMarki.Items.Clear(); colKodMarki.DataSource = Db.Load("SELECT KodMarki, Naimenovanie FROM Marki ORDER BY Naimenovanie");
             colKodMehanika.Items.Clear(); colKodMehanika.DataSource = Db.Load("SELECT KodSotrudnika, FIO FROM Sotrudniki ORDER BY FIO");

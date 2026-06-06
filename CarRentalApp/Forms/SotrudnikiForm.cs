@@ -13,7 +13,6 @@ namespace CarRentalApp.Forms
         public SotrudnikiForm()
         {
             InitializeComponent();
-            // Очищаем образцы строк из дизайнера перед привязкой к реальным данным
             grid.Rows.Clear();
             colKodDolzhnosti.Items.Clear(); colKodDolzhnosti.DataSource = Db.Load("SELECT KodDolzhnosti, Naimenovanie FROM Dolzhnosti ORDER BY Naimenovanie");
             grid.DataSource = bs;

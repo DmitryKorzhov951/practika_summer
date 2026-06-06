@@ -13,7 +13,6 @@ namespace CarRentalApp.Forms
         public UslugiForm()
         {
             InitializeComponent();
-            // Очищаем образцы строк из дизайнера перед привязкой к реальным данным
             grid.Rows.Clear();
 
             grid.DataSource = bs;

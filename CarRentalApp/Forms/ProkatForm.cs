@@ -13,7 +13,6 @@ namespace CarRentalApp.Forms
         public ProkatForm()
         {
             InitializeComponent();
-            // Очищаем образцы строк из дизайнера перед привязкой к реальным данным
             grid.Rows.Clear();
             colKodAvtomobilya.Items.Clear(); colKodAvtomobilya.DataSource = Db.Load("SELECT KodAvtomobilya, RegNomer FROM Avtomobili ORDER BY RegNomer");
             colKodKlienta.Items.Clear(); colKodKlienta.DataSource = Db.Load("SELECT KodKlienta, FIO FROM Klienty ORDER BY FIO");

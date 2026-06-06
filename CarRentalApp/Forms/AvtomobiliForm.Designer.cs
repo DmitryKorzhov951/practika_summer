@@ -44,6 +44,21 @@ namespace CarRentalApp.Forms
             base.Dispose(disposing);
         }
 
+        private void PaintHeader(object sender, System.Windows.Forms.PaintEventArgs e)
+        {
+            var g = e.Graphics;
+            var r = this.panelHeader.ClientRectangle;
+            using (var grad = new System.Drawing.Drawing2D.LinearGradientBrush(
+                r,
+                System.Drawing.Color.FromArgb(12, 12, 14),
+                System.Drawing.Color.FromArgb(70, 18, 22),
+                System.Drawing.Drawing2D.LinearGradientMode.Horizontal))
+                g.FillRectangle(grad, r);
+            using var red = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(229, 57, 53));
+            g.FillRectangle(red, 0, 0, r.Width, 2);
+            g.FillRectangle(red, 0, 0, 5, r.Height);
+        }
+
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
@@ -89,16 +104,18 @@ namespace CarRentalApp.Forms
             this.panelButtons.SuspendLayout();
             this.SuspendLayout();
 
-            // ===== Шапка: чёрная плашка с заголовком слева =====
+            // ===== Шапка: тёмный градиент + красные полосы =====
             this.panelHeader.BackColor = System.Drawing.Color.FromArgb(12, 12, 14);
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Controls.Add(this.panelHeaderAccent);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1200, 56);
+            this.panelHeader.Paint += new System.Windows.Forms.PaintEventHandler(this.PaintHeader);
 
+            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
             this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI Black", 14F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI Black", 13F, System.Drawing.FontStyle.Bold);
             this.lblTitle.ForeColor = System.Drawing.Color.White;
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Padding = new System.Windows.Forms.Padding(22, 0, 0, 0);

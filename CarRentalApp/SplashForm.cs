@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace CarRentalApp
 {
-    /// <summary>Заставка приложения. Раскладка и отрисовка — в SplashForm.Designer.cs.</summary>
+    /// <summary>Заставка приложения. Раскладка и отрисовка — в SplashForm.Designer.cs / SplashBackground.cs.</summary>
     public partial class SplashForm : Form
     {
         public SplashForm()
@@ -11,6 +11,7 @@ namespace CarRentalApp
             InitializeComponent();
             timer.Tick += (s, e) => { timer.Stop(); Close(); };
             Click += (s, e) => Close();
+            splashBg.Click += (s, e) => Close();
         }
 
         protected override void OnShown(EventArgs e)

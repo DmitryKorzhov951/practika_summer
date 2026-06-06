@@ -118,7 +118,7 @@ namespace CarRentalApp.Forms
 
             this.navMoveFirst.Name = "navMoveFirst"; this.navMoveFirst.Text = "|<"; this.navMoveFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.navMovePrev.Name = "navMovePrev"; this.navMovePrev.Text = "<"; this.navMovePrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.navPosition.Name = "navPosition"; this.navPosition.Size = new System.Drawing.Size(40, 25); this.navPosition.AccessibleName = "Position";
+            this.navPosition.Name = "navPosition"; this.navPosition.Size = new System.Drawing.Size(40, 25); this.navPosition.AccessibleName = "Position"; this.navPosition.Text = "1";
             this.navCount.Name = "navCount"; this.navCount.Text = "/ {0}"; this.navCount.ToolTipText = "Всего записей";
             this.navMoveNext.Name = "navMoveNext"; this.navMoveNext.Text = ">"; this.navMoveNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.navMoveLast.Name = "navMoveLast"; this.navMoveLast.Text = ">|"; this.navMoveLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -138,6 +138,8 @@ namespace CarRentalApp.Forms
             this.grid.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
             this.grid.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
             this.grid.ColumnHeadersDefaultCellStyle.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.grid.ColumnHeadersDefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(15, 15, 18);
+            this.grid.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
             this.grid.ColumnHeadersHeight = 36;
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -147,7 +149,6 @@ namespace CarRentalApp.Forms
                 this.colAdres,
                 this.colTelefon,
                 this.colPasport});
-            this.grid.DataSource = this.bs;
             this.grid.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
             this.grid.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.grid.DefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
@@ -169,6 +170,18 @@ namespace CarRentalApp.Forms
             this.colAdres.DataPropertyName = "Adres"; this.colAdres.HeaderText = "Адрес"; this.colAdres.Name = "colAdres"; this.colAdres.MinimumWidth = 90;
             this.colTelefon.DataPropertyName = "Telefon"; this.colTelefon.HeaderText = "Телефон"; this.colTelefon.Name = "colTelefon"; this.colTelefon.MinimumWidth = 90;
             this.colPasport.DataPropertyName = "Pasport"; this.colPasport.HeaderText = "Паспорт"; this.colPasport.Name = "colPasport"; this.colPasport.MinimumWidth = 90;
+
+            // ===== Образец строк (видимы только в конструкторе; на запуске затираются DataSource) =====
+            this.grid.Rows.Add(new object[] { "Иванов Сергей Петрович", "М", "15.03.1985", "Москва, ул. Ленина, 12", "+7(495)123-45-67", "4510 123456" });
+            this.grid.Rows.Add(new object[] { "Петрова Ольга Ивановна", "Ж", "22.07.1992", "Москва, ул. Тверская, 25", "+7(495)234-56-78", "4511 234567" });
+            this.grid.Rows.Add(new object[] { "Сидоров Андрей Михайлович", "М", "10.11.1988", "Москва, пр. Мира, 45", "+7(495)345-67-89", "4512 345678" });
+            this.grid.Rows.Add(new object[] { "Кузнецов Дмитрий Олегович", "М", "05.02.1990", "Москва, ул. Арбат, 7", "+7(495)456-78-90", "4513 456789" });
+            this.grid.Rows.Add(new object[] { "Морозова Анна Викторовна", "Ж", "18.06.1995", "Москва, ул. Покровка, 33", "+7(495)567-89-01", "4514 567890" });
+            this.grid.Rows.Add(new object[] { "Васильев Игорь Юрьевич", "М", "30.09.1983", "Москва, ул. Садовая, 15", "+7(495)678-90-12", "4515 678901" });
+            this.grid.Rows.Add(new object[] { "Новикова Елена Сергеевна", "Ж", "12.04.1998", "Москва, ул. Полянка, 18", "+7(495)789-01-23", "4516 789012" });
+            this.grid.Rows.Add(new object[] { "Фёдоров Алексей Иванович", "М", "25.07.1986", "Москва, ул. Якиманка, 5", "+7(495)890-12-34", "4517 890123" });
+            this.grid.Rows.Add(new object[] { "Соколова Мария Александровна", "Ж", "08.12.1993", "Москва, ул. Остоженка, 22", "+7(495)901-23-45", "4518 901234" });
+            this.grid.Rows.Add(new object[] { "Михайлов Олег Дмитриевич", "М", "14.05.1977", "Москва, ул. Пречистенка, 9", "+7(495)012-34-56", "4519 012345" });
 
             // ===== Нижняя панель кнопок =====
             this.panelButtons.BackColor = System.Drawing.Color.FromArgb(22, 22, 26);

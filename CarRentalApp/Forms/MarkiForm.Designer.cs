@@ -112,7 +112,7 @@ namespace CarRentalApp.Forms
 
             this.navMoveFirst.Name = "navMoveFirst"; this.navMoveFirst.Text = "|<"; this.navMoveFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.navMovePrev.Name = "navMovePrev"; this.navMovePrev.Text = "<"; this.navMovePrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.navPosition.Name = "navPosition"; this.navPosition.Size = new System.Drawing.Size(40, 25); this.navPosition.AccessibleName = "Position";
+            this.navPosition.Name = "navPosition"; this.navPosition.Size = new System.Drawing.Size(40, 25); this.navPosition.AccessibleName = "Position"; this.navPosition.Text = "1";
             this.navCount.Name = "navCount"; this.navCount.Text = "/ {0}"; this.navCount.ToolTipText = "Всего записей";
             this.navMoveNext.Name = "navMoveNext"; this.navMoveNext.Text = ">"; this.navMoveNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.navMoveLast.Name = "navMoveLast"; this.navMoveLast.Text = ">|"; this.navMoveLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -132,13 +132,14 @@ namespace CarRentalApp.Forms
             this.grid.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
             this.grid.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
             this.grid.ColumnHeadersDefaultCellStyle.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.grid.ColumnHeadersDefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(15, 15, 18);
+            this.grid.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
             this.grid.ColumnHeadersHeight = 36;
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
                 this.colNaimenovanie,
                 this.colHarakteristiki,
                 this.colOpisanie});
-            this.grid.DataSource = this.bs;
             this.grid.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
             this.grid.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.grid.DefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
@@ -157,6 +158,16 @@ namespace CarRentalApp.Forms
             this.colNaimenovanie.DataPropertyName = "Naimenovanie"; this.colNaimenovanie.HeaderText = "Наименование"; this.colNaimenovanie.Name = "colNaimenovanie"; this.colNaimenovanie.MinimumWidth = 90;
             this.colHarakteristiki.DataPropertyName = "Harakteristiki"; this.colHarakteristiki.HeaderText = "Характеристики"; this.colHarakteristiki.Name = "colHarakteristiki"; this.colHarakteristiki.MinimumWidth = 90;
             this.colOpisanie.DataPropertyName = "Opisanie"; this.colOpisanie.HeaderText = "Описание"; this.colOpisanie.Name = "colOpisanie"; this.colOpisanie.MinimumWidth = 90;
+
+            // ===== Образец строк (видимы только в конструкторе; на запуске затираются DataSource) =====
+            this.grid.Rows.Add(new object[] { "Toyota", "Япония, 2.0L, бензин", "Надёжные и популярные автомобили" });
+            this.grid.Rows.Add(new object[] { "BMW", "Германия, 3.0L, бензин", "Премиум-сегмент" });
+            this.grid.Rows.Add(new object[] { "Mercedes-Benz", "Германия, 2.5L, дизель", "Бизнес и премиум класс" });
+            this.grid.Rows.Add(new object[] { "Audi", "Германия, 2.0L, бензин", "Технологичные автомобили" });
+            this.grid.Rows.Add(new object[] { "Volkswagen", "Германия, 1.6L, бензин", "Народные автомобили" });
+            this.grid.Rows.Add(new object[] { "Hyundai", "Корея, 1.6L, бензин", "Доступные и экономичные" });
+            this.grid.Rows.Add(new object[] { "Kia", "Корея, 2.0L, бензин", "Современный дизайн, гарантия" });
+            this.grid.Rows.Add(new object[] { "Lada", "Россия, 1.6L, бензин", "Бюджетный сегмент" });
 
             // ===== Нижняя панель кнопок =====
             this.panelButtons.BackColor = System.Drawing.Color.FromArgb(22, 22, 26);

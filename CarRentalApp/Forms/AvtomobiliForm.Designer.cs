@@ -130,7 +130,7 @@ namespace CarRentalApp.Forms
 
             this.navMoveFirst.Name = "navMoveFirst"; this.navMoveFirst.Text = "|<"; this.navMoveFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.navMovePrev.Name = "navMovePrev"; this.navMovePrev.Text = "<"; this.navMovePrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.navPosition.Name = "navPosition"; this.navPosition.Size = new System.Drawing.Size(40, 25); this.navPosition.AccessibleName = "Position";
+            this.navPosition.Name = "navPosition"; this.navPosition.Size = new System.Drawing.Size(40, 25); this.navPosition.AccessibleName = "Position"; this.navPosition.Text = "1";
             this.navCount.Name = "navCount"; this.navCount.Text = "/ {0}"; this.navCount.ToolTipText = "Всего записей";
             this.navMoveNext.Name = "navMoveNext"; this.navMoveNext.Text = ">"; this.navMoveNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.navMoveLast.Name = "navMoveLast"; this.navMoveLast.Text = ">|"; this.navMoveLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -150,6 +150,8 @@ namespace CarRentalApp.Forms
             this.grid.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
             this.grid.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
             this.grid.ColumnHeadersDefaultCellStyle.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.grid.ColumnHeadersDefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(15, 15, 18);
+            this.grid.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
             this.grid.ColumnHeadersHeight = 36;
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -165,7 +167,6 @@ namespace CarRentalApp.Forms
                 this.colVozvrachen,
                 this.colKodMarki,
                 this.colKodMehanika});
-            this.grid.DataSource = this.bs;
             this.grid.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
             this.grid.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.grid.DefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
@@ -192,7 +193,19 @@ namespace CarRentalApp.Forms
             this.colOtmetki.DataPropertyName = "Otmetki"; this.colOtmetki.HeaderText = "Отметки"; this.colOtmetki.Name = "colOtmetki"; this.colOtmetki.MinimumWidth = 90;
             this.colVozvrachen.DataPropertyName = "Vozvrachen"; this.colVozvrachen.HeaderText = "Возвращён"; this.colVozvrachen.Name = "colVozvrachen";
             this.colKodMarki.DataPropertyName = "KodMarki"; this.colKodMarki.HeaderText = "Марка"; this.colKodMarki.Name = "colKodMarki"; this.colKodMarki.DisplayMember = "Naimenovanie"; this.colKodMarki.ValueMember = "KodMarki"; this.colKodMarki.FlatStyle = System.Windows.Forms.FlatStyle.Standard; this.colKodMarki.MinimumWidth = 110;
+            this.colKodMarki.Items.AddRange(new object[] { "Toyota", "BMW", "Mercedes-Benz", "Audi", "Volkswagen", "Hyundai", "Kia", "Lada" });
             this.colKodMehanika.DataPropertyName = "KodMehanika"; this.colKodMehanika.HeaderText = "Механик"; this.colKodMehanika.Name = "colKodMehanika"; this.colKodMehanika.DisplayMember = "FIO"; this.colKodMehanika.ValueMember = "KodSotrudnika"; this.colKodMehanika.FlatStyle = System.Windows.Forms.FlatStyle.Standard; this.colKodMehanika.MinimumWidth = 110;
+            this.colKodMehanika.Items.AddRange(new object[] { "Сидоров А. М.", "Кузнецов Д. О.", "Фёдоров А. И." });
+
+            // ===== Образец строк (видимы только в конструкторе; на запуске затираются DataSource) =====
+            this.grid.Rows.Add(new object[] { "А123БВ77", "KX12345", "DV12345", "2020", "50000", "1500000", "2500", "01.01.2024", "Хорошее", "True", "Toyota", "Сидоров А. М." });
+            this.grid.Rows.Add(new object[] { "В234ГД77", "KX23456", "DV23456", "2021", "30000", "2500000", "3500", "15.02.2024", "Отличное", "True", "BMW", "Кузнецов Д. О." });
+            this.grid.Rows.Add(new object[] { "Е345ЖЗ77", "KX34567", "DV34567", "2019", "75000", "2000000", "3000", "10.03.2024", "Среднее", "False", "Mercedes-Benz", "Фёдоров А. И." });
+            this.grid.Rows.Add(new object[] { "К456ЛМ77", "KX45678", "DV45678", "2022", "20000", "2800000", "3800", "20.04.2024", "Отличное", "True", "Audi", "Сидоров А. М." });
+            this.grid.Rows.Add(new object[] { "Н567ОП77", "KX56789", "DV56789", "2018", "90000", "1200000", "2200", "05.05.2024", "Среднее", "True", "Volkswagen", "Кузнецов Д. О." });
+            this.grid.Rows.Add(new object[] { "Р678СТ77", "KX67890", "DV67890", "2021", "40000", "1400000", "2400", "12.06.2024", "Хорошее", "False", "Hyundai", "Фёдоров А. И." });
+            this.grid.Rows.Add(new object[] { "У789ФХ77", "KX78901", "DV78901", "2020", "55000", "1300000", "2300", "18.07.2024", "Хорошее", "True", "Kia", "Сидоров А. М." });
+            this.grid.Rows.Add(new object[] { "Ц890ЧШ77", "KX89012", "DV89012", "2023", "10000", "900000", "1800", "25.08.2024", "Отличное", "True", "Lada", "Кузнецов Д. О." });
 
             // ===== Нижняя панель кнопок =====
             this.panelButtons.BackColor = System.Drawing.Color.FromArgb(22, 22, 26);

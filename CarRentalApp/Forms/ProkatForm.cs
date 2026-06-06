@@ -13,12 +13,16 @@ namespace CarRentalApp.Forms
         public ProkatForm()
         {
             InitializeComponent();
-            colKodAvtomobilya.DataSource = Db.Load("SELECT KodAvtomobilya, RegNomer FROM Avtomobili ORDER BY RegNomer");
-            colKodKlienta.DataSource = Db.Load("SELECT KodKlienta, FIO FROM Klienty ORDER BY FIO");
-            colKodUslugi1.DataSource = Db.Load("SELECT KodUslugi, Naimenovanie FROM Uslugi ORDER BY Naimenovanie");
-            colKodUslugi2.DataSource = Db.Load("SELECT KodUslugi, Naimenovanie FROM Uslugi ORDER BY Naimenovanie");
-            colKodUslugi3.DataSource = Db.Load("SELECT KodUslugi, Naimenovanie FROM Uslugi ORDER BY Naimenovanie");
-            colKodSotrudnika.DataSource = Db.Load("SELECT KodSotrudnika, FIO FROM Sotrudniki ORDER BY FIO");
+            // Очищаем образцы строк из дизайнера перед привязкой к реальным данным
+            grid.Rows.Clear();
+            colKodAvtomobilya.Items.Clear(); colKodAvtomobilya.DataSource = Db.Load("SELECT KodAvtomobilya, RegNomer FROM Avtomobili ORDER BY RegNomer");
+            colKodKlienta.Items.Clear(); colKodKlienta.DataSource = Db.Load("SELECT KodKlienta, FIO FROM Klienty ORDER BY FIO");
+            colKodUslugi1.Items.Clear(); colKodUslugi1.DataSource = Db.Load("SELECT KodUslugi, Naimenovanie FROM Uslugi ORDER BY Naimenovanie");
+            colKodUslugi2.Items.Clear(); colKodUslugi2.DataSource = Db.Load("SELECT KodUslugi, Naimenovanie FROM Uslugi ORDER BY Naimenovanie");
+            colKodUslugi3.Items.Clear(); colKodUslugi3.DataSource = Db.Load("SELECT KodUslugi, Naimenovanie FROM Uslugi ORDER BY Naimenovanie");
+            colKodSotrudnika.Items.Clear(); colKodSotrudnika.DataSource = Db.Load("SELECT KodSotrudnika, FIO FROM Sotrudniki ORDER BY FIO");
+            grid.DataSource = bs;
+
             btnAdd.Click    += (s, e) => bs.AddNew();
             btnDel.Click    += (s, e) => Del();
             btnSave.Click   += (s, e) => Save();

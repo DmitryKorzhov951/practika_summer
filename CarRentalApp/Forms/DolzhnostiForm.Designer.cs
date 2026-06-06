@@ -114,7 +114,7 @@ namespace CarRentalApp.Forms
 
             this.navMoveFirst.Name = "navMoveFirst"; this.navMoveFirst.Text = "|<"; this.navMoveFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.navMovePrev.Name = "navMovePrev"; this.navMovePrev.Text = "<"; this.navMovePrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.navPosition.Name = "navPosition"; this.navPosition.Size = new System.Drawing.Size(40, 25); this.navPosition.AccessibleName = "Position";
+            this.navPosition.Name = "navPosition"; this.navPosition.Size = new System.Drawing.Size(40, 25); this.navPosition.AccessibleName = "Position"; this.navPosition.Text = "1";
             this.navCount.Name = "navCount"; this.navCount.Text = "/ {0}"; this.navCount.ToolTipText = "Всего записей";
             this.navMoveNext.Name = "navMoveNext"; this.navMoveNext.Text = ">"; this.navMoveNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.navMoveLast.Name = "navMoveLast"; this.navMoveLast.Text = ">|"; this.navMoveLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -134,6 +134,8 @@ namespace CarRentalApp.Forms
             this.grid.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
             this.grid.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
             this.grid.ColumnHeadersDefaultCellStyle.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.grid.ColumnHeadersDefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(15, 15, 18);
+            this.grid.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
             this.grid.ColumnHeadersHeight = 36;
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -141,7 +143,6 @@ namespace CarRentalApp.Forms
                 this.colOklad,
                 this.colObyazannosti,
                 this.colTrebovaniya});
-            this.grid.DataSource = this.bs;
             this.grid.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
             this.grid.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.grid.DefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
@@ -161,6 +162,14 @@ namespace CarRentalApp.Forms
             this.colOklad.DataPropertyName = "Oklad"; this.colOklad.HeaderText = "Оклад"; this.colOklad.Name = "colOklad"; this.colOklad.MinimumWidth = 90;
             this.colObyazannosti.DataPropertyName = "Obyazannosti"; this.colObyazannosti.HeaderText = "Обязанности"; this.colObyazannosti.Name = "colObyazannosti"; this.colObyazannosti.MinimumWidth = 90;
             this.colTrebovaniya.DataPropertyName = "Trebovaniya"; this.colTrebovaniya.HeaderText = "Требования"; this.colTrebovaniya.Name = "colTrebovaniya"; this.colTrebovaniya.MinimumWidth = 90;
+
+            // ===== Образец строк (видимы только в конструкторе; на запуске затираются DataSource) =====
+            this.grid.Rows.Add(new object[] { "Директор", "150000", "Управление организацией", "Опыт работы от 5 лет" });
+            this.grid.Rows.Add(new object[] { "Менеджер", "70000", "Работа с клиентами", "Опыт от 2 лет" });
+            this.grid.Rows.Add(new object[] { "Механик", "55000", "Обслуживание автомобилей", "Профильное образование" });
+            this.grid.Rows.Add(new object[] { "Бухгалтер", "65000", "Ведение учёта и отчётности", "Высшее экономическое" });
+            this.grid.Rows.Add(new object[] { "Администратор", "45000", "Приём клиентов", "Среднее, без опыта" });
+            this.grid.Rows.Add(new object[] { "Кассир", "40000", "Расчёт с клиентами", "Среднее, без опыта" });
 
             // ===== Нижняя панель кнопок =====
             this.panelButtons.BackColor = System.Drawing.Color.FromArgb(22, 22, 26);

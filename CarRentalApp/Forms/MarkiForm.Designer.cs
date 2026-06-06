@@ -5,7 +5,6 @@ namespace CarRentalApp.Forms
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Panel panelHeaderAccent;
-        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.BindingNavigator nav;
         private System.Windows.Forms.BindingSource bs;
         private System.Windows.Forms.ToolStripButton navMoveFirst;
@@ -41,13 +40,18 @@ namespace CarRentalApp.Forms
             var r = this.panelHeader.ClientRectangle;
             using (var grad = new System.Drawing.Drawing2D.LinearGradientBrush(
                 r,
-                System.Drawing.Color.FromArgb(12, 12, 14),
-                System.Drawing.Color.FromArgb(70, 18, 22),
+                System.Drawing.Color.FromArgb(20, 10, 14),
+                System.Drawing.Color.FromArgb(120, 28, 34),
                 System.Drawing.Drawing2D.LinearGradientMode.Horizontal))
                 g.FillRectangle(grad, r);
             using var red = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(229, 57, 53));
             g.FillRectangle(red, 0, 0, r.Width, 2);
             g.FillRectangle(red, 0, 0, 5, r.Height);
+            using var titleFont = new System.Drawing.Font("Segoe UI Black", 13F, System.Drawing.FontStyle.Bold);
+            System.Windows.Forms.TextRenderer.DrawText(g, "МАРКИ АВТОМОБИЛЕЙ", titleFont,
+                new System.Drawing.Rectangle(22, 0, r.Width - 44, r.Height - 4),
+                System.Drawing.Color.White,
+                System.Windows.Forms.TextFormatFlags.Left | System.Windows.Forms.TextFormatFlags.VerticalCenter);
         }
 
         private void InitializeComponent()
@@ -55,7 +59,6 @@ namespace CarRentalApp.Forms
             this.components = new System.ComponentModel.Container();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.panelHeaderAccent = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.bs = new System.Windows.Forms.BindingSource(this.components);
             this.nav = new System.Windows.Forms.BindingNavigator(this.components);
             this.navMoveFirst = new System.Windows.Forms.ToolStripButton();
@@ -86,23 +89,13 @@ namespace CarRentalApp.Forms
             this.panelButtons.SuspendLayout();
             this.SuspendLayout();
 
-            // ===== Шапка: тёмный градиент + красные полосы =====
+            // ===== Шапка: тёмный градиент + красные полосы + заголовок рисуется в PaintHeader =====
             this.panelHeader.BackColor = System.Drawing.Color.FromArgb(12, 12, 14);
-            this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Controls.Add(this.panelHeaderAccent);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1000, 56);
             this.panelHeader.Paint += new System.Windows.Forms.PaintEventHandler(this.PaintHeader);
-
-            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
-            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI Black", 13F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Padding = new System.Windows.Forms.Padding(22, 0, 0, 0);
-            this.lblTitle.Text = "МАРКИ АВТОМОБИЛЕЙ";
-            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
             this.panelHeaderAccent.BackColor = System.Drawing.Color.FromArgb(229, 57, 53);
             this.panelHeaderAccent.Dock = System.Windows.Forms.DockStyle.Bottom;

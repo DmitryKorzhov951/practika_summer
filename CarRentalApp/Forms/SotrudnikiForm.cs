@@ -9,15 +9,12 @@ namespace CarRentalApp.Forms
     public partial class SotrudnikiForm : Form
     {
         private readonly DataTable _dt = new();
-        private readonly BindingSource _bs = new();
 
         public SotrudnikiForm()
         {
             InitializeComponent();
             colKodDolzhnosti.DataSource = Db.Load("SELECT KodDolzhnosti, Naimenovanie FROM Dolzhnosti ORDER BY Naimenovanie");
-            grid.DataSource = _bs;
-
-            btnAdd.Click    += (s, e) => _bs.AddNew();
+            btnAdd.Click    += (s, e) => bs.AddNew();
             btnDel.Click    += (s, e) => Del();
             btnSave.Click   += (s, e) => Save();
             btnTable.Click  += (s, e) => new SotrudnikiGridForm().Show();
@@ -29,12 +26,12 @@ namespace CarRentalApp.Forms
 
         private void Load_()
         {
-            try { _dt.Clear(); using var c = Db.Open(); using var da = new SqlDataAdapter("SELECT * FROM Sotrudniki", c); da.Fill(_dt); _bs.DataSource = _dt; }
+            try { _dt.Clear(); using var c = Db.Open(); using var da = new SqlDataAdapter("SELECT * FROM Sotrudniki", c); da.Fill(_dt); bs.DataSource = _dt; }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Save()
         {
-            try { _bs.EndEdit(); using var c = Db.Open(); using var da = new SqlDataAdapter("SELECT * FROM Sotrudniki", c); using var b = new SqlCommandBuilder(da); _ = b; da.Update(_dt); MessageBox.Show("Сохранено."); }
+            try { bs.EndEdit(); using var c = Db.Open(); using var da = new SqlDataAdapter("SELECT * FROM Sotrudniki", c); using var b = new SqlCommandBuilder(da); _ = b; da.Update(_dt); MessageBox.Show("Сохранено."); }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Del()

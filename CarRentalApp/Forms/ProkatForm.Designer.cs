@@ -5,7 +5,18 @@ namespace CarRentalApp.Forms
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Panel panelHeaderAccent;
-        private System.Windows.Forms.PictureBox picPoster;
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.BindingNavigator nav;
+        private System.Windows.Forms.BindingSource bs;
+        private System.Windows.Forms.ToolStripButton navMoveFirst;
+        private System.Windows.Forms.ToolStripButton navMovePrev;
+        private System.Windows.Forms.ToolStripTextBox navPosition;
+        private System.Windows.Forms.ToolStripLabel navCount;
+        private System.Windows.Forms.ToolStripButton navMoveNext;
+        private System.Windows.Forms.ToolStripButton navMoveLast;
+        private System.Windows.Forms.ToolStripSeparator navSep1;
+        private System.Windows.Forms.ToolStripButton navAddNew;
+        private System.Windows.Forms.ToolStripButton navDelete;
         private System.Windows.Forms.DataGridView grid;
         private System.Windows.Forms.Panel panelButtons;
         private System.Windows.Forms.Button btnAdd;
@@ -34,11 +45,21 @@ namespace CarRentalApp.Forms
 
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources =
-                new System.ComponentModel.ComponentResourceManager(typeof(ProkatForm));
+            this.components = new System.ComponentModel.Container();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.panelHeaderAccent = new System.Windows.Forms.Panel();
-            this.picPoster = new System.Windows.Forms.PictureBox();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.bs = new System.Windows.Forms.BindingSource(this.components);
+            this.nav = new System.Windows.Forms.BindingNavigator(this.components);
+            this.navMoveFirst = new System.Windows.Forms.ToolStripButton();
+            this.navMovePrev = new System.Windows.Forms.ToolStripButton();
+            this.navPosition = new System.Windows.Forms.ToolStripTextBox();
+            this.navCount = new System.Windows.Forms.ToolStripLabel();
+            this.navMoveNext = new System.Windows.Forms.ToolStripButton();
+            this.navMoveLast = new System.Windows.Forms.ToolStripButton();
+            this.navSep1 = new System.Windows.Forms.ToolStripSeparator();
+            this.navAddNew = new System.Windows.Forms.ToolStripButton();
+            this.navDelete = new System.Windows.Forms.ToolStripButton();
             this.grid = new System.Windows.Forms.DataGridView();
             this.panelButtons = new System.Windows.Forms.Panel();
             this.btnAdd = new System.Windows.Forms.Button();
@@ -58,48 +79,76 @@ namespace CarRentalApp.Forms
             this.colKodUslugi2 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.colKodUslugi3 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.colKodSotrudnika = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.bs)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nav)).BeginInit();
+            this.nav.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPoster)).BeginInit();
             this.panelHeader.SuspendLayout();
-            this.picPoster.SuspendLayout();
             this.panelButtons.SuspendLayout();
             this.SuspendLayout();
 
-            // ===== Шапка: постер растянут на всю ширину, заголовок-плёнка поверх =====
+            // ===== Шапка: чёрная плашка с заголовком слева =====
             this.panelHeader.BackColor = System.Drawing.Color.FromArgb(12, 12, 14);
-            this.panelHeader.Controls.Add(this.picPoster);
+            this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Controls.Add(this.panelHeaderAccent);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1200, 130);
+            this.panelHeader.Size = new System.Drawing.Size(1300, 56);
 
-            // PictureBox занимает всё пространство шапки, картинка растягивается
-            this.picPoster.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picPoster.Image = ((System.Drawing.Image)(resources.GetObject("poster")));
-            this.picPoster.Name = "picPoster";
-            this.picPoster.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picPoster.TabStop = false;
+            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI Black", 14F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Padding = new System.Windows.Forms.Padding(22, 0, 0, 0);
+            this.lblTitle.Text = "ПРОКАТ";
+            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
-
-            // Красная акцентная полоса в самом низу шапки
             this.panelHeaderAccent.BackColor = System.Drawing.Color.FromArgb(229, 57, 53);
             this.panelHeaderAccent.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelHeaderAccent.Name = "panelHeaderAccent";
-            this.panelHeaderAccent.Size = new System.Drawing.Size(1200, 4);
+            this.panelHeaderAccent.Size = new System.Drawing.Size(1300, 4);
+
+            // ===== BindingNavigator =====
+            this.nav.AddNewItem = this.navAddNew;
+            this.nav.BindingSource = this.bs;
+            this.nav.CountItem = this.navCount;
+            this.nav.DeleteItem = this.navDelete;
+            this.nav.Dock = System.Windows.Forms.DockStyle.Top;
+            this.nav.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+                this.navMoveFirst, this.navMovePrev, this.navPosition, this.navCount,
+                this.navMoveNext, this.navMoveLast, this.navSep1, this.navAddNew, this.navDelete});
+            this.nav.MoveFirstItem = this.navMoveFirst;
+            this.nav.MoveLastItem = this.navMoveLast;
+            this.nav.MoveNextItem = this.navMoveNext;
+            this.nav.MovePreviousItem = this.navMovePrev;
+            this.nav.Name = "nav";
+            this.nav.PositionItem = this.navPosition;
+            this.nav.Size = new System.Drawing.Size(1300, 25);
+            this.nav.TabStop = true;
+
+            this.navMoveFirst.Name = "navMoveFirst"; this.navMoveFirst.Text = "|<"; this.navMoveFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.navMovePrev.Name = "navMovePrev"; this.navMovePrev.Text = "<"; this.navMovePrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.navPosition.Name = "navPosition"; this.navPosition.Size = new System.Drawing.Size(40, 25); this.navPosition.AccessibleName = "Position";
+            this.navCount.Name = "navCount"; this.navCount.Text = "/ {0}"; this.navCount.ToolTipText = "Всего записей";
+            this.navMoveNext.Name = "navMoveNext"; this.navMoveNext.Text = ">"; this.navMoveNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.navMoveLast.Name = "navMoveLast"; this.navMoveLast.Text = ">|"; this.navMoveLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.navSep1.Name = "navSep1";
+            this.navAddNew.Name = "navAddNew"; this.navAddNew.Text = "+"; this.navAddNew.ForeColor = System.Drawing.Color.Green; this.navAddNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.navDelete.Name = "navDelete"; this.navDelete.Text = "X"; this.navDelete.ForeColor = System.Drawing.Color.DarkRed; this.navDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 
             // ===== Сетка данных =====
             this.grid.AllowUserToAddRows = true;
             this.grid.AllowUserToResizeRows = false;
             this.grid.AutoGenerateColumns = false;
-            this.grid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.grid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grid.BackgroundColor = System.Drawing.Color.FromArgb(18, 18, 20);
             this.grid.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.grid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.grid.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(15, 15, 18);
             this.grid.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
             this.grid.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
-            this.grid.ColumnHeadersDefaultCellStyle.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
-            this.grid.ColumnHeadersHeight = 38;
+            this.grid.ColumnHeadersDefaultCellStyle.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.grid.ColumnHeadersHeight = 36;
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
                 this.colDataVydachi,
@@ -113,6 +162,7 @@ namespace CarRentalApp.Forms
                 this.colKodUslugi2,
                 this.colKodUslugi3,
                 this.colKodSotrudnika});
+            this.grid.DataSource = this.bs;
             this.grid.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
             this.grid.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.grid.DefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
@@ -126,19 +176,19 @@ namespace CarRentalApp.Forms
             this.grid.GridColor = System.Drawing.Color.FromArgb(60, 60, 66);
             this.grid.Name = "grid";
             this.grid.RowHeadersVisible = false;
-            this.grid.RowTemplate.Height = 28;
+            this.grid.RowTemplate.Height = 30;
             this.grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.colDataVydachi.DataPropertyName = "DataVydachi"; this.colDataVydachi.HeaderText = "Дата выдачи"; this.colDataVydachi.Name = "colDataVydachi";
-            this.colSrok.DataPropertyName = "Srok"; this.colSrok.HeaderText = "Срок"; this.colSrok.Name = "colSrok";
-            this.colDataVozvrata.DataPropertyName = "DataVozvrata"; this.colDataVozvrata.HeaderText = "Дата возврата"; this.colDataVozvrata.Name = "colDataVozvrata";
-            this.colCena.DataPropertyName = "Cena"; this.colCena.HeaderText = "Цена"; this.colCena.Name = "colCena";
+            this.colDataVydachi.DataPropertyName = "DataVydachi"; this.colDataVydachi.HeaderText = "Дата выдачи"; this.colDataVydachi.Name = "colDataVydachi"; this.colDataVydachi.MinimumWidth = 90;
+            this.colSrok.DataPropertyName = "Srok"; this.colSrok.HeaderText = "Срок"; this.colSrok.Name = "colSrok"; this.colSrok.MinimumWidth = 90;
+            this.colDataVozvrata.DataPropertyName = "DataVozvrata"; this.colDataVozvrata.HeaderText = "Дата возврата"; this.colDataVozvrata.Name = "colDataVozvrata"; this.colDataVozvrata.MinimumWidth = 90;
+            this.colCena.DataPropertyName = "Cena"; this.colCena.HeaderText = "Цена"; this.colCena.Name = "colCena"; this.colCena.MinimumWidth = 90;
             this.colOplachen.DataPropertyName = "Oplachen"; this.colOplachen.HeaderText = "Оплачен"; this.colOplachen.Name = "colOplachen";
-            this.colKodAvtomobilya.DataPropertyName = "KodAvtomobilya"; this.colKodAvtomobilya.HeaderText = "Авто"; this.colKodAvtomobilya.Name = "colKodAvtomobilya"; this.colKodAvtomobilya.DisplayMember = "RegNomer"; this.colKodAvtomobilya.ValueMember = "KodAvtomobilya"; this.colKodAvtomobilya.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
-            this.colKodKlienta.DataPropertyName = "KodKlienta"; this.colKodKlienta.HeaderText = "Клиент"; this.colKodKlienta.Name = "colKodKlienta"; this.colKodKlienta.DisplayMember = "FIO"; this.colKodKlienta.ValueMember = "KodKlienta"; this.colKodKlienta.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
-            this.colKodUslugi1.DataPropertyName = "KodUslugi1"; this.colKodUslugi1.HeaderText = "Усл. 1"; this.colKodUslugi1.Name = "colKodUslugi1"; this.colKodUslugi1.DisplayMember = "Naimenovanie"; this.colKodUslugi1.ValueMember = "KodUslugi"; this.colKodUslugi1.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
-            this.colKodUslugi2.DataPropertyName = "KodUslugi2"; this.colKodUslugi2.HeaderText = "Усл. 2"; this.colKodUslugi2.Name = "colKodUslugi2"; this.colKodUslugi2.DisplayMember = "Naimenovanie"; this.colKodUslugi2.ValueMember = "KodUslugi"; this.colKodUslugi2.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
-            this.colKodUslugi3.DataPropertyName = "KodUslugi3"; this.colKodUslugi3.HeaderText = "Усл. 3"; this.colKodUslugi3.Name = "colKodUslugi3"; this.colKodUslugi3.DisplayMember = "Naimenovanie"; this.colKodUslugi3.ValueMember = "KodUslugi"; this.colKodUslugi3.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
-            this.colKodSotrudnika.DataPropertyName = "KodSotrudnika"; this.colKodSotrudnika.HeaderText = "Сотрудник"; this.colKodSotrudnika.Name = "colKodSotrudnika"; this.colKodSotrudnika.DisplayMember = "FIO"; this.colKodSotrudnika.ValueMember = "KodSotrudnika"; this.colKodSotrudnika.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
+            this.colKodAvtomobilya.DataPropertyName = "KodAvtomobilya"; this.colKodAvtomobilya.HeaderText = "Авто"; this.colKodAvtomobilya.Name = "colKodAvtomobilya"; this.colKodAvtomobilya.DisplayMember = "RegNomer"; this.colKodAvtomobilya.ValueMember = "KodAvtomobilya"; this.colKodAvtomobilya.FlatStyle = System.Windows.Forms.FlatStyle.Standard; this.colKodAvtomobilya.MinimumWidth = 110;
+            this.colKodKlienta.DataPropertyName = "KodKlienta"; this.colKodKlienta.HeaderText = "Клиент"; this.colKodKlienta.Name = "colKodKlienta"; this.colKodKlienta.DisplayMember = "FIO"; this.colKodKlienta.ValueMember = "KodKlienta"; this.colKodKlienta.FlatStyle = System.Windows.Forms.FlatStyle.Standard; this.colKodKlienta.MinimumWidth = 110;
+            this.colKodUslugi1.DataPropertyName = "KodUslugi1"; this.colKodUslugi1.HeaderText = "Усл. 1"; this.colKodUslugi1.Name = "colKodUslugi1"; this.colKodUslugi1.DisplayMember = "Naimenovanie"; this.colKodUslugi1.ValueMember = "KodUslugi"; this.colKodUslugi1.FlatStyle = System.Windows.Forms.FlatStyle.Standard; this.colKodUslugi1.MinimumWidth = 110;
+            this.colKodUslugi2.DataPropertyName = "KodUslugi2"; this.colKodUslugi2.HeaderText = "Усл. 2"; this.colKodUslugi2.Name = "colKodUslugi2"; this.colKodUslugi2.DisplayMember = "Naimenovanie"; this.colKodUslugi2.ValueMember = "KodUslugi"; this.colKodUslugi2.FlatStyle = System.Windows.Forms.FlatStyle.Standard; this.colKodUslugi2.MinimumWidth = 110;
+            this.colKodUslugi3.DataPropertyName = "KodUslugi3"; this.colKodUslugi3.HeaderText = "Усл. 3"; this.colKodUslugi3.Name = "colKodUslugi3"; this.colKodUslugi3.DisplayMember = "Naimenovanie"; this.colKodUslugi3.ValueMember = "KodUslugi"; this.colKodUslugi3.FlatStyle = System.Windows.Forms.FlatStyle.Standard; this.colKodUslugi3.MinimumWidth = 110;
+            this.colKodSotrudnika.DataPropertyName = "KodSotrudnika"; this.colKodSotrudnika.HeaderText = "Сотрудник"; this.colKodSotrudnika.Name = "colKodSotrudnika"; this.colKodSotrudnika.DisplayMember = "FIO"; this.colKodSotrudnika.ValueMember = "KodSotrudnika"; this.colKodSotrudnika.FlatStyle = System.Windows.Forms.FlatStyle.Standard; this.colKodSotrudnika.MinimumWidth = 110;
 
             // ===== Нижняя панель кнопок =====
             this.panelButtons.BackColor = System.Drawing.Color.FromArgb(22, 22, 26);
@@ -150,9 +200,8 @@ namespace CarRentalApp.Forms
             this.panelButtons.Controls.Add(this.btnClose);
             this.panelButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelButtons.Name = "panelButtons";
-            this.panelButtons.Size = new System.Drawing.Size(1200, 50);
+            this.panelButtons.Size = new System.Drawing.Size(1300, 50);
 
-            // btnAdd (Accent)
             this.btnAdd.BackColor = System.Drawing.Color.FromArgb(255, 193, 7);
             this.btnAdd.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(255, 193, 7);
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -162,7 +211,6 @@ namespace CarRentalApp.Forms
             this.btnAdd.Name = "btnAdd"; this.btnAdd.Size = new System.Drawing.Size(110, 32);
             this.btnAdd.Text = "Добавить"; this.btnAdd.UseVisualStyleBackColor = false;
 
-            // btnDel (Danger)
             this.btnDel.BackColor = System.Drawing.Color.FromArgb(183, 28, 28);
             this.btnDel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(183, 28, 28);
             this.btnDel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -172,7 +220,6 @@ namespace CarRentalApp.Forms
             this.btnDel.Name = "btnDel"; this.btnDel.Size = new System.Drawing.Size(110, 32);
             this.btnDel.Text = "Удалить"; this.btnDel.UseVisualStyleBackColor = false;
 
-            // btnSave (Primary)
             this.btnSave.BackColor = System.Drawing.Color.FromArgb(229, 57, 53);
             this.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(229, 57, 53);
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -182,7 +229,6 @@ namespace CarRentalApp.Forms
             this.btnSave.Name = "btnSave"; this.btnSave.Size = new System.Drawing.Size(110, 32);
             this.btnSave.Text = "Сохранить"; this.btnSave.UseVisualStyleBackColor = false;
 
-            // btnTable / btnReport / btnClose (Default)
             this.btnTable.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
             this.btnTable.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(60, 60, 66);
             this.btnTable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -214,20 +260,25 @@ namespace CarRentalApp.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(18, 18, 20);
-            this.ClientSize = new System.Drawing.Size(1200, 560);
+            this.ClientSize = new System.Drawing.Size(1300, 580);
             this.Controls.Add(this.grid);
+            this.Controls.Add(this.nav);
             this.Controls.Add(this.panelButtons);
             this.Controls.Add(this.panelHeader);
             this.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
             this.Name = "ProkatForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Прокат";
+
+            ((System.ComponentModel.ISupportInitialize)(this.bs)).EndInit();
+            this.nav.ResumeLayout(false);
+            this.nav.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nav)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPoster)).EndInit();
             this.panelHeader.ResumeLayout(false);
-            this.picPoster.ResumeLayout(false);
             this.panelButtons.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
         }
     }
 }

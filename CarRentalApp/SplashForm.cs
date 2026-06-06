@@ -1,3 +1,4 @@
+using System;
 using System.Windows.Forms;
 
 namespace CarRentalApp
@@ -9,8 +10,13 @@ namespace CarRentalApp
         {
             InitializeComponent();
             timer.Tick += (s, e) => { timer.Stop(); Close(); };
-            timer.Start();
             Click += (s, e) => Close();
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            timer.Start();
         }
     }
 }

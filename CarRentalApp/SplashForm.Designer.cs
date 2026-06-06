@@ -20,6 +20,7 @@ namespace CarRentalApp
             var g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             var r = this.ClientRectangle;
+            if (r.Width <= 0 || r.Height <= 0) return;
 
             using (var bg = new LinearGradientBrush(r,
                 Color.FromArgb(70, 18, 22),

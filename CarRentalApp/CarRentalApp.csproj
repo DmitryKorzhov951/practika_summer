@@ -24,6 +24,7 @@
     <Compile Update="MainForm.Designer.cs">                <DependentUpon>MainForm.cs</DependentUpon>         </Compile>
     <Compile Update="SplashForm.Designer.cs">             <DependentUpon>SplashForm.cs</DependentUpon>       </Compile>
     <Compile Update="Forms\KlientyForm.Designer.cs">      <DependentUpon>KlientyForm.cs</DependentUpon>      </Compile>
+    <Compile Update="Forms\KlientyGridForm.Designer.cs">  <DependentUpon>KlientyForms.cs</DependentUpon>     </Compile>
     <Compile Update="Forms\SotrudnikiForm.Designer.cs">   <DependentUpon>SotrudnikiForm.cs</DependentUpon>   </Compile>
     <Compile Update="Forms\DolzhnostiForm.Designer.cs">   <DependentUpon>DolzhnostiForm.cs</DependentUpon>   </Compile>
     <Compile Update="Forms\MarkiForm.Designer.cs">        <DependentUpon>MarkiForm.cs</DependentUpon>        </Compile>

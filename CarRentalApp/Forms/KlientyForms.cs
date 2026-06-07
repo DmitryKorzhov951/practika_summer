@@ -1,74 +1,64 @@
 using System;
 using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace CarRentalApp.Forms
 {
-    public class KlientyGridForm : Form
+    /// <summary>Табличная форма Клиенты. Раскладка — в KlientyGridForm.Designer.cs.</summary>
+    public partial class KlientyGridForm : Form
     {
-        private readonly DataGridView _grid = new();
-        private readonly BindingSource _bs  = new();
-        private readonly ComboBox _cmb = new() { DropDownStyle = ComboBoxStyle.DropDownList, Width = 160 };
-        private readonly TextBox _f = new() { Width = 140 };
-        private readonly TextBox _s = new() { Width = 140 };
+        private const string Sql =
+            @"SELECT FIO AS [ФИО], Pol AS [Пол], DataRozhdeniya AS [Дата рождения],
+                     Adres AS [Адрес], Telefon AS [Телефон], Pasport AS [Паспорт] FROM Klienty";
 
         public KlientyGridForm()
         {
-            Text = "Клиенты (табличная)";
-            StartPosition = FormStartPosition.CenterScreen;
-            Size = new Size(960, 480);
-            UI.ApplyTheme(this);
+            InitializeComponent();
 
+            grid.Rows.Clear();
+            grid.AutoGenerateColumns = false;
+            grid.DataSource = bs;
 
-            var top = UI.MakeParamsPanel();
-            top.Controls.Add(L("Поле:")); top.Controls.Add(_cmb);
-            top.Controls.Add(L("Фильтр:")); top.Controls.Add(_f);
-            top.Controls.Add(UI.MakeBtn("▲", (s,e)=>Sort(true), 30));
-            top.Controls.Add(UI.MakeBtn("▼", (s,e)=>Sort(false), 30));
-            top.Controls.Add(L("Поиск:")); top.Controls.Add(_s);
-            Controls.Add(top);
-            _f.TextChanged += (s,e) => Flt(); _s.TextChanged += (s,e) => Flt();
+            btnSortAsc.Click  += (s, e) => Sort(true);
+            btnSortDesc.Click += (s, e) => Sort(false);
+            btnReport.Click   += (s, e) => new KlientyReport().Show();
+            btnClose.Click    += (s, e) => Close();
 
-            _grid.Dock = DockStyle.Fill;
-            UI.StyleGrid(_grid);
-            _grid.ReadOnly = true;
-            _grid.AllowUserToAddRows = false;
-            _grid.DataSource = _bs;
-            Controls.Add(_grid);
-            Controls.Add(new BindingNavigator(_bs) { Dock = DockStyle.Bottom, AddNewItem = null, DeleteItem = null });
+            txtFilter.TextChanged += (s, e) => Flt();
+            txtSearch.TextChanged += (s, e) => Flt();
 
-            var btns = UI.MakeButtonsPanel();
-            btns.Controls.Add(UI.MakeBtn("Отчёт",   (s,e) => new KlientyReport().Show()));
-            btns.Controls.Add(UI.MakeBtn("Закрыть", (s,e) => Close()));
-            Controls.Add(btns);
-            Controls.Add(UI.MakeBanner("Клиенты — табличная форма", "klienty"));
-
-            const string sql = @"SELECT FIO AS [ФИО], Pol AS [Пол], DataRozhdeniya AS [Дата рождения],
-                                        Adres AS [Адрес], Telefon AS [Телефон], Pasport AS [Паспорт] FROM Klienty";
-            var dt = Db.Load(sql); _bs.DataSource = dt;
-            foreach (DataColumn c in dt.Columns) _cmb.Items.Add(c.ColumnName);
-            if (_cmb.Items.Count > 0) _cmb.SelectedIndex = 0;
+            Load_();
         }
-        private static Label L(string t) => new() { Text = t, AutoSize = true, Padding = new Padding(0, 9, 4, 0), Font = UI.BodyBold, ForeColor = UI.TextDim, BackColor = Color.Transparent };
-        private void Sort(bool asc) { if (_cmb.SelectedItem == null) return; try { _bs.Sort = $"[{_cmb.SelectedItem}] " + (asc?"ASC":"DESC"); } catch { } }
+
+        private void Load_()
+        {
+            try { bs.DataSource = Db.Load(Sql); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void Sort(bool asc)
+        {
+            if (cmbPole.SelectedItem == null) return;
+            try { bs.Sort = $"[{cmbPole.SelectedItem}] " + (asc ? "ASC" : "DESC"); }
+            catch { }
+        }
+
         private void Flt()
         {
             try
             {
                 string f = "";
-                if (_cmb.SelectedItem != null && !string.IsNullOrEmpty(_f.Text))
-                    f = $"CONVERT([{_cmb.SelectedItem}], 'System.String') LIKE '%{_f.Text.Replace("'", "''")}%'";
-                if (!string.IsNullOrEmpty(_s.Text))
+                if (cmbPole.SelectedItem != null && !string.IsNullOrEmpty(txtFilter.Text))
+                    f = $"CONVERT([{cmbPole.SelectedItem}], 'System.String') LIKE '%{txtFilter.Text.Replace("'", "''")}%'";
+                if (!string.IsNullOrEmpty(txtSearch.Text))
                 {
-                    var v = _s.Text.Replace("'", "''");
-                    var x = "(" + string.Join(" OR ", _grid.Columns.Cast<DataGridViewColumn>()
-                        .Select(c => $"CONVERT([{c.Name}], 'System.String') LIKE '%{v}%'")) + ")";
+                    var v = txtSearch.Text.Replace("'", "''");
+                    var x = "(" + string.Join(" OR ", grid.Columns.Cast<DataGridViewColumn>()
+                        .Select(c => $"CONVERT([{c.DataPropertyName}], 'System.String') LIKE '%{v}%'")) + ")";
                     f = string.IsNullOrEmpty(f) ? x : $"({f}) AND {x}";
                 }
-                _bs.Filter = f;
+                bs.Filter = f;
             }
             catch { }
         }

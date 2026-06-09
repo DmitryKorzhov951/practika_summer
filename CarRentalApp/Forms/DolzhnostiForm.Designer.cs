@@ -75,11 +75,11 @@ namespace CarRentalApp.Forms
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
 
-            // ===== Шапка =====
+            // header
             this.header.Title = "ДОЛЖНОСТИ";
             this.header.Size = new System.Drawing.Size(900, 56);
 
-            // ===== BindingNavigator =====
+            // nav
             this.nav.AddNewItem = null;
             this.nav.BindingSource = this.bs;
             this.nav.CountItem = this.navCount;
@@ -95,14 +95,25 @@ namespace CarRentalApp.Forms
             this.nav.Name = "nav";
             this.nav.PositionItem = this.navPosition;
             this.nav.Size = new System.Drawing.Size(900, 25);
-            this.navMoveFirst.Name = "navMoveFirst"; this.navMoveFirst.Text = "|<"; this.navMoveFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.navMovePrev.Name = "navMovePrev"; this.navMovePrev.Text = "<"; this.navMovePrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.navPosition.Name = "navPosition"; this.navPosition.Size = new System.Drawing.Size(40, 25); this.navPosition.Text = "1";
-            this.navCount.Name = "navCount"; this.navCount.Text = "/ {0}";
-            this.navMoveNext.Name = "navMoveNext"; this.navMoveNext.Text = ">"; this.navMoveNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.navMoveLast.Name = "navMoveLast"; this.navMoveLast.Text = ">|"; this.navMoveLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.navMoveFirst.Name = "navMoveFirst";
+            this.navMoveFirst.Text = "|<";
+            this.navMoveFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.navMovePrev.Name = "navMovePrev";
+            this.navMovePrev.Text = "<";
+            this.navMovePrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.navPosition.Name = "navPosition";
+            this.navPosition.Size = new System.Drawing.Size(40, 25);
+            this.navPosition.Text = "1";
+            this.navCount.Name = "navCount";
+            this.navCount.Text = "/ {0}";
+            this.navMoveNext.Name = "navMoveNext";
+            this.navMoveNext.Text = ">";
+            this.navMoveNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.navMoveLast.Name = "navMoveLast";
+            this.navMoveLast.Text = ">|";
+            this.navMoveLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 
-            // ===== Постер =====
+            // pictureBox
             this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.pictureBox.Location = new System.Drawing.Point(40, 100);
             this.pictureBox.Name = "pictureBox";
@@ -110,67 +121,145 @@ namespace CarRentalApp.Forms
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox.TabStop = false;
 
-            // ===== Поля (тёмная тема: белый текст на тёмном фоне) =====
-            System.Drawing.Color textCol = System.Drawing.Color.FromArgb(240, 240, 244);
-            System.Drawing.Color labelCol = System.Drawing.Color.FromArgb(229, 57, 53);
-            System.Drawing.Color fieldBg = System.Drawing.Color.FromArgb(30, 30, 34);
-            System.Drawing.Font labelFont = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
-            System.Drawing.Font textFont = new System.Drawing.Font("Segoe UI", 10F);
+            // lblNaim
+            this.lblNaim.AutoSize = false;
+            this.lblNaim.BackColor = System.Drawing.Color.Transparent;
+            this.lblNaim.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
+            this.lblNaim.ForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
+            this.lblNaim.Location = new System.Drawing.Point(130, 370);
+            this.lblNaim.Name = "lblNaim";
+            this.lblNaim.Size = new System.Drawing.Size(170, 28);
+            this.lblNaim.Text = "Наименование:";
+            this.lblNaim.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // txtNaim
+            this.txtNaim.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
+            this.txtNaim.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtNaim.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtNaim.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
+            this.txtNaim.Location = new System.Drawing.Point(310, 370);
+            this.txtNaim.Name = "txtNaim";
+            this.txtNaim.Size = new System.Drawing.Size(440, 28);
 
-            void cfgLabel(System.Windows.Forms.Label l, string text, int x, int y)
-            {
-                l.AutoSize = false;
-                l.BackColor = System.Drawing.Color.Transparent;
-                l.Font = labelFont;
-                l.ForeColor = labelCol;
-                l.Location = new System.Drawing.Point(x, y);
-                l.Size = new System.Drawing.Size(170, 28);
-                l.Text = text;
-                l.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            }
-            void cfgText(System.Windows.Forms.TextBox t, int x, int y)
-            {
-                t.BackColor = fieldBg;
-                t.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-                t.Font = textFont;
-                t.ForeColor = textCol;
-                t.Location = new System.Drawing.Point(x, y);
-                t.Size = new System.Drawing.Size(440, 28);
-            }
+            // lblOklad
+            this.lblOklad.AutoSize = false;
+            this.lblOklad.BackColor = System.Drawing.Color.Transparent;
+            this.lblOklad.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
+            this.lblOklad.ForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
+            this.lblOklad.Location = new System.Drawing.Point(130, 410);
+            this.lblOklad.Name = "lblOklad";
+            this.lblOklad.Size = new System.Drawing.Size(170, 28);
+            this.lblOklad.Text = "Оклад:";
+            this.lblOklad.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // txtOklad
+            this.txtOklad.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
+            this.txtOklad.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtOklad.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtOklad.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
+            this.txtOklad.Location = new System.Drawing.Point(310, 410);
+            this.txtOklad.Name = "txtOklad";
+            this.txtOklad.Size = new System.Drawing.Size(440, 28);
 
-            cfgLabel(this.lblNaim,  "Наименование:", 130, 370); this.lblNaim.Name  = "lblNaim";
-            cfgText (this.txtNaim,  310, 370);                  this.txtNaim.Name  = "txtNaim";
-            cfgLabel(this.lblOklad, "Оклад:",        130, 410); this.lblOklad.Name = "lblOklad";
-            cfgText (this.txtOklad, 310, 410);                  this.txtOklad.Name = "txtOklad";
-            cfgLabel(this.lblObyaz, "Обязанности:",  130, 450); this.lblObyaz.Name = "lblObyaz";
-            cfgText (this.txtObyaz, 310, 450);                  this.txtObyaz.Name = "txtObyaz";
-            cfgLabel(this.lblTreb,  "Требования:",   130, 490); this.lblTreb.Name  = "lblTreb";
-            cfgText (this.txtTreb,  310, 490);                  this.txtTreb.Name  = "txtTreb";
+            // lblObyaz
+            this.lblObyaz.AutoSize = false;
+            this.lblObyaz.BackColor = System.Drawing.Color.Transparent;
+            this.lblObyaz.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
+            this.lblObyaz.ForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
+            this.lblObyaz.Location = new System.Drawing.Point(130, 450);
+            this.lblObyaz.Name = "lblObyaz";
+            this.lblObyaz.Size = new System.Drawing.Size(170, 28);
+            this.lblObyaz.Text = "Обязанности:";
+            this.lblObyaz.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // txtObyaz
+            this.txtObyaz.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
+            this.txtObyaz.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtObyaz.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtObyaz.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
+            this.txtObyaz.Location = new System.Drawing.Point(310, 450);
+            this.txtObyaz.Name = "txtObyaz";
+            this.txtObyaz.Size = new System.Drawing.Size(440, 28);
 
-            // ===== Кнопки =====
-            int y1 = 560, y2 = 605, bw = 130, bh = 36, gap = 10, x0 = 60;
+            // lblTreb
+            this.lblTreb.AutoSize = false;
+            this.lblTreb.BackColor = System.Drawing.Color.Transparent;
+            this.lblTreb.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
+            this.lblTreb.ForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
+            this.lblTreb.Location = new System.Drawing.Point(130, 490);
+            this.lblTreb.Name = "lblTreb";
+            this.lblTreb.Size = new System.Drawing.Size(170, 28);
+            this.lblTreb.Text = "Требования:";
+            this.lblTreb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // txtTreb
+            this.txtTreb.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
+            this.txtTreb.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtTreb.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtTreb.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
+            this.txtTreb.Location = new System.Drawing.Point(310, 490);
+            this.txtTreb.Name = "txtTreb";
+            this.txtTreb.Size = new System.Drawing.Size(440, 28);
 
-            void cfgBtn(CarRentalApp.Controls.ColoredButton b, string name, string text,
-                        CarRentalApp.Controls.BtnVariant v, int x, int y, int w)
-            {
-                b.Name = name; b.Text = text; b.Variant = v;
-                b.Location = new System.Drawing.Point(x, y);
-                b.Size = new System.Drawing.Size(w, bh);
-            }
+            // btnFirst
+            this.btnFirst.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnFirst.Text = "Первая";
+            this.btnFirst.Location = new System.Drawing.Point(60, 560);
+            this.btnFirst.Size = new System.Drawing.Size(130, 36);
+            this.btnFirst.Name = "btnFirst";
+            // btnPrev
+            this.btnPrev.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnPrev.Text = "Предыдущая";
+            this.btnPrev.Location = new System.Drawing.Point(200, 560);
+            this.btnPrev.Size = new System.Drawing.Size(130, 36);
+            this.btnPrev.Name = "btnPrev";
+            // btnAdd
+            this.btnAdd.Variant = CarRentalApp.Controls.BtnVariant.Add;
+            this.btnAdd.Text = "Добавить";
+            this.btnAdd.Location = new System.Drawing.Point(340, 560);
+            this.btnAdd.Size = new System.Drawing.Size(130, 36);
+            this.btnAdd.Name = "btnAdd";
+            // btnSave
+            this.btnSave.Variant = CarRentalApp.Controls.BtnVariant.Save;
+            this.btnSave.Text = "Сохранить";
+            this.btnSave.Location = new System.Drawing.Point(480, 560);
+            this.btnSave.Size = new System.Drawing.Size(130, 36);
+            this.btnSave.Name = "btnSave";
+            // btnReport
+            this.btnReport.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnReport.Text = "Отчёт";
+            this.btnReport.Location = new System.Drawing.Point(620, 560);
+            this.btnReport.Size = new System.Drawing.Size(180, 36);
+            this.btnReport.Name = "btnReport";
 
-            cfgBtn(this.btnFirst,  "btnFirst",  "Первая",     CarRentalApp.Controls.BtnVariant.Default, x0,             y1, bw);
-            cfgBtn(this.btnPrev,   "btnPrev",   "Предыдущая", CarRentalApp.Controls.BtnVariant.Default, x0 + (bw+gap),  y1, bw);
-            cfgBtn(this.btnAdd,    "btnAdd",    "Добавить",   CarRentalApp.Controls.BtnVariant.Add,     x0 + (bw+gap)*2,y1, bw);
-            cfgBtn(this.btnSave,   "btnSave",   "Сохранить",  CarRentalApp.Controls.BtnVariant.Save,    x0 + (bw+gap)*3,y1, bw);
-            cfgBtn(this.btnReport, "btnReport", "Отчёт",      CarRentalApp.Controls.BtnVariant.Default, x0 + (bw+gap)*4,y1, 170);
+            // btnLast
+            this.btnLast.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnLast.Text = "Последняя";
+            this.btnLast.Location = new System.Drawing.Point(60, 605);
+            this.btnLast.Size = new System.Drawing.Size(130, 36);
+            this.btnLast.Name = "btnLast";
+            // btnNext
+            this.btnNext.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnNext.Text = "Следующая";
+            this.btnNext.Location = new System.Drawing.Point(200, 605);
+            this.btnNext.Size = new System.Drawing.Size(130, 36);
+            this.btnNext.Name = "btnNext";
+            // btnDel
+            this.btnDel.Variant = CarRentalApp.Controls.BtnVariant.Delete;
+            this.btnDel.Text = "Удалить";
+            this.btnDel.Location = new System.Drawing.Point(340, 605);
+            this.btnDel.Size = new System.Drawing.Size(130, 36);
+            this.btnDel.Name = "btnDel";
+            // btnTable
+            this.btnTable.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnTable.Text = "Табличная";
+            this.btnTable.Location = new System.Drawing.Point(480, 605);
+            this.btnTable.Size = new System.Drawing.Size(130, 36);
+            this.btnTable.Name = "btnTable";
+            // btnClose
+            this.btnClose.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnClose.Text = "Закрыть";
+            this.btnClose.Location = new System.Drawing.Point(620, 605);
+            this.btnClose.Size = new System.Drawing.Size(180, 36);
+            this.btnClose.Name = "btnClose";
 
-            cfgBtn(this.btnLast,  "btnLast",  "Последняя",   CarRentalApp.Controls.BtnVariant.Default, x0,             y2, bw);
-            cfgBtn(this.btnNext,  "btnNext",  "Следующая",   CarRentalApp.Controls.BtnVariant.Default, x0 + (bw+gap),  y2, bw);
-            cfgBtn(this.btnDel,   "btnDel",   "Удалить",     CarRentalApp.Controls.BtnVariant.Delete,  x0 + (bw+gap)*2,y2, bw);
-            cfgBtn(this.btnTable, "btnTable", "Табличная",   CarRentalApp.Controls.BtnVariant.Default, x0 + (bw+gap)*3,y2, bw);
-            cfgBtn(this.btnClose, "btnClose", "Закрыть",     CarRentalApp.Controls.BtnVariant.Default, x0 + (bw+gap)*4,y2, 170);
-
-            // ===== Форма =====
+            // Форма
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(18, 18, 20);

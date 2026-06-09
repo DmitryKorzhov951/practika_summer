@@ -16,7 +16,7 @@ namespace CarRentalApp.Forms
         {
             InitializeComponent();
 
-            // Постер
+            // Постер из Assets/posters
             try
             {
                 string p = Path.Combine(AppContext.BaseDirectory, "Assets", "posters", "dolzhnosti.png");
@@ -26,21 +26,20 @@ namespace CarRentalApp.Forms
 
             // Привязка полей к BindingSource
             txtNaim.DataBindings.Add("Text", bs, "Naimenovanie", true, DataSourceUpdateMode.OnPropertyChanged);
-            txtOklad.DataBindings.Add("Text", bs, "Oklad", true, DataSourceUpdateMode.OnPropertyChanged);
+            txtOklad.DataBindings.Add("Text", bs, "Oklad",        true, DataSourceUpdateMode.OnPropertyChanged);
             txtObyaz.DataBindings.Add("Text", bs, "Obyazannosti", true, DataSourceUpdateMode.OnPropertyChanged);
-            txtTreb.DataBindings.Add("Text", bs, "Trebovaniya", true, DataSourceUpdateMode.OnPropertyChanged);
+            txtTreb.DataBindings.Add("Text", bs, "Trebovaniya",   true, DataSourceUpdateMode.OnPropertyChanged);
 
-            // Кнопки
-            btnFirst.Click += (s, e) => { if (bs.Count > 0) bs.MoveFirst(); };
-            btnPrev.Click  += (s, e) => { if (bs.Count > 0) bs.MovePrevious(); };
-            btnNext.Click  += (s, e) => { if (bs.Count > 0) bs.MoveNext(); };
-            btnLast.Click  += (s, e) => { if (bs.Count > 0) bs.MoveLast(); };
-            btnAdd.Click   += (s, e) => bs.AddNew();
-            btnDel.Click   += (s, e) => Del();
-            navSave.Click  += (s, e) => Save();
-            btnTable.Click += (s, e) => new DolzhnostiGridForm().Show();
+            btnFirst.Click  += (s, e) => { if (bs.Count > 0) bs.MoveFirst(); };
+            btnPrev.Click   += (s, e) => { if (bs.Count > 0) bs.MovePrevious(); };
+            btnNext.Click   += (s, e) => { if (bs.Count > 0) bs.MoveNext(); };
+            btnLast.Click   += (s, e) => { if (bs.Count > 0) bs.MoveLast(); };
+            btnAdd.Click    += (s, e) => bs.AddNew();
+            btnDel.Click    += (s, e) => Del();
+            btnSave.Click   += (s, e) => Save();
+            btnTable.Click  += (s, e) => new DolzhnostiGridForm().Show();
             btnReport.Click += (s, e) => new DolzhnostiReport().Show();
-            btnClose.Click += (s, e) => Close();
+            btnClose.Click  += (s, e) => Close();
 
             Load_();
         }

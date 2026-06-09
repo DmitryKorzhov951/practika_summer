@@ -4,28 +4,31 @@ namespace CarRentalApp.Forms
     {
         private System.ComponentModel.IContainer components = null;
         private CarRentalApp.Controls.BandedHeader header;
-        private System.Windows.Forms.BindingNavigator nav;
         private System.Windows.Forms.BindingSource bs;
+        private System.Windows.Forms.BindingNavigator nav;
         private System.Windows.Forms.ToolStripButton navMoveFirst;
         private System.Windows.Forms.ToolStripButton navMovePrev;
         private System.Windows.Forms.ToolStripTextBox navPosition;
         private System.Windows.Forms.ToolStripLabel navCount;
         private System.Windows.Forms.ToolStripButton navMoveNext;
         private System.Windows.Forms.ToolStripButton navMoveLast;
-        private System.Windows.Forms.ToolStripSeparator navSep1;
-        private System.Windows.Forms.ToolStripButton navAddNew;
-        private System.Windows.Forms.ToolStripButton navDelete;
-        private CarRentalApp.Controls.StyledGrid grid;
-        private System.Windows.Forms.Panel panelButtons;
+        private System.Windows.Forms.PictureBox pictureBox;
+        private System.Windows.Forms.Label lblNaimenovanie;
+        private System.Windows.Forms.TextBox txtNaimenovanie;
+        private System.Windows.Forms.Label lblHarakteristiki;
+        private System.Windows.Forms.TextBox txtHarakteristiki;
+        private System.Windows.Forms.Label lblOpisanie;
+        private System.Windows.Forms.TextBox txtOpisanie;
+        private CarRentalApp.Controls.ColoredButton btnFirst;
+        private CarRentalApp.Controls.ColoredButton btnPrev;
+        private CarRentalApp.Controls.ColoredButton btnNext;
+        private CarRentalApp.Controls.ColoredButton btnLast;
         private CarRentalApp.Controls.ColoredButton btnAdd;
         private CarRentalApp.Controls.ColoredButton btnDel;
         private CarRentalApp.Controls.ColoredButton btnSave;
         private CarRentalApp.Controls.ColoredButton btnTable;
         private CarRentalApp.Controls.ColoredButton btnReport;
         private CarRentalApp.Controls.ColoredButton btnClose;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colNaimenovanie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colHarakteristiki;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colOpisanie;
 
         protected override void Dispose(bool disposing)
         {
@@ -45,105 +48,209 @@ namespace CarRentalApp.Forms
             this.navCount = new System.Windows.Forms.ToolStripLabel();
             this.navMoveNext = new System.Windows.Forms.ToolStripButton();
             this.navMoveLast = new System.Windows.Forms.ToolStripButton();
-            this.navSep1 = new System.Windows.Forms.ToolStripSeparator();
-            this.navAddNew = new System.Windows.Forms.ToolStripButton();
-            this.navDelete = new System.Windows.Forms.ToolStripButton();
-            this.grid = new CarRentalApp.Controls.StyledGrid();
-            this.panelButtons = new System.Windows.Forms.Panel();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.lblNaimenovanie = new System.Windows.Forms.Label();
+            this.txtNaimenovanie = new System.Windows.Forms.TextBox();
+            this.lblHarakteristiki = new System.Windows.Forms.Label();
+            this.txtHarakteristiki = new System.Windows.Forms.TextBox();
+            this.lblOpisanie = new System.Windows.Forms.Label();
+            this.txtOpisanie = new System.Windows.Forms.TextBox();
+            this.btnFirst = new CarRentalApp.Controls.ColoredButton();
+            this.btnPrev = new CarRentalApp.Controls.ColoredButton();
+            this.btnNext = new CarRentalApp.Controls.ColoredButton();
+            this.btnLast = new CarRentalApp.Controls.ColoredButton();
             this.btnAdd = new CarRentalApp.Controls.ColoredButton();
             this.btnDel = new CarRentalApp.Controls.ColoredButton();
             this.btnSave = new CarRentalApp.Controls.ColoredButton();
             this.btnTable = new CarRentalApp.Controls.ColoredButton();
             this.btnReport = new CarRentalApp.Controls.ColoredButton();
             this.btnClose = new CarRentalApp.Controls.ColoredButton();
-            this.colNaimenovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHarakteristiki = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOpisanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.bs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nav)).BeginInit();
             this.nav.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
-            this.panelButtons.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
 
-            // ===== Шапка =====
+            // header
             this.header.Title = "МАРКИ АВТОМОБИЛЕЙ";
-            this.header.Size = new System.Drawing.Size(1000, 56);
+            this.header.Size = new System.Drawing.Size(900, 56);
 
-            // ===== BindingNavigator =====
-            this.nav.AddNewItem = this.navAddNew;
+            // nav
+            this.nav.AddNewItem = null;
             this.nav.BindingSource = this.bs;
             this.nav.CountItem = this.navCount;
-            this.nav.DeleteItem = this.navDelete;
+            this.nav.DeleteItem = null;
             this.nav.Dock = System.Windows.Forms.DockStyle.Top;
             this.nav.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
                 this.navMoveFirst, this.navMovePrev, this.navPosition, this.navCount,
-                this.navMoveNext, this.navMoveLast, this.navSep1, this.navAddNew, this.navDelete});
+                this.navMoveNext, this.navMoveLast });
             this.nav.MoveFirstItem = this.navMoveFirst;
             this.nav.MoveLastItem = this.navMoveLast;
             this.nav.MoveNextItem = this.navMoveNext;
             this.nav.MovePreviousItem = this.navMovePrev;
             this.nav.Name = "nav";
             this.nav.PositionItem = this.navPosition;
-            this.nav.Size = new System.Drawing.Size(1000, 25);
-            this.navMoveFirst.Name = "navMoveFirst"; this.navMoveFirst.Text = "|<"; this.navMoveFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.navMovePrev.Name = "navMovePrev"; this.navMovePrev.Text = "<"; this.navMovePrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.navPosition.Name = "navPosition"; this.navPosition.Size = new System.Drawing.Size(40, 25); this.navPosition.Text = "1";
-            this.navCount.Name = "navCount"; this.navCount.Text = "/ {0}"; this.navCount.ToolTipText = "Всего записей";
-            this.navMoveNext.Name = "navMoveNext"; this.navMoveNext.Text = ">"; this.navMoveNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.navMoveLast.Name = "navMoveLast"; this.navMoveLast.Text = ">|"; this.navMoveLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.navSep1.Name = "navSep1";
-            this.navAddNew.Name = "navAddNew"; this.navAddNew.Text = "+"; this.navAddNew.ForeColor = System.Drawing.Color.Green; this.navAddNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.navDelete.Name = "navDelete"; this.navDelete.Text = "X"; this.navDelete.ForeColor = System.Drawing.Color.DarkRed; this.navDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.nav.Size = new System.Drawing.Size(900, 25);
+            this.navMoveFirst.Name = "navMoveFirst";
+            this.navMoveFirst.Text = "|<";
+            this.navMoveFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.navMovePrev.Name = "navMovePrev";
+            this.navMovePrev.Text = "<";
+            this.navMovePrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.navPosition.Name = "navPosition";
+            this.navPosition.Size = new System.Drawing.Size(40, 25);
+            this.navPosition.Text = "1";
+            this.navCount.Name = "navCount";
+            this.navCount.Text = "/ {0}";
+            this.navMoveNext.Name = "navMoveNext";
+            this.navMoveNext.Text = ">";
+            this.navMoveNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.navMoveLast.Name = "navMoveLast";
+            this.navMoveLast.Text = ">|";
+            this.navMoveLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 
-            // ===== Сетка =====
-            this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grid.Name = "grid";
-            this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-                this.colNaimenovanie,
-                this.colHarakteristiki,
-                this.colOpisanie});
-            this.colNaimenovanie.DataPropertyName = "Naimenovanie"; this.colNaimenovanie.HeaderText = "Наименование"; this.colNaimenovanie.Name = "colNaimenovanie"; this.colNaimenovanie.MinimumWidth = 90;
-            this.colHarakteristiki.DataPropertyName = "Harakteristiki"; this.colHarakteristiki.HeaderText = "Характеристики"; this.colHarakteristiki.Name = "colHarakteristiki"; this.colHarakteristiki.MinimumWidth = 90;
-            this.colOpisanie.DataPropertyName = "Opisanie"; this.colOpisanie.HeaderText = "Описание"; this.colOpisanie.Name = "colOpisanie"; this.colOpisanie.MinimumWidth = 90;
+            // pictureBox
+            this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.pictureBox.Location = new System.Drawing.Point(40, 100);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(820, 240);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox.TabStop = false;
 
-            // ===== Образец строк (видимы только в конструкторе) =====
-            this.grid.Rows.Add(new object[] { "Toyota", "Япония, 2.0L, бензин", "Надёжные и популярные автомобили" });
-            this.grid.Rows.Add(new object[] { "BMW", "Германия, 3.0L, бензин", "Премиум-сегмент" });
-            this.grid.Rows.Add(new object[] { "Mercedes-Benz", "Германия, 2.5L, дизель", "Бизнес и премиум класс" });
-            this.grid.Rows.Add(new object[] { "Audi", "Германия, 2.0L, бензин", "Технологичные автомобили" });
-            this.grid.Rows.Add(new object[] { "Volkswagen", "Германия, 1.6L, бензин", "Народные автомобили" });
-            this.grid.Rows.Add(new object[] { "Hyundai", "Корея, 1.6L, бензин", "Доступные и экономичные" });
-            this.grid.Rows.Add(new object[] { "Kia", "Корея, 2.0L, бензин", "Современный дизайн, гарантия" });
-            this.grid.Rows.Add(new object[] { "Lada", "Россия, 1.6L, бензин", "Бюджетный сегмент" });
+            this.lblNaimenovanie.AutoSize = false;
+            this.lblNaimenovanie.BackColor = System.Drawing.Color.Transparent;
+            this.lblNaimenovanie.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
+            this.lblNaimenovanie.ForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
+            this.lblNaimenovanie.Location = new System.Drawing.Point(130, 370);
+            this.lblNaimenovanie.Name = "lblNaimenovanie";
+            this.lblNaimenovanie.Size = new System.Drawing.Size(160, 28);
+            this.lblNaimenovanie.Text = "Наименование:";
+            this.lblNaimenovanie.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.txtNaimenovanie.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
+            this.txtNaimenovanie.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtNaimenovanie.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtNaimenovanie.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
+            this.txtNaimenovanie.Location = new System.Drawing.Point(310, 370);
+            this.txtNaimenovanie.Name = "txtNaimenovanie";
+            this.txtNaimenovanie.Size = new System.Drawing.Size(440, 28);
+            this.lblHarakteristiki.AutoSize = false;
+            this.lblHarakteristiki.BackColor = System.Drawing.Color.Transparent;
+            this.lblHarakteristiki.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
+            this.lblHarakteristiki.ForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
+            this.lblHarakteristiki.Location = new System.Drawing.Point(130, 410);
+            this.lblHarakteristiki.Name = "lblHarakteristiki";
+            this.lblHarakteristiki.Size = new System.Drawing.Size(160, 28);
+            this.lblHarakteristiki.Text = "Характеристики:";
+            this.lblHarakteristiki.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.txtHarakteristiki.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
+            this.txtHarakteristiki.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtHarakteristiki.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtHarakteristiki.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
+            this.txtHarakteristiki.Location = new System.Drawing.Point(310, 410);
+            this.txtHarakteristiki.Name = "txtHarakteristiki";
+            this.txtHarakteristiki.Size = new System.Drawing.Size(440, 28);
+            this.lblOpisanie.AutoSize = false;
+            this.lblOpisanie.BackColor = System.Drawing.Color.Transparent;
+            this.lblOpisanie.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
+            this.lblOpisanie.ForeColor = System.Drawing.Color.FromArgb(229, 57, 53);
+            this.lblOpisanie.Location = new System.Drawing.Point(130, 450);
+            this.lblOpisanie.Name = "lblOpisanie";
+            this.lblOpisanie.Size = new System.Drawing.Size(160, 28);
+            this.lblOpisanie.Text = "Описание:";
+            this.lblOpisanie.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.txtOpisanie.BackColor = System.Drawing.Color.FromArgb(30, 30, 34);
+            this.txtOpisanie.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtOpisanie.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtOpisanie.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
+            this.txtOpisanie.Location = new System.Drawing.Point(310, 450);
+            this.txtOpisanie.Name = "txtOpisanie";
+            this.txtOpisanie.Size = new System.Drawing.Size(440, 28);
 
-            // ===== Нижняя панель кнопок =====
-            this.panelButtons.BackColor = System.Drawing.Color.FromArgb(22, 22, 26);
-            this.panelButtons.Controls.Add(this.btnAdd);
-            this.panelButtons.Controls.Add(this.btnDel);
-            this.panelButtons.Controls.Add(this.btnSave);
-            this.panelButtons.Controls.Add(this.btnTable);
-            this.panelButtons.Controls.Add(this.btnReport);
-            this.panelButtons.Controls.Add(this.btnClose);
-            this.panelButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelButtons.Name = "panelButtons";
-            this.panelButtons.Size = new System.Drawing.Size(1000, 50);
+            // btnFirst
+            this.btnFirst.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnFirst.Text = "Первая";
+            this.btnFirst.Location = new System.Drawing.Point(60, 520);
+            this.btnFirst.Size = new System.Drawing.Size(130, 36);
+            this.btnFirst.Name = "btnFirst";
+            // btnPrev
+            this.btnPrev.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnPrev.Text = "Предыдущая";
+            this.btnPrev.Location = new System.Drawing.Point(200, 520);
+            this.btnPrev.Size = new System.Drawing.Size(130, 36);
+            this.btnPrev.Name = "btnPrev";
+            // btnAdd
+            this.btnAdd.Variant = CarRentalApp.Controls.BtnVariant.Add;
+            this.btnAdd.Text = "Добавить";
+            this.btnAdd.Location = new System.Drawing.Point(340, 520);
+            this.btnAdd.Size = new System.Drawing.Size(130, 36);
+            this.btnAdd.Name = "btnAdd";
+            // btnSave
+            this.btnSave.Variant = CarRentalApp.Controls.BtnVariant.Save;
+            this.btnSave.Text = "Сохранить";
+            this.btnSave.Location = new System.Drawing.Point(480, 520);
+            this.btnSave.Size = new System.Drawing.Size(130, 36);
+            this.btnSave.Name = "btnSave";
+            // btnReport
+            this.btnReport.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnReport.Text = "Отчёт";
+            this.btnReport.Location = new System.Drawing.Point(620, 520);
+            this.btnReport.Size = new System.Drawing.Size(180, 36);
+            this.btnReport.Name = "btnReport";
 
-            this.btnAdd.Variant = CarRentalApp.Controls.BtnVariant.Add;     this.btnAdd.Text = "Добавить";   this.btnAdd.Location = new System.Drawing.Point(12, 9);   this.btnAdd.Name = "btnAdd";
-            this.btnDel.Variant = CarRentalApp.Controls.BtnVariant.Delete;  this.btnDel.Text = "Удалить";    this.btnDel.Location = new System.Drawing.Point(128, 9);  this.btnDel.Name = "btnDel";
-            this.btnSave.Variant = CarRentalApp.Controls.BtnVariant.Save;   this.btnSave.Text = "Сохранить"; this.btnSave.Location = new System.Drawing.Point(244, 9);  this.btnSave.Name = "btnSave";
-            this.btnTable.Variant = CarRentalApp.Controls.BtnVariant.Default;  this.btnTable.Text = "Табличная"; this.btnTable.Location = new System.Drawing.Point(360, 9); this.btnTable.Name = "btnTable";
-            this.btnReport.Variant = CarRentalApp.Controls.BtnVariant.Default; this.btnReport.Text = "Отчёт";    this.btnReport.Location = new System.Drawing.Point(476, 9); this.btnReport.Name = "btnReport";
-            this.btnClose.Variant = CarRentalApp.Controls.BtnVariant.Default;  this.btnClose.Text = "Закрыть";   this.btnClose.Location = new System.Drawing.Point(592, 9); this.btnClose.Name = "btnClose";
+            // btnLast
+            this.btnLast.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnLast.Text = "Последняя";
+            this.btnLast.Location = new System.Drawing.Point(60, 565);
+            this.btnLast.Size = new System.Drawing.Size(130, 36);
+            this.btnLast.Name = "btnLast";
+            // btnNext
+            this.btnNext.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnNext.Text = "Следующая";
+            this.btnNext.Location = new System.Drawing.Point(200, 565);
+            this.btnNext.Size = new System.Drawing.Size(130, 36);
+            this.btnNext.Name = "btnNext";
+            // btnDel
+            this.btnDel.Variant = CarRentalApp.Controls.BtnVariant.Delete;
+            this.btnDel.Text = "Удалить";
+            this.btnDel.Location = new System.Drawing.Point(340, 565);
+            this.btnDel.Size = new System.Drawing.Size(130, 36);
+            this.btnDel.Name = "btnDel";
+            // btnTable
+            this.btnTable.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnTable.Text = "Табличная";
+            this.btnTable.Location = new System.Drawing.Point(480, 565);
+            this.btnTable.Size = new System.Drawing.Size(130, 36);
+            this.btnTable.Name = "btnTable";
+            // btnClose
+            this.btnClose.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnClose.Text = "Закрыть";
+            this.btnClose.Location = new System.Drawing.Point(620, 565);
+            this.btnClose.Size = new System.Drawing.Size(180, 36);
+            this.btnClose.Name = "btnClose";
 
-            // ===== Форма =====
+            // Форма
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(18, 18, 20);
-            this.ClientSize = new System.Drawing.Size(1000, 520);
-            this.Controls.Add(this.grid);
+            this.ClientSize = new System.Drawing.Size(900, 620);
+            this.Controls.Add(this.pictureBox);
+            this.Controls.Add(this.lblNaimenovanie);
+            this.Controls.Add(this.txtNaimenovanie);
+            this.Controls.Add(this.lblHarakteristiki);
+            this.Controls.Add(this.txtHarakteristiki);
+            this.Controls.Add(this.lblOpisanie);
+            this.Controls.Add(this.txtOpisanie);
+            this.Controls.Add(this.btnFirst);
+            this.Controls.Add(this.btnPrev);
+            this.Controls.Add(this.btnAdd);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.btnReport);
+            this.Controls.Add(this.btnLast);
+            this.Controls.Add(this.btnNext);
+            this.Controls.Add(this.btnDel);
+            this.Controls.Add(this.btnTable);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.nav);
-            this.Controls.Add(this.panelButtons);
             this.Controls.Add(this.header);
             this.ForeColor = System.Drawing.Color.FromArgb(240, 240, 244);
             this.Name = "MarkiForm";
@@ -154,8 +261,7 @@ namespace CarRentalApp.Forms
             this.nav.ResumeLayout(false);
             this.nav.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nav)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
-            this.panelButtons.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }

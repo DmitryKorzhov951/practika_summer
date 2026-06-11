@@ -55,6 +55,10 @@ namespace CarRentalApp.Forms
             var btns = UI.MakeButtonsPanel();
             btns.Controls.Add(UI.MakeBtn("Отчёт",   (s, e) => _onReport?.Invoke()));
             ExtendButtons(btns);
+            btns.Controls.Add(UI.MakeBtn("|<", (s, e) => { if (_bs.Count > 0) _bs.MoveFirst();    }, 40));
+            btns.Controls.Add(UI.MakeBtn("<",  (s, e) => { if (_bs.Count > 0) _bs.MovePrevious(); }, 40));
+            btns.Controls.Add(UI.MakeBtn(">",  (s, e) => { if (_bs.Count > 0) _bs.MoveNext();     }, 40));
+            btns.Controls.Add(UI.MakeBtn(">|", (s, e) => { if (_bs.Count > 0) _bs.MoveLast();     }, 40));
             btns.Controls.Add(UI.MakeBtn("Закрыть", (s, e) => Close()));
             Controls.Add(btns);
             Controls.Add(UI.MakeBanner("Запрос «" + title + "»", poster));

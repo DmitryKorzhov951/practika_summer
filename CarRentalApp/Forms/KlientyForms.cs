@@ -23,6 +23,10 @@ namespace CarRentalApp.Forms
             btnSortAsc.Click  += (s, e) => Sort(true);
             btnSortDesc.Click += (s, e) => Sort(false);
             btnReport.Click   += (s, e) => new KlientyReport().Show();
+            btnNavFirst.Click += (s, e) => { if (bs.Count > 0) bs.MoveFirst(); };
+            btnNavPrev.Click  += (s, e) => { if (bs.Count > 0) bs.MovePrevious(); };
+            btnNavNext.Click  += (s, e) => { if (bs.Count > 0) bs.MoveNext(); };
+            btnNavLast.Click  += (s, e) => { if (bs.Count > 0) bs.MoveLast(); };
             btnClose.Click    += (s, e) => Close();
 
             txtFilter.TextChanged += (s, e) => Flt();

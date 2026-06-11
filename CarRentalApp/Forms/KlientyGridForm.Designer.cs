@@ -24,6 +24,10 @@ namespace CarRentalApp.Forms
         private System.Windows.Forms.ToolStripButton navMoveLast;
         private System.Windows.Forms.Panel panelButtons;
         private CarRentalApp.Controls.ColoredButton btnReport;
+        private CarRentalApp.Controls.ColoredButton btnNavFirst;
+        private CarRentalApp.Controls.ColoredButton btnNavPrev;
+        private CarRentalApp.Controls.ColoredButton btnNavNext;
+        private CarRentalApp.Controls.ColoredButton btnNavLast;
         private CarRentalApp.Controls.ColoredButton btnClose;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFIO;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPol;
@@ -62,6 +66,10 @@ namespace CarRentalApp.Forms
             this.navMoveLast = new System.Windows.Forms.ToolStripButton();
             this.panelButtons = new System.Windows.Forms.Panel();
             this.btnReport = new CarRentalApp.Controls.ColoredButton();
+            this.btnNavFirst = new CarRentalApp.Controls.ColoredButton();
+            this.btnNavPrev = new CarRentalApp.Controls.ColoredButton();
+            this.btnNavNext = new CarRentalApp.Controls.ColoredButton();
+            this.btnNavLast = new CarRentalApp.Controls.ColoredButton();
             this.btnClose = new CarRentalApp.Controls.ColoredButton();
             this.colFIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPol = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -206,6 +214,10 @@ namespace CarRentalApp.Forms
             // ===== Нижняя панель кнопок =====
             this.panelButtons.BackColor = System.Drawing.Color.FromArgb(22, 22, 26);
             this.panelButtons.Controls.Add(this.btnReport);
+            this.panelButtons.Controls.Add(this.btnNavFirst);
+            this.panelButtons.Controls.Add(this.btnNavPrev);
+            this.panelButtons.Controls.Add(this.btnNavNext);
+            this.panelButtons.Controls.Add(this.btnNavLast);
             this.panelButtons.Controls.Add(this.btnClose);
             this.panelButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelButtons.Name = "panelButtons";
@@ -214,11 +226,37 @@ namespace CarRentalApp.Forms
             this.btnReport.Variant = CarRentalApp.Controls.BtnVariant.Save;
             this.btnReport.Text = "Отчёт";
             this.btnReport.Location = new System.Drawing.Point(12, 9);
+            this.btnReport.Size = new System.Drawing.Size(110, 32);
             this.btnReport.Name = "btnReport";
+
+            this.btnNavFirst.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnNavFirst.Text = "|<";
+            this.btnNavFirst.Location = new System.Drawing.Point(140, 9);
+            this.btnNavFirst.Size = new System.Drawing.Size(50, 32);
+            this.btnNavFirst.Name = "btnNavFirst";
+
+            this.btnNavPrev.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnNavPrev.Text = "<";
+            this.btnNavPrev.Location = new System.Drawing.Point(196, 9);
+            this.btnNavPrev.Size = new System.Drawing.Size(50, 32);
+            this.btnNavPrev.Name = "btnNavPrev";
+
+            this.btnNavNext.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnNavNext.Text = ">";
+            this.btnNavNext.Location = new System.Drawing.Point(252, 9);
+            this.btnNavNext.Size = new System.Drawing.Size(50, 32);
+            this.btnNavNext.Name = "btnNavNext";
+
+            this.btnNavLast.Variant = CarRentalApp.Controls.BtnVariant.Default;
+            this.btnNavLast.Text = ">|";
+            this.btnNavLast.Location = new System.Drawing.Point(308, 9);
+            this.btnNavLast.Size = new System.Drawing.Size(50, 32);
+            this.btnNavLast.Name = "btnNavLast";
 
             this.btnClose.Variant = CarRentalApp.Controls.BtnVariant.Default;
             this.btnClose.Text = "Закрыть";
-            this.btnClose.Location = new System.Drawing.Point(128, 9);
+            this.btnClose.Location = new System.Drawing.Point(376, 9);
+            this.btnClose.Size = new System.Drawing.Size(110, 32);
             this.btnClose.Name = "btnClose";
 
             // ===== Форма =====
